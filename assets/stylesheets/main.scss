@@ -1,0 +1,1244 @@
+$primary:#000;
+// MIXINS
+@mixin background($background-position: center center, $background-repeat: no-repeat, $background-size: cover) {
+    background-position: $background-position;
+    background-repeat: $background-repeat;
+    background-size: $background-size;
+}
+
+@mixin responsive-ratio($x, $y, $pseudo: false) {
+    $padding: unquote(($y / $x) * 100 + '%');
+    @if $pseudo {
+        &:before {
+            @include pseudo($pos: relative);
+            width: 100%;
+            padding-top: $padding;
+        }
+    }
+    @else {
+        padding-top: $padding;
+    }
+}
+
+.no-scroll,
+.no_scroll {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+img[lazy="loading"] {
+    width: 100%;
+    color: #bbb;
+}
+
+.accessibility {
+    margin: 0;
+    height: 0;
+    position: absolute;
+    visibility: hidden;
+}
+
+.main_content_container {
+    min-height: 100vh;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding-top: 5rem;
+}
+
+.home .main_content_container {
+    padding-top: 0rem;
+}
+
+.router_content {
+    v-webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+    flex: 1 0 auto;
+}
+
+.carousel-image[lazy="loading"] {
+    margin: 0 auto;
+    margin-bottom: 40px;
+    background-color: #e8e8e8;
+    border: 1px solid #cbcdce;
+    position: relative;
+    transition: 0.3s all ease;
+    &:after {
+        content: "\f110";
+        font-family: FontAwesome;
+        font-size: 2.75rem;
+        font-weight: normal;
+        font-style: normal;
+        color: #cbcdce;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        transition: 0.3s all ease;
+    }
+}
+
+
+/********** Nav ************/
+
+.nav-content {
+    // height: 80px;
+    position: fixed;
+    width: 100%;
+    z-index: 1030;
+    .top-nav {
+        // background: rgba(255, 255, 255, 0);
+        transition: all 0.3s ease;
+        .nav-item .nav-link {
+            // color: #FFF;
+            transition: all 0.3s ease;
+            &:focus {
+                border-bottom-color: #FFF;
+                outline: none !important;
+            }
+        }
+    }
+    .top-nav.home {
+        background-color: rgba(255, 255, 255, 0);
+        .nav-item .nav-link {
+            color: #FFF;
+        }
+    }
+    .top-nav.navbar-opaque {
+        background-color: #fff;
+        .nav-item .nav-link {
+            color: #000;
+        }
+    }
+    .nav-link {
+        cursor: pointer;
+    }
+    .top-nav .dropdown .dropdown-menu.service .dropdown-item {
+        margin-bottom: 0;
+    }
+    .top-nav .dropdown .dropdown-menu.service .last_dd_item.dropdown-item {
+        margin-bottom: 1rem;
+    }
+}
+
+.nav-container.nav-opened {
+    .top-nav {
+        height: 80px;
+    }
+}
+
+// STICKY
+.sticky-animate {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.nav-content.sticky {
+    .top-nav {
+        height: 65px;
+        background: white;
+        box-shadow: 3px 3px 7px rgba(158, 158, 158, 0.55);
+        .nav-item .nav-link {
+            color: #000;
+        }
+    }
+    .nav-container.nav-opened .top-nav {
+        height: 80px;
+    }
+}
+
+.sticky {
+    height: 65px;
+    top: 0;
+    nav {
+        height: 65px;
+    }
+}
+
+.nav-content.sticky #main-nav {
+    .logo {
+        margin: 12px 0px;
+        width: 100px;
+        height: 34px;
+        background-image: url("//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1539292470000/southland-mall-logo2-01-compressor.png");
+    }
+    .nav-list li {
+        margin: 13px 20px;
+        a {
+            color: #000;
+            &:after {
+                background: #000;
+            }
+        }
+    }
+}
+
+
+/****** Footer *******/
+
+.footer_subtext {
+    padding: 10px 0 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    .social-media-footer a {
+        font-size: 1.5rem;
+        height: 2.4rem;
+        width: 2.4rem;
+        text-align: center;
+        background-color: #292b2c;
+        color: #fff;
+        border-radius: 3px;
+        margin-right: .25rem;
+        margin-top: .25rem;
+    }
+    .footer_logo_container {
+        img {
+            max-width: 200px;
+        }
+    }
+}
+
+
+/**** Site Search ******/
+
+#nav-right {
+    .right-search-content {
+        height: calc(100vh - 165px);
+        overflow-y: scroll;
+    }
+    .search-component {
+        .input-group-text {
+            height: calc(2.875rem + 2px);
+            //   border: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            background-color: transparent;
+            border-right: none;
+        }
+        .ion-ios-search-strong:before {
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+        // font-family: $font_family;
+        position: relative;
+        display: flex;
+        position: relative;
+        p.control {
+            width: 100%;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .input {
+            background: transparent;
+            border-radius: 0px;
+            outline: none !important;
+            border: none;
+            // font-family: $font_family;
+            height: calc(2.875rem + 2px);
+            padding: .5rem 1rem;
+            line-height: 1.5;
+            font-size: 1rem;
+            //   text-transform: uppercase;
+            color: #000;
+            width: 100%;
+            padding-left: 0;
+            outline-offset: 0px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        // Placeholder text colour
+        .input::placeholder {
+            color: #fff;
+            opacity: 1;
+        }
+        .input::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            color: #fff;
+        }
+        .input::-moz-placeholder {
+            /* Firefox 19+ */
+            color: #fff;
+        }
+        .input::-ms-input-placeholder {
+            /* IE 10+ */
+            color: #fff;
+        }
+        .options-list {
+            height: 100%;
+            width: 100%;
+            color: #000;
+            margin-left: 0;
+            padding-left: 0;
+            li {
+                list-style: none;
+                padding: 3px 20px;
+                clear: both;
+                color: #333;
+                white-space: nowrap;
+                font-weight: 400;
+                line-height: 1.428;
+                border-bottom: none;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                position: relative;
+                display: block;
+                padding: .75rem 1.25rem;
+                margin-bottom: -1px;
+                background-color: #fff;
+                border: 1px solid #b2b2b2;
+                width: 100%;
+                color: #495057;
+                text-align: inherit;
+            }
+            z-index:9999999;
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden !important;
+            overflow-y:scroll !important;
+            top: calc(2.875rem+14px);
+        }
+    }
+}
+
+
+/****** Inside Header *******/
+
+// .half-banner {
+//   h1 {
+//     text-shadow: 3px 3px 7px rgba(0, 0, 0, .7);
+//   }
+// }
+
+/****** Home ******/
+
+.hero-nav {
+    .slick-dots {
+        list-style: none;
+        display: flex;
+        position: relative;
+        bottom: auto;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        color: black;
+        li {
+            cursor: pointer;
+            width: 15rem;
+            height: 100%;
+            margin: 0;
+            &.slick-active .nav-link {
+                border-top: 4px solid #fff;
+            }
+        }
+    }
+    .nav-link {
+        text-align: left;
+    }
+}
+
+.featured-carousel .carousel-image {
+    margin: auto;
+}
+
+
+/*** Stores ***/
+
+#cat-slide-nav {
+    .slick-prev:before {
+        margin-left: 4px;
+    }
+    .slick-next:before {
+        margin-left: 8px;
+    }
+}
+
+#directory {
+    .store-details .overview table.table tr.row td {
+        vertical-align: middle;
+    }
+    .search-component {
+        background-color: #737373;
+        border: 0;
+        border-radius: 0;
+        font-family: Raleway;
+        position: relative;
+        display: flex;
+        position: relative;
+        p.control {
+            width: 100%;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .input {
+            background: transparent;
+            border-radius: 0px;
+            outline: none !important;
+            border: none;
+            font-family: Raleway;
+            height: calc(2.875rem + 2px);
+            padding: .5rem 1rem;
+            line-height: 1.5;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #fff;
+            width: 100%;
+            padding-left: 0;
+            outline-offset: 0px;
+        }
+        // Placeholder text colour
+        .input::placeholder {
+            color: #fff !important;
+            opacity: 1;
+        }
+        .input::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            color: #fff !important;
+        }
+        .input::-moz-placeholder {
+            /* Firefox 19+ */
+            color: #fff !important;
+        }
+        .input::-ms-input-placeholder {
+            /* IE 10+ */
+            color: #fff !important;
+        }
+        .options-list {
+            height: 100%;
+            width: 100%;
+            color: #000;
+            margin-left: 0;
+            padding-left: 0;
+            li {
+                list-style: none;
+                padding: 3px 20px;
+                clear: both;
+                color: #333;
+                white-space: nowrap;
+                font-weight: 400;
+                line-height: 1.428;
+                border-bottom: none;
+                font-size: 1rem;
+                text-transform: uppercase;
+                position: relative;
+                display: block;
+                padding: .75rem 1.25rem;
+                margin-bottom: -1px;
+                background-color: #fff;
+                border: 1px solid #b2b2b2;
+                width: 100%;
+                color: #495057;
+                text-align: inherit;
+            }
+            z-index:9999999;
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden !important;
+            overflow-y:scroll !important;
+            top: calc(2.875rem+16px);
+            margin: 0;
+            border: 0;
+            border-bottom: 1px solid #dbdbdb;
+        }
+    }
+    .nav-item {
+        cursor: pointer;
+    }
+}
+
+.recomended_stores {
+    img {
+        max-height: 100px;
+    }
+}
+
+
+/***** Mapplic ****/
+
+.results-map {
+    min-height: unset !important;
+}
+
+.map-view {
+    min-height: unset !important;
+    .map {
+        margin: 5rem auto !important;
+        max-width: 90%;
+        min-width: 85%;
+    }
+    .mapplic-container {
+        max-width: 700px;
+        float: none;
+    }
+}
+
+#mapplic {
+    border: 1px solid #FFF;
+    text-align: center;
+    .mapplic-zoom-buttons {
+        bottom: auto;
+        top: -18px;
+        right: 20px;
+        transform: rotate(-90deg);
+    }
+    .mapplic-tooltip-title {
+        line-height: normal;
+    }
+    .mapplic-popup-link {
+        background-color: $primary;
+    }
+    .mapplic-levels {
+        left: 0;
+        right: unset;
+    }
+    .mapplic-levels a {
+        width: 25px;
+        background-size: 12px 6px;
+    }
+    .mapplic-levels-select {
+        padding: 5px 20px 5px 10px;
+        font-size: 1.5rem;
+    }
+    .mapplic-button {
+        width: 38px;
+        height: 38px;
+    }
+    a.mapplic-zoomin-button,
+    a.mapplic-zoomout-button {
+        background-size: 15px 15px;
+    }
+    a.mapplic-zoomout-button {
+        transform: rotate(90deg);
+    }
+    .mapplic-tooltip-title {
+        font-size: 1rem;
+        line-height: normal;
+        text-align: left;
+    }
+    .has-image .mapplic-tooltip-title {
+        margin-top: -30px !important;
+        text-shadow: 1px 1px 7px #171717;
+    }
+}
+
+#storeMallMap #mapplic {
+    border: 1px solid #e9e9e9;
+    .mapplic-popup-link {
+        display: none !important;
+    }
+}
+
+
+/******* Events **********/
+
+.event-section {
+    .featured-image-box {
+        .blur-overlay {
+            filter: blur(3px);
+            max-width: 100%;
+            max-height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 200px;
+        }
+        .card-img-top {
+            width: auto;
+            max-width: 100%;
+            max-height: 100%;
+            max-height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: transparent;
+        }
+    }
+}
+
+.event-section.directory-section {
+    .card {
+        .blur-overlay {
+            filter: blur(3px);
+            max-width: 100%;
+            max-height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 200px;
+        }
+        .card-img {
+            position: relative;
+            width: 100%;
+            height: auto;
+            text-align: center;
+            overflow: hidden;
+        }
+        .card-img-top {
+            width: auto;
+            max-width: 100%;
+            max-height: 100%;
+            max-height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: transparent;
+        }
+    }
+}
+
+
+/**** Dining ******/
+
+.listing-flag.featured {
+    background-color: #000;
+}
+
+
+/******** FAQs **********/
+
+#faq {
+    .card {
+        border: none;
+    }
+    .card-header {
+        border: none;
+        padding: 0 !important;
+        background: transparent;
+    }
+    .card-body {
+        border: none;
+    }
+    .card .btn p {
+        color: $primary;
+        font-size: 1.25rem;
+    }
+    .btn-secondary {
+        background-color: transparent;
+        color: #000;
+        border: none;
+        text-align: left;
+        font-family: Palatino;
+        text-transform: none;
+        padding: 0;
+        &:active,
+        &:focus {
+            box-shadow: none;
+            outline: none !important
+        }
+    }
+    .icon .fa {
+        font-size: 14px;
+    }
+}
+
+hr {
+    width: 100%;
+}
+
+
+/*** HOURS *****/
+
+#mall-hours {
+    .row {
+        min-height: 30px;
+        line-height: 30px;
+        &.active {
+            background-color: #000;
+            color: #fff;
+        }
+    }
+    .hour_name {
+        font-weight: bold;
+    }
+}
+
+.week-hours {
+    .day-hours {
+        display: flex;
+        padding: .3rem;
+         :last-child {
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+    }
+    .text-muted {
+        padding: 10px 0;
+        display: inline-block;
+    }
+    .day-hours.active {
+        background-color: #737373;
+        color: #fff;
+    }
+    .btn-right-arrow:after {
+        visibility: visible;
+    }
+}
+
+li.list-group-item.row.place-group-item {
+    width: 100%;
+    margin: auto;
+    [class*="col-"] {
+        &:first-child {
+            padding-left: 0;
+        }
+        padding-right: 0;
+    }
+}
+
+
+/*** CAREERS ***/
+
+.careers_title {
+    margin: 50px 0;
+    font-size: 1.313rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.careers_sign_up {
+    padding: 16px 20px;
+    min-width: 200px;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    &:hover {
+        background-color: #000;
+        color: #FFF;
+    }
+}
+
+.careers-section {
+    margin: 10px 0;
+    padding: 0;
+    width: 100%;
+}
+
+.careers-container {
+    position: relative;
+    .careers-image {
+        @include responsive-ratio(24,
+        13);
+        @include background(center,
+        no-repeat,
+        cover);
+        background-color: #000;
+        max-width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .careers-content {
+        width: 55%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #FFF;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    .careers-content-mobile {
+        display: none;
+    }
+    .careers-content-title {
+        margin-bottom: 0.625rem;
+        font-size: 2.4rem;
+        text-shadow: 1px 1px 5px rgba(78, 78, 78, 0.7);
+    }
+    .careers-content-desc {
+        margin-bottom: 1.125rem;
+        font-family: "Raleway", sans-serif;
+        font-size: 1.125rem;
+        text-shadow: 1px 1px 5px rgba(78, 78, 78, 0.7);
+    }
+}
+
+.careers-link {
+    margin: 0 auto;
+    padding: 14px 0;
+    width: 200px;
+    height: 58px;
+    background-color: #FFF;
+    font-family: "GTAmerica Black", sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: #000;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: #000;
+        color: #FFF;
+    }
+}
+
+.careers-link.header-link {
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    &:hover {
+        background-color: #FFF;
+        color: #000;
+    }
+}
+
+@media (max-width: 1024px) {
+    .careers-container .careers-content {
+        width: 80%;
+    }
+    .careers-link {
+        padding: 11px 0;
+        max-width: 175px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .careers-link {
+        padding: 9px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .careers-logo {
+        max-width: 250px;
+    }
+    .careers_title {
+        padding: 0 15px;
+        font-size: 1rem;
+        br {
+            display: none;
+        }
+    }
+    .careers_sign_up {
+        padding: 8px 0;
+        min-width: 150px;
+    }
+    .careers-container {
+        .careers-content {
+            .careers-content-desc,
+            a {
+                display: none;
+            }
+        }
+        .careers-content-mobile {
+            margin: 30px 0 40px 0;
+            padding: 0 15px;
+            display: block;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .careers-content-title {
+            margin: 1rem 0 0 0;
+            font-size: 1.5rem;
+            line-height: unset;
+        }
+        .careers-content-desc {
+            font-size: 1rem;
+            text-shadow: none;
+        }
+    }
+    .careers-container .careers-content-mobile.last {
+        margin: 30px 0;
+    }
+    .careers-link {
+        // padding: 14px 0;
+        height: 42px;
+        max-width: 150px;
+        background-color: #000;
+        font-size: 1rem;
+        color: #FFF;
+    }
+}
+
+
+/**** REGISTER /SUBSCRIBE ********/
+
+.register-section,
+.login-section {
+    .create-account-form {
+        .form-control {
+            font-size: 1.2rem;
+            padding: 20px;
+            text-align: center;
+            //Placeholder text colour
+            .input::placeholder {
+                color: #fff;
+                opacity: 1;
+            }
+            .input::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                color: #fff;
+            }
+            .input::-moz-placeholder {
+                /* Firefox 19+ */
+                color: #fff;
+            }
+            .input::-ms-input-placeholder {
+                /* IE 10+ */
+                color: #fff;
+            }
+        }
+    }
+    .facebook_login,
+    .google_login {
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 300;
+        text-transform: none;
+        color: #fff;
+        .fa {
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+    }
+    .sso-buttons {
+        .col-md-6 {
+            padding-bottom: 10px;
+        }
+    }
+    .facebook_login {
+        background-color: #3b5998;
+    }
+    .google_login {
+        background-color: #68a6fa;
+    }
+    label[for*="register-"],
+    label[for*="log-in-"] {
+        display: none;
+    }
+}
+
+.account-section {
+    .box-listings .listing-box-row .listing-cta {
+        text-align: center !important;
+    }
+    .stores-for-you .listing-cta .btn-favorite {
+        padding: 0;
+        background: transparent;
+    }
+}
+
+@media (min-width: 768px) {
+    // .googleMap,
+    // .visitor-section.directory-section .results-content .results-list,
+    // .visitor-section.directory-section .results-content .results-map .map {
+    //   height: 430px;
+    // }
+    .directory-section .results-content .results-list,
+    .directory-section .results-content .results-map {
+        min-height: 100%;
+    }
+    .nav-opened .nav-left-container,
+    .nav-opened .nav-right {
+        top: 79px;
+    }
+    .top-nav .navbar {
+        padding-bottom: 0;
+    }
+    .top-nav.home {
+        &.nav-collapse {
+            background-color: #000;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-content,
+    nav.navbar {
+        transition: all ease 0.3s;
+        height: 65px;
+    }
+    //   .sticky,
+    //   .sticky nav {
+    //     height: 80px;
+    //   }
+    .top-nav.nav-collapse.home .branding .logo-light {
+        display: block;
+    }
+    .top-nav.nav-collapse.home .branding .logo-dark {
+        display: none;
+    }
+    .top-nav.nav-collapse .branding .logo-light {
+        display: none;
+    }
+    .top-nav.nav-collapse .branding .logo-dark {
+        display: block;
+    }
+    .sticky {
+        .top-nav.nav-collapse .branding .logo-light {
+            display: none;
+        }
+        .top-nav.nav-collapse .branding .logo-dark {
+            display: block;
+        }
+    }
+    .nav-opened .nav-left-container,
+    .nav-opened .nav-left-flyout {
+        top: 5rem;
+        height: 100vh;
+    }
+    .top-nav.nav-collapse .nav-item .nav-link {
+        color: #000;
+    }
+    .store_category_nav {
+        display: none;
+    }
+    .footer_subtext {
+        flex-direction: column;
+    }
+    footer ul.bottom-nav li {
+        margin-right: -1.25rem;
+    }
+    .results-map .googleMap {
+        height: 100vh;
+    }
+    .directory-section .results-content .results-list {
+        min-height: 100%;
+    }
+    #directory {
+        .search-component {
+            background-color: #000;
+            .input {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    #mob-top-nav {
+        height: 65px;
+        min-height: unset;
+    }
+    .sticky,
+    .sticky nav {
+        height: 65px;
+    }
+    .nav-opened .nav-left-container,
+    .nav-opened .nav-left-flyout {
+        top: 65px;
+    }
+    .nav-right {
+        top: 65px;
+    }
+    .announce-ribbon .ribbon {
+        height: auto;
+        min-height: 13vh;
+        .h5 {
+            font-size: 1rem;
+        }
+    }
+    .py-1 {
+        padding: 0.5rem 0 !important;
+    }
+}
+
+
+/****** Beverly Styles ******/
+
+.list-group-item+.list-group-item {
+    border-top-width: thin;
+}
+
+.hero-header .hero-carousel .slide-content .h1 {
+    word-break: break-word;
+}
+
+.top-nav .nav-item.search {
+    z-index: 1;
+    margin-top: 15px;
+    height: 100%;
+}
+
+.announce-ribbon .ribbon,
+.nav-left {
+    background-image: none;
+}
+
+.img-fluid.d-none.d-lg-block {
+    margin: auto;
+}
+
+.mb-4 {
+    width: 100%;
+}
+
+.sticky-top {
+    top: -5px;
+}
+
+.directory-section .results-content .card-img .btn-favorite {
+    background-color: transparent !important;
+    z-index: 5;
+    &:before {
+        background-color: rgba(0, 0, 0, 0.75);
+        // font-family: FontAwesome;
+        // content: "\f005";
+    }
+}
+
+.store-details .overview .website {
+    word-break: break-word;
+}
+
+#storeMallMap {
+    max-width: 95%;
+    margin: auto;
+}
+
+.make_it_small {
+    width: 1px !important;
+    height: 1px;
+    .h4 {
+        font-size: 1px;
+    }
+}
+
+#footer #navbarNewsletter ul li a.text-white:hover {
+    background-color: transparent !important;
+}
+
+#footer a:focus {
+    color: #4D4D4D !important;
+}
+
+.half-banner {
+    h1 {
+        color: #000 !important;
+    }
+    a {
+        color: #000 !important;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+}
+
+.customer-service-section {
+    .icon {
+        font-size: 1rem;
+    }
+}
+
+.store-details .overview table.table tr.row table.week-hours-table td {
+    vertical-align: middle;
+    text-align: right;
+}
+
+body.bev-template .top-nav .nav-item.flag {
+    font-size: 1.2vw;
+    top: -0.6rem;
+    height: auto;
+}
+
+.half-banner .btn-outline-light.btn-map-pin {
+    color: #fff !important;
+}
+
+.jobs_section {
+    .results-content .map-view,
+    .results-content .results-list {
+        min-height: 100vh;
+    }
+}
+
+.store-details {
+    // overview box
+    .overview {
+        p {
+            margin-bottom: 0;
+        }
+        .row {
+            padding: 5px 0;
+        }
+    }
+    .collapsed_dets {
+        display: inline-block;
+        position: relative;
+        transition: all ease 0.3s;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(#fff));
+            background-image: linear-gradient(transparent, #fff);
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            font-family: Raleway;
+            letter-spacing: 1px;
+        }
+    }
+    .details-box a {
+        cursor: pointer;
+        display: inline-block;
+        font-size: .8rem;
+        text-decoration: underline;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        padding: .375rem .75rem;
+        font-family: Raleway;
+        letter-spacing: 1px;
+    }
+}
+
+#langMenuButton .btn,
+.btn-outline-light:hover {
+    color: #000;
+}
+
+@media (min-width: 768px) {
+    .top-nav .nav-item {
+        height: 100%;
+    }
+    .featured-carousel .slick-prev:before {
+        left: 2px;
+        position: relative;
+    }
+    .featured-carousel .slick-next:before {
+        left: 4px;
+        position: relative;
+    }
+    .featured-carousel .slick-slide .carousel-text {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+    .register-section .sso-buttons {
+        justify-content: space-evenly;
+    }
+}
+
+@media (max-width: 768px) {
+    .jobs_section {
+        .results-content .map-view,
+        .results-content .results-list {
+            min-height: 100vh;
+        }
+        .directory-header.sticky-top {
+            top: 65px;
+        }
+    }
+}

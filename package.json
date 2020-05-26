@@ -1,38 +1,51 @@
 {
-  "name": "southLandMall",
-  "version": "1.0.0",
-  "description": "My exceptional website",
-  "author": "Mithun",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  },
-  "dependencies": {
-    "nuxt": "^2.3.4",
-    "bootstrap-vue": "^2.0.0-rc.11",
-    "bootstrap": "^4.1.3",
-    "@nuxtjs/font-awesome": "^1.0.3",
-    "@nuxtjs/google-analytics": "^2.0.2",
-    "es6-shim": "^0.35.3",
-    "fuse.js": "^3.2.1",
-    "hammerjs": "^2.0.8",
-    "jquery": "^3.3.1",
-    "jquery-mousewheel": "^3.1.13",
-    "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10",
-    "moment": "^2.22.0",
-    "moment-range": "^4.0.1",
-    "moment-timezone": "^0.5.21",
-    "nuxt-vuex-router-sync": "^0.0.2",
-    "axios": "^0.18.0",
-    "@nuxtjs/sitemap": "^0.1.1"
-  },
-  "devDependencies": {
-    "cross-env": "^5.2.0",
-    "node-sass": "^4.9.2",
-    "sass-loader": "^7.0.3"
-  }
+    "name": "southLandMall",
+    "version": "1.0.0",
+    "description": "My exceptional website",
+    "author": "Mithun",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "@nuxtjs/font-awesome": "^1.0.3",
+        "@nuxtjs/google-analytics": "^2.0.2",
+        "@nuxtjs/sitemap": "^0.1.1",
+        "axios": "^0.18.0",
+        "bootstrap": "^4.1.3",
+        "bootstrap-vue": "^2.0.0-rc.11",
+        "es6-shim": "^0.35.3",
+        "fuse.js": "^3.2.1",
+        "hammerjs": "^2.0.8",
+        "jquery": "^3.3.1",
+        "jquery-mousewheel": "^3.1.13",
+        "js-cookie": "^2.2.0",
+        "lodash": "^4.17.10",
+        "moment": "^2.22.0",
+        "moment-range": "^4.0.1",
+        "moment-timezone": "^0.5.21",
+        "nuxt": "^2.3.4",
+        "nuxt-i18n": "^5.4.1",
+        "vue-i18n": "^8.16.0",
+        "nuxt-vuex-router-sync": "^0.0.2",
+        "stickyfilljs": "^2.1.0",
+        "v-click-outside": "^2.1.3",
+        "vee-validate": "^2.2.11",
+        "velocity-animate": "^1.5.2",
+        "vue-cookieconsent-component": "^1.2.0",
+        "vue-lazyload": "^1.3.1",
+        "vue-scrollto": "^2.17.1",
+        "vue-slick": "^1.1.15",
+        "vue-truncate-collapsed": "^2.1.0",
+        "vue2-animate": "^2.1.0",
+        "vue2-smooth-scroll": "^1.1.0"
+    },
+    "devDependencies": {
+        "cross-env": "^5.2.0",
+        "node-sass": "^4.9.2",
+        "sass-loader": "^7.0.3"
+    }
 }

@@ -1,53 +1,250 @@
 <template>
   <div>
-    <nuxt/>
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <smart-app-banner ios="1206738635"></smart-app-banner>
+    <alert-banner></alert-banner>
+    <div class="page-content" :class="{'home': $route.path === '/'}">
+      <header-component :is-transparent="true" :menu_items="menu_items" />
+      <div class="main_content_container">
+        <nuxt class="router_content" />
+      </div>
+      <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" />
+    </div>
+    <chat-window chatUrl="https://secure.kipsu.com/acct/widget/333/1c7d"></chat-window>
+    <!-- <cookie-consent
+      :cookieExpiryDays="7"
+      message="We use cookies to ensure you get the best experience on our website. By using our website, you agree to our use of cookies for the purposes listed in our "
+      linkLabel="Privacy Policy."
+      href="/pages/privacy-policy"
+      cookieDomain="beverlycenter.com"
+    /> -->
   </div>
 </template>
-
 <style>
-html
-{
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+/* cookie consent styling */
+.cookie-consent section {
+  padding: 0;
 }
-*, *:before, *:after
-{
-  box-sizing: border-box;
-  margin: 0;
+.cookie-consent-link {
+  text-decoration: underline;
+  font-weight: bold;
 }
-.button--green
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-.button--green:hover
-{
-  color: #fff;
-  background-color: #3b8070;
-}
-.button--grey
-{
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-.button--grey:hover
-{
-  color: #fff;
-  background-color: #35495e;
+.cookie-consent-compliance {
+  background-color: #000;
+  border: none;
+  text-transform: uppercase;
 }
 </style>
+
+<script>
+import { mapGetters } from 'vuex'
+import Stickyfill from 'stickyfilljs'
+
+import '~/node_modules/vue-cookieconsent-component/src/scss/_cookie-consent.scss'
+import '~/node_modules/vue-cookieconsent-component/src/scss/_cookie-consent-bottom.scss'
+import '~/node_modules/vue-cookieconsent-component/src/scss/_cookie-consent-transition.scss'
+import '~/node_modules/vue-cookieconsent-component/src/scss/_cookie-consent-variables.scss'
+
+export default {
+  transition: 'page',
+  data() {
+    return {
+      menu_items: [
+        {
+          name: 'Stores',
+          id: 'stores',
+          footer_name: 'Explore Stores',
+          href: '/stores'
+        },
+        {
+          name: 'Events',
+          id: 'events',
+          footer_name: 'Explore Events',
+          href: '/events'
+        },
+        {
+          name: 'Dining',
+          id: 'dine',
+          footer_name: 'Explore Dining',
+          href: '/dining'
+        },
+        {
+          name: 'Sales & Offers',
+          id: 'promos',
+          footer_name: 'Explore Deals',
+          href: '/sales-offers'
+        },
+        {
+          name: 'Hours & Map',
+          id: 'hours',
+          href: '/visit-hours',
+          sub_menu: [
+            {
+              name: 'Mall Map',
+              route_name: 'stores-mall-map',
+              icon: 'icon ion-android-map'
+            },
+            {
+              name: 'Hours',
+              route_name: 'visit-hours-mall-hours',
+              icon: 'icon ion-ios-time-outline'
+            },
+            {
+              name: 'Directions',
+              href: '/visit-hours/mall-directions',
+              icon: 'icon ion-ios-navigate'
+            },
+            {
+              name: 'Parking',
+              href: '/visit-hours/mall-parking',
+              icon: 'icon ion-android-car'
+            },
+            {
+              name: 'Hotels',
+              href: '/visit-hours/hotels',
+              icon: 'icon ion-ios-moon'
+            }
+          ]
+        },
+        {
+          name: 'Concierge',
+          id: 'concierge',
+          href: '/contact-us',
+          sub_menu: [
+            {
+              name: 'Chat Live',
+              href: '/',
+              id: 'chat'
+            },
+            {
+              name: 'Contact Us',
+              href: '/contact-us',
+              id: 'contact_us'
+            },
+            {
+              name: 'Jobs',
+              href: '/work-for-beverlycenter',
+              id: 'jobs'
+            },
+            {
+              name: 'FAQ',
+              href: '/contact-us#FAQ',
+              route_name: 'contact-us',
+              params: 'faq'
+            }
+          ]
+        },
+        {
+          name: 'My Account',
+          id: 'account',
+          href: '/account',
+          sub_menu: [
+            {
+              name: 'Sign In',
+              href: '/log-in',
+              id: 'sign_in',
+              showIfLoggedIn: false
+            },
+            {
+              name: 'Register',
+              href: '/register',
+              id: 'register',
+              showIfLoggedIn: false
+            },
+            {
+              name: 'Your Account',
+              href: '/account',
+              id: 'account',
+              showIfLoggedIn: true
+            },
+            {
+              name: 'Your Favorites',
+              href: '/account',
+              id: 'your_favorites',
+              icon: 'icon ion-ios-star',
+              showIfLoggedIn: true
+            },
+            {
+              name: 'Sign Out',
+              id: 'sign_out',
+              showIfLoggedIn: true
+            }
+          ]
+        }
+      ],
+      footer_sub_menu: [
+        {
+          name: 'Jobs',
+          href: '/work-for-beverlycenter'
+        },
+        {
+          name: 'Advertise',
+          href: '/advertising'
+        },
+        {
+          name: 'Media',
+          href: '/media'
+        },
+        {
+          name: 'About Our Ads',
+          href: '/pages/about-our-ads'
+        },
+        {
+          name: 'Terms of Service',
+          href: '/pages/terms-of-service'
+        },
+        {
+          name: 'Leasing Information',
+          href: '/leasing'
+        },
+        {
+          name: 'Privacy Policy',
+          href: '/pages/privacy-policy'
+        }
+      ]
+    }
+  },
+
+  created() {
+    // Login/Register
+    // gapi.load('auth2', function() {})
+    this.$store.dispatch('selectProperty', this.property)
+  },
+  computed: {
+    ...mapGetters(['property'])
+  },
+  watch: {
+    $route() {
+      this.updateUserRoutes()
+      // this.load()
+    },
+    isLoggedIn() {
+      if (!this.isLoggedIn) {
+        this.updateUserRoutes()
+      }
+    }
+  },
+  components: {
+    headerComponent: () => import('~/components/headerComponent.vue'),
+    footerComponent: () => import('~/components/footerComponent.vue'),
+    chatWindow: () => import('~/components/chatWindow.vue'),
+    SmartAppBanner: () => import('~/components/smartAppBanner.vue'),
+    AlertBanner: () => import('~/components/alertBanner.vue')
+  },
+  mounted: () => {
+    // apply polyfill for CSS position: sticky
+    const elements = $('.sticky-top')
+    Stickyfill.add(elements)
+  },
+  methods: {
+    // Expose hook to call from outside vue app when google maps api is loaded.
+    googleMapAPIReady: () => {
+      this.$emit('MapsApiLoaded')
+    },
+    // Expose hook to call from outside vue app when google api is loaded.
+    googleAPIReady: () => {
+      this.$emit('GoogleApiLoaded')
+    }
+  }
+}
+</script>
