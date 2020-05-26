@@ -166,11 +166,11 @@ img[lazy="loading"] {
     }
 }
 
-.nav-content.sticky #main-nav {
+.nav-content {
     .logo {
         margin: 12px 0px;
-        width: 100px;
-        height: 34px;
+        width: 160px;
+        height: 51px;
         background-image: url("//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1539292470000/southland-mall-logo2-01-compressor.png");
     }
     .nav-list li {
@@ -960,6 +960,39 @@ li.list-group-item.row.place-group-item {
         &.nav-collapse {
             background-color: #000;
         }
+    }
+    .top-header {
+        display: flex;
+        margin: 0px 60px;
+        border-bottom: 1px solid #efefef;
+    }
+    .header-lang {
+        display: flex;
+        flex: 0.2;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .logo-header {
+        display: flex;
+        flex: 0.6;
+        justify-content: center;
+    }
+    .header-signin {
+        display: flex;
+        flex: 0.2;
+        flex-direction: column;
+    }
+    .nav-bar {
+        display: flex;
+        justify-content: center;
+    }
+    .nav-bar>div {
+        margin: 0px 30px;
+        padding: 0px 5px;
+    }
+    .nav-arrow {
+        display: flex;
+        justify-content: center;
     }
 }
 

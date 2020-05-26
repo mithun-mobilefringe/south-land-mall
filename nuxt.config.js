@@ -24,7 +24,12 @@ module.exports = {
             { hid: 'og:type', name: 'og:type', content: 'website' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            {
+                rel: 'stylesheet',
+                href: 'https://fonts.googleapis.com/css?family=Work+Sans&display=swap',
+                async: true
+            },
         ]
     },
 
