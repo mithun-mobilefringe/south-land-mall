@@ -360,6 +360,106 @@ footer {
 }
 
 
+/*** Menu Dropdown ***/
+
+.menu-modal {
+    width: 475px;
+    height: 417px;
+    position: absolute;
+    left: -500%;
+}
+
+.dropdown-box {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    display: flex;
+    z-index: 999999;
+    text-transform: uppercase;
+    border: solid 0.5px #000000;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    height: 100%;
+}
+
+.dropdown-col {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+}
+
+.menu-dropdown-header {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0px;
+}
+
+.display-border {
+    border-bottom: 0.5px solid #a2a2a2;
+}
+
+.dropdown-options {
+    display: flex;
+    flex-direction: column;
+    height: 215px;
+    &>div {
+        padding-top: 20px;
+    }
+}
+
+.dropdown-img {
+    display: flex;
+    width: 215px;
+    height: 215px;
+    justify-content: center;
+}
+
+.dropdown-visit {
+    display: flex;
+    border: 0.5px solid #000000;
+    justify-content: center;
+    margin: 0px 15px;
+}
+
+.display-name {
+    display: flex;
+    justify-content: center;
+    margin: 0px 15px;
+}
+
+.fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-out {
+    opacity: 1;
+    animation-name: fadeOutOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 0.5s;
+}
+
+@keyframes fadeOutOpacity {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
 /*** Stores ***/
 
 #cat-slide-nav {

@@ -70,9 +70,9 @@ module.exports = {
 
     /* Global CSS */
     css: [
-        '~/assets/stylesheets/main.scss',
         '~/node_modules/vue2-animate/dist/vue2-animate.min.css',
         '~/assets/stylesheets/styles.scss',
+        '~/assets/stylesheets/main.scss',
     ],
 
     /* Plugins to load before mounting the App */
@@ -86,7 +86,7 @@ module.exports = {
         '~/plugins/vue-blueshift.js',
         '~/plugins/vue-cookieconsent-component.js',
         '~/plugins/vee-validate.js',
-        '~/plugins/global.js'
+        '~/plugins/global.js',
     ],
 
     /* Nuxt.js modules */

@@ -20,108 +20,21 @@
           </div>
         </div>
         <div class="nav-container nav-bar">
-            <div>Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div></div>
-            <div>Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div></div>
-            <div>Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div></div>
-            <div>News</div>
-            <div>Services</div>
-            <div>About</div>
+            <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" style="position: relative;">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+              <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
+            </div>
+            <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" style="position: relative;">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+              <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
+            </div>
+            <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+              <stay-drop-down v-if="displayStayDropDown"></stay-drop-down>
+            </div>
+            <div @click="displayDropDown(0)">News</div>
+            <div @click="displayDropDown(0)">Services</div>
+            <div @click="displayDropDown(0)">About</div>
         </div>
+        
       </div>
-      <!-- end header nav -->
-      <!-- begin mobile header nav -->
-      <div
-        class="top-nav container-fluid d-md-none nav-collapse"
-        id="mob-top-nav"
-        v-cloak
-        :class="{'navbar-opaque': showOpaque, 'home': $route.path === '/'}"
-      >
-        <nav class="navbar" aria-label="Header Navigation">
-          <ul class="navbar-nav">
-            <!-- -->
-            <li class="nav-item" role="menu">
-              <!-- v-bind:class="{ 'active': showLeftNav }" -->
-              <a
-                class="nav-link icon"
-                href="/"
-                v-on:click.prevent="onStoresClick('mobile')"
-                :aria-expanded="showLeftNav ? 'true' : 'false'"
-                aria-label="Toggle left navigation window"
-                aria-controls="nav-left-container"
-                @keydown.space.prevent="onStoresClick('mobile')"
-                @keydown.down.prevent="focusOnStoresMenu('sign-in')"
-                @keydown.esc.prevent="closeLeftNav('mobile')"
-                @keydown.tab="closeLeftNav('search')"
-                id="stores-mobile"
-              >
-                <span class="ion-navicon-round" :class="storeTabClass" v-if="!showLeftNav"></span>
-                <span class="ion-close-round" v-if="showLeftNav"></span>
-              </a>
-            </li>
-            <li class="nav-item" v-bind:class="{ 'active': showSearchWindow }">
-              <a
-                class="nav-link icon"
-                @click="showSearchWindow = !showSearchWindow"
-                :aria-expanded="showSearchWindow ? 'true': 'false'"
-                aria-label="Toggle site search window"
-                aria-controls="nav-right"
-                id="search"
-              >
-                <span class="ion-ios-search-strong"></span>
-              </a>
-            </li>
-          </ul>
-          <a class="branding" href="/" alt="Home" :tabindex="showLeftNav ? '-1': '0'">
-            <img class="img-fluid logo-light" src="/images/logo.png" :alt="property.name" />
-            <img class="img-fluid logo-dark" src="/images/logo-black.png" :alt="property.name" />
-          </a>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <nuxt-link
-                class="nav-link icon"
-                :to="localePath({name: 'stores-mall-map'})"
-                aria-label="Map"
-                :tabindex="showLeftNav ? '-1': '0'"
-              >
-                <span class="ion-android-map"></span>
-              </nuxt-link>
-            </li>
-            <li class="nav-item">
-              <nuxt-link
-                class="nav-link icon"
-                :to="localePath({name: 'visit-hours-mall-directions'})"
-                aria-label="Search Site"
-                :tabindex="showLeftNav ? '-1': '0'"
-              >
-                <span class="ion-ios-navigate"></span>
-              </nuxt-link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <!-- end mobile header nav -->
-      <!-- begin left nav -->
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOut"
-      >
-        <nav-left
-          nav-item="navLeftLocation"
-          @close-left-nav="showLeftNav= false"
-          v-if="showLeftNav"
-        ></nav-left>
-        <!-- @open-chat="openChat" -->
-        <!--  -->
-      </transition>
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOut"
-      >
-        <right-search-component v-if="showSearchWindow"></right-search-component>
-        <!--  -->
-      </transition>
     </div>
   </div>
 </template>
@@ -130,28 +43,24 @@
 import { mapGetters } from "vuex";
 import moment from "moment";
 import tz from "moment-timezone";
+import ClickOutside from 'vue-click-outside'
+// import func from '../vue-temp/vue-editor-bridge';
 
 export default {
-  components: {},
+  components: {
+    shopDropDown: () => import('~/components/shopDropDown.vue'),
+    dineDropDown: () => import('~/components/dineDropDown.vue'),
+    stayDropDown: () => import('~/components/stayDropDown.vue'),
+  },
   data: function data() {
     return {
       showOpaque: false,
-      isScrolling: false,
-      showLeftNav: false,
-      showSearchWindow: false,
-      isTransparent: false,
-      storeTabClass: false,
       is_home: false,
-      scrolled: false,
-      isOpen: false,
-      showMenu: false,
-      mobileScroll: false,
-      lastScrollTop: 0,
-      navUp: false,
-      navDown: true
+      displayShopDropDown: false,
+      displayStayDropDown: false,
+      displayDineDropDown: false
     };
   },
-  props: ["menu_items"],
   created() {
     this.$nextTick(function() {
       //Init
@@ -164,29 +73,6 @@ export default {
     });
   },
   watch: {
-    $route(to, from) {
-      this.navUp = false;
-      if (this.$route.path === "/") {
-        this.is_home = true;
-      } else {
-        this.is_home = false;
-      }
-      this.showSearchWindow = false;
-    },
-    showLeftNav() {
-      if (this.showLeftNav || this.showSearchWindow) {
-        document.body.classList.add("no_scroll");
-      } else if (!this.showLeftNav || !this.showSearchWindow) {
-        document.body.classList.remove("no_scroll");
-      }
-    },
-    showSearchWindow() {
-      if (this.showLeftNav || this.showSearchWindow) {
-        document.body.classList.add("no_scroll");
-      } else if (!this.showLeftNav || !this.showSearchWindow) {
-        document.body.classList.remove("no_scroll");
-      }
-    }
   },
   beforeRouteUpdate(to, from, next) {
     this.$nextTick(function() {
@@ -207,53 +93,43 @@ export default {
     }
   },
   methods: {
-    handleScroll() {
-      this.scrolled = window.pageYOffset > 100;
+    hideShopDropDown: function() {
+        this.displayShopDropDown = false;
     },
-    mobileDidScrolled() {
-      if (this.isMobile) {
-        this.mobileScroll = window.pageYOffset > 0;
-        var _this = this;
-        // setTimeout(function() {
-        if (_this.mobileScroll) {
-          _this.mobileHasScrolled();
-          _this.mobileScroll = false;
-        }
-        // }, 150);
-      }
+    hideDineDropDown: function() {
+      this.displayDineDropDown = false;
     },
-    mobileHasScrolled() {
-      // var lastScrollTop = 0;
-      var delta = 5;
-      var navbarHeight = document.getElementsByClassName("navbar").offsetHeight;
-      var st = $(window).scrollTop();
-
-      // If they scrolled down and are past the navbar, add class .nav-up.
-      // This is necessary so you never see what is "behind" the navbar.
-      if (st > this.lastScrollTop && st > navbarHeight) {
-        // Scroll Down
-        this.navUp = true;
+    hideStayDropDown: function () {
+      this.displayStayDropDown = false;
+    },
+    displayDropDown: function(menuItem) {
+      if(menuItem == 1) {
+        this.displayShopDropDown = !this.displayShopDropDown;
+        this.displayDineDropDown = false;
+        this.displayStayDropDown = false;
+      } else if(menuItem == 2) {
+        this.displayDineDropDown = !this.displayDineDropDown;
+        this.displayStayDropDown = false;
+        this.displayShopDropDown = false;
+      } else if(menuItem == 3) {
+        this.displayStayDropDown = !this.displayStayDropDown;
+        this.displayDineDropDown = false;
+        this.displayShopDropDown = false;
       } else {
-        // Scroll Up
-        if (st + $(window).height() < $(document).height()) {
-          this.navUp = false;
-        }
+        this.displayDineDropDown = false;
+        this.displayShopDropDown = false;
+        this.displayStayDropDown = false;
       }
-
-      this.lastScrollTop = st;
-    },
-    onStoresClick() {
-      this.showLeftNav = !this.showLeftNav;
-      this.showSearchWindow = false;
     }
   },
-  beforeMount() {
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("scroll", this.mobileDidScrolled);
+  mounted () {
+    // prevent click outside event with popupItem.
+    this.popupItem = this.$el
   },
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("scroll", this.mobileDidScrolled);
+ 
+  // do not forget this section
+  directives: {
+    ClickOutside
   }
 };
 </script>
