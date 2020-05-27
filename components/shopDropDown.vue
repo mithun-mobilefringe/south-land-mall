@@ -6,7 +6,7 @@
           <span>Stores Directory</span>
         </div>
         <div class="dropdown-options">
-          <div>Promotions</div>
+          <nuxt-link to="/promotions">Promotions</nuxt-link>
           <div>Mall Map</div>
           <div>New Stores</div>
           <div>Shopping Hours</div>

@@ -49,7 +49,7 @@ img[lazy="loading"] {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-    padding-top: 5rem;
+    padding-top: 7rem;
 }
 
 .home .main_content_container {
@@ -416,13 +416,13 @@ footer {
     display: flex;
     border: 0.5px solid #000000;
     justify-content: center;
-    margin: 0px 15px;
+    margin: 0px 20px;
 }
 
 .display-name {
     display: flex;
     justify-content: center;
-    margin: 0px 15px;
+    margin: 20px;
 }
 
 .fade-in {
@@ -1093,6 +1093,7 @@ li.list-group-item.row.place-group-item {
     .nav-arrow {
         display: flex;
         justify-content: center;
+        font-size: small;
     }
 }
 

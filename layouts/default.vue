@@ -3,7 +3,7 @@
     <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
     <smart-app-banner ios="1206738635"></smart-app-banner>
     <alert-banner></alert-banner>
-    <div class="page-content" :class="{'home': $route.path === '/'}">
+    <div class="page-content">
       <header-component :is-transparent="true" :menu_items="menu_items" />
       <div class="main_content_container">
         <nuxt class="router_content" />
@@ -214,7 +214,7 @@ export default {
     ...mapGetters(['property'])
   },
   watch: {
-    $route() {
+    /* $route() {
       this.updateUserRoutes()
       // this.load()
     },
@@ -222,7 +222,7 @@ export default {
       if (!this.isLoggedIn) {
         this.updateUserRoutes()
       }
-    }
+    } */
   },
   components: {
     headerComponent: () => import('~/components/headerComponent.vue'),
