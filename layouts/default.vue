@@ -8,7 +8,7 @@
       <div class="main_content_container">
         <nuxt class="router_content" />
       </div>
-      <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" />
+      <!-- <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" /> -->
     </div>
     <chat-window chatUrl="https://secure.kipsu.com/acct/widget/333/1c7d"></chat-window>
     <!-- <cookie-consent

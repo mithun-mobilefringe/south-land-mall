@@ -2,8 +2,10 @@
 <div>
 <div class="category-menu">
     <div class="col-4">   
+        <span @click="showList=!showList" class="category-lbl">
         <span style="margin-right: 5px">{{categoryLbl}}</span>
-        <i class="fa fa-caret-right" style="font-size: small"></i>
+        <i class="fa fa-caret-right category-icon" style="font-size: small" :class="{'rotate': showList}"></i>
+        </span>
     </div>
     <div class="col-4 map-category">
         Mall Map
@@ -14,9 +16,13 @@
     </div>
     
 </div>
-<div class="category-list">
-
+<transition name="fade">
+<div class="category-list col-12" v-if="categories" v-show="showList">
+    <div v-for="category in categories" class="category-item col-3" :key="category.id">
+        {{category.name}}
+    </div> 
 </div>
+</transition>
 </div>
 </template>
 
@@ -30,13 +36,24 @@ export default {
   data() {
     return {
       socialFeed: null,
-      categoryLbl: ''
+      categoryLbl: '',
+      categories: null,
+      showList: false
     }
   },
   mounted() {
     this.loadData();
   },
   computed: {
+      ...mapGetters([
+      "processedCategories"
+    ]),
+    filteredCategories() {
+        return this.processedCategories.filter(category => {
+        return category.parent_category_id == null
+     })
+    }
+    
   },
   methods: {
     loadData: function() {
@@ -44,6 +61,7 @@ export default {
           this.categoryLbl = 'Categories'
           this.getStoreCategories();
       }
+      this.categories = this.filteredCategories;
 
     },
     getStoreCategories: function() {
@@ -58,9 +76,15 @@ export default {
     background-color: #000000;
     display: flex;
     color: #FFFFFF;
-    padding: 0px 88px;
+    padding: 0px 70px;
     align-items: center;
     font-size: 16px;
+}
+.category-icon {
+    transition: transform 0.3s ease-in-out;
+}
+.category-lbl:hover {
+    cursor: pointer;
 }
 .map-category {
     display: flex;
@@ -75,5 +99,21 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 5px;
+}
+.category-list {
+    height: 235px;
+    background: #EEEEF0 0% 0% no-repeat padding-box;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 70px;
+}
+.category-item {
+    display: flex;
+    height: 25px;
+}
+
+.rotate {
+    
+    transform: rotate(90deg);
 }
 </style>

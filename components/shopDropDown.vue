@@ -1,6 +1,6 @@
 <template>
   <div class="menu-modal">
-    <div class="col-12 dropdown-box fade-in">
+    <div class="col-12 dropdown-box">
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header display-border">
           <span>Stores Directory</span>

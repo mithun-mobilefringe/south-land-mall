@@ -21,13 +21,19 @@
         </div>
         <div class="nav-container nav-bar">
             <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" style="position: relative;">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
+              <transition name="fade">
+                <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
+              </transition>
             </div>
             <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" style="position: relative;">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
+              <transition name="fade">
+                <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
+              </transition>
             </div>
             <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <stay-drop-down v-if="displayStayDropDown"></stay-drop-down>
+              <transition name="fade">
+                <stay-drop-down v-if="displayStayDropDown"></stay-drop-down>
+              </transition>
             </div>
             <div @click="displayDropDown(0)">News</div>
             <div @click="displayDropDown(0)">Services</div>
