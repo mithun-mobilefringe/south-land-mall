@@ -18,9 +18,11 @@
 </div>
 <transition name="fade">
 <div class="category-list col-12" v-if="categories" v-show="showList">
+    <div class="category-list-items">
     <div v-for="category in categories" class="category-item col-3" :key="category.id">
         {{category.name}}
     </div> 
+    </div>
 </div>
 </transition>
 </div>
@@ -105,11 +107,20 @@ export default {
     background: #EEEEF0 0% 0% no-repeat padding-box;
     display: flex;
     flex-wrap: wrap;
-    padding: 30px 70px;
+    padding: 30px 85px 0px 85px;
+    margin-bottom: 30px;
+    
+}
+.category-list-items {
+    border-bottom: solid 0.5px #000000;
+    display: flex;
+    flex-wrap: wrap;
 }
 .category-item {
     display: flex;
     height: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .rotate {

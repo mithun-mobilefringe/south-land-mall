@@ -49,7 +49,8 @@ img[lazy="loading"] {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-    padding-top: 7rem;
+    padding-top: 8rem;
+    background: #EEEEF0 0% 0% no-repeat padding-box;
 }
 
 .home .main_content_container {
@@ -460,6 +461,13 @@ footer {
 }
 
 
+/***page content***/
+
+.page_content {
+    margin: 0px 85px;
+}
+
+
 /*** Stores ***/
 
 #cat-slide-nav {
@@ -643,6 +651,71 @@ footer {
     border: 1px solid #e9e9e9;
     .mapplic-popup-link {
         display: none !important;
+    }
+}
+
+
+/****Promotion****/
+
+.promotion-section {
+    display: flex;
+    flex-wrap: wrap;
+    .promotion-container {
+        display: flex;
+        border: solid 0.5px #000000;
+        height: 255px;
+        width: 100%;
+        .container-details {
+            display: flex;
+            flex-direction: column;
+            .promo-store-name {
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                font-weight: bold;
+                flex: 30%;
+                // padding: 30px;
+                // margin-bottom: 32px;
+            }
+            .promo-name {
+                display: flex;
+                font-size: 20px;
+                font-weight: normal;
+                // padding-bottom: 10px;
+            }
+            .promo-date {
+                display: flex;
+                font-size: 12px;
+                font-weight: normal;
+                flex: 10%;
+                // margin-bottom: 40px;
+            }
+            .promo-button {
+                display: flex;
+                justify-content: center;
+                border: solid 0.5px #000000;
+                margin-bottom: 30px;
+                &>div {
+                    display: flex;
+                    justify-content: center;
+                    text-transform: uppercase;
+                    padding: 0px 10px;
+                }
+            }
+        }
+        .container-img {
+            display: flex;
+            padding: 0px;
+            padding-bottom: 1px;
+            &>div {
+                height: 100%;
+                width: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-color: white;
+            }
+        }
     }
 }
 
@@ -1063,7 +1136,6 @@ li.list-group-item.row.place-group-item {
     }
     .top-header {
         display: flex;
-        margin: 0px 60px;
         border-bottom: 1px solid #efefef;
     }
     .header-lang {

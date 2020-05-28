@@ -3,70 +3,22 @@
     <category-menu-component categoryType="stores"></category-menu-component>
     <inside-page-header :pageBanner="pageBanner" :pageHeader="$t('promos_page.promotions')"></inside-page-header>
     <div class="site_container page_content">
-      <div id="events_container" v-if="promotions.length > 0" class="row">
-        <div
-          class="col-sm-4 event_container"
-          v-for="(promo,index) in promotions"
-          :class="{ 'last': index === (promotions.length - 1) }"
-          :key="promo.id"
-          v-if="showMore > index"
-        >
-          <nuxt-link :to="'/promotions/'+ promo.slug">
-            <div class="row">
-              <div class="col-sm-12 event_image_container">
-                <div class="featured_tag" v-if="promo.is_featured">
-                  <div class="featured_tag_text">Featured</div>
-                </div>
-                <div
-                  v-if="isMissingImage(promo.store.store_front_url_abs)"
-                  class="store_details_image center-block"
-                >
-                  <div class="no_logo">
-                    <img class="store_img" src="/images/rect_transparent_logo.png" alt>
-                    <h2 class="store_details_name">{{ promo.store.name }}</h2>
-                  </div>
-                </div>
-                <div v-else>
-                  <img class="transparent_logo" src="/images/rect_transparent_logo.png" alt>
-                  <img class="event_image" :src="checkStoreImageURL(promo.store)" :alt="promo.name">
-                </div>
-              </div>
-              <div class="col-sm-12 event_dets_container">
-                <div class="center_container">
-                  <div v-if="promo.promotionable_type == 'Store'">
-                    <h4 class="event_store_name caps" v-if="locale=='fr'">{{promo.store.name_2}}</h4>
-                    <h4 class="event_store_name caps" v-else>{{ promo.store.name }}</h4>
-                  </div>
-                  <div v-if="promo.promotionable_type == 'Property'">
-                    <h4 class="event_store_name caps">{{ property.name }}</h4>
-                  </div>
-                  <h4 class="event_name caps" v-if="locale=='fr'">{{promo.name_2}}</h4>
-                  <h4 class="event_name caps" v-else>{{truncate(promo.name, 40)}}</h4>
-                  <p class="event_dates caps" v-if="promo.no_end_date">On Going</p>
-                  <p class="event_dates caps" v-else>
-                    <span
-                      v-if="isMultiDay(promo,timezone)"
-                    >{{promo.start_date | moment("MMMM D", timezone)}} - {{promo.end_date | moment("MMMM D", timezone)}}</span>
-                    <span v-else>{{promo.start_date | moment("MMMM D", timezone)}}</span>
-                  </p>
-                  <span class="hvr-underline-from-center">View Promotion Details</span>
-                </div>
-              </div>
+      <div class="promotion-section col-12">
+        <div class="col-md-6 col-sm-12" style="padding: 15px" v-for="promotion in promotions" :key="promotion.id">
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div class="promo-date">{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button"><div>Promotion Details</div></div>
             </div>
-          </nuxt-link>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div id="no_events" class="row" v-else>
-        <div class="col-md-12">
-          <p>{{$t("promos_page.no_promo_message")}}</p>
-        </div>
-      </div>
-      <div class="show_more">
-        <div
-          class="pointer contact_btn"
-          v-if="promotions && showMore < promotions.length"
-          @click="loadMorePromos()"
-        >Load More</div>
       </div>
     </div>
   </div>
@@ -96,7 +48,7 @@ export default {
   async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getData", { resource: "promotions" }),
+        store.dispatch("getMMData", { resource: "promotions" }),
         store.dispatch("LOAD_SEO", { url: "/promotions" })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -149,7 +101,7 @@ export default {
             if (_.isEmpty(value.store)) {
               value.store = {};
               value.store.store_front_url_abs =
-                "/images/coquitlam_default_logo.png";
+                "https://www.mallmaverick.com/system/promotions/promo_images/000/135/896/original/SLM_-_Mall_Entrance.jpg?1542985738";
             }
 
             if (value.is_featured) {
