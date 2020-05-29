@@ -1,8 +1,8 @@
 <template>
   <!-- begin header nav -->
-  <div class="nav-content sticky-aniamte nav-spacing">
+  <div class="nav-content sticky-aniamte nav-spacing container">
     <div class="nav-container">
-      <div class="content-container d-none d-md-block row">
+      <div class="d-none d-md-block row">
         <div class="top-header">
           <div class="header-lang">
             <div>EN</div>
@@ -47,8 +47,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import moment from "moment";
-import tz from "moment-timezone";
 import ClickOutside from 'vue-click-outside'
 // import func from '../vue-temp/vue-editor-bridge';
 

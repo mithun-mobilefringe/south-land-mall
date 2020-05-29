@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div>
-      <div class="container">
+    <div style="background: #EEEEF0 0% 0% no-repeat padding-box;">
+      <div style="background: #FFFFFF 0% 0% no-repeat padding-box;">
       <header-component :is-transparent="true" :menu_items="menu_items" />
       </div>
-      <div class="main_content_container container">
+      <div class="main_content_container">
         <nuxt class="router_content" />
       </div>
       <div class="container">

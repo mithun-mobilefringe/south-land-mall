@@ -1,71 +1,66 @@
 <template>
   <div class="promo_dets_container" v-if="currentPromo">
-    <inside-page-header :pageBanner="pageBanner" :pageHeader="$t('promos_page.promotions')"></inside-page-header>
-    <div class="site_container">
+    <category-menu-component categoryType="promotionDetails"></category-menu-component>
+    <div class="site_container container">
       <div class="row">
-        <div class="col-sm-12 promo_image_container text-left">
-          <nuxt-link to="/promotions" class="back_to_list hvr-underline-from-center">
-            <span class="promo_back caps">
-              <i class="fa fa-angle-left" style="margin-right:10px;"></i>
-              {{$t("promos_page.back_to_promos")}}
-            </span>
-          </nuxt-link>
-          <h3 style="margin: 20px auto 0px;" v-if="locale=='fr'">
-            <span class="promo_name">{{currentPromo.name_2}}</span>}
-          </h3>
-          <h3 style="margin: 20px auto 0px;" v-else>
-            <span class="promo_name">{{currentPromo.name}}</span>
-          </h3>
-          <div class>
-            <nuxt-link
-              v-if="currentPromo.store"
-              :to="'/stores/'+currentPromo.store.slug"
-              class="hvr-underline-from-center"
-            >
-              <p class="promo_store_name caps" v-if="locale=='fr'">{{currentPromo.store.name_2}}</p>
-              <p class="promo_store_name caps" v-else>{{currentPromo.store.name}}</p>
-            </nuxt-link>
-          </div>
-          <div class="clearfix promo_div_date">
-            <p v-if="currentPromo.no_end_date">On Going</p>
-            <p v-else-if="isMultiDay(currentPromo,timezone)">{{currentPromo.start_date | moment("MMMM D", timezone)}} - {{currentPromo.end_date | moment("MMMM D", timezone)}}</p>
-            <p v-else>{{currentPromo.start_date | moment("MMMM D", timezone)}}</p>
-            <social-sharing
-              :url="shareURL(currentPromo.slug,'promotions')"
-              :title="currentPromo.title"
-              :description="currentPromo.body"
-              :quote="truncate(currentPromo.description, {'length': 99})"
-              :twitter-user="twitterUsername"
-              :media="currentPromo.promo_image_url_abs_large"
-              inline-template
-            >
-              <div class="social-share">
-                <p class="no_margin caps">Share This Promotion:</p>
-                <div class="social_share">
-                  <network network="facebook">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                  </network>
-                  <network network="twitter">
-                    <i class="fa fa-twitter social_icons" aria-hidden="true"></i>
-                  </network>
+        <div class="col-12 top-section p-0">
+          <div class="col-6 p-0">
+            <div class="detail">
+              <div class="detail-internal">
+                <div class="detail-date">
+                  {{currentPromo.start_date | moment("MMM D", timezone)}} - {{currentPromo.end_date | moment("MMM D", timezone)}}
+                </div>
+                <div class="detail-name">
+                  {{currentPromo.name}}
+                </div>
+                <div class="detail-description">
+                  <span v-html="currentPromo.description"></span>
+                </div>
+                <div class="detail-buttons">
+                  <div class="visit-button btn">
+                    <nuxt-link to="">Visit {{currentPromo.store.name}}</nuxt-link>
+                  </div>
+                  <div class="share-button">
+                    Share Promotion
+                    <i class="fa fa-share"></i>
+                  </div>
                 </div>
               </div>
-            </social-sharing>
-            <!-- </div> -->
-          </div>
-          <div class="col-sm-12 no_padding promo_dets_desc">
-            <img
-              v-if="!isMissingImage(currentPromo.promo_image_url_abs_large)"
-              v-lazy="currentPromo.promo_image_url_abs_large"
-              class="image"
-              alt
-            >
-            <div class="text-left promo_description">
-              <p v-if="locale=='fr'" v-html="currentPromo.rich_description_2"></p>
-              <p v-else v-html="currentPromo.rich_description"></p>
             </div>
-            <div v-if="currentPromo.disclaimer_message" class="text-left promo_description">
-              <p>{{currentPromo.disclaimer_message}}</p>
+          </div>
+          <div class="col-6 p-0">
+            <div class="img">
+              <img :src="currentPromo.image_url"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" v-if="storePromos.length > 0">
+        <div class="other-promotions-lbl col-12">
+          Other Promotions at {{currentPromo.store.name}}
+        </div>
+      </div>
+      <div class="row" v-if="storePromos.length > 0">
+        <div
+          class="col-md-6 col-sm-12 promotion-section"
+          v-for="promotion in storePromos"
+          :key="promotion.id"
+        >
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div
+                class="promo-date"
+              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button btn">
+                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+              </div>
+            </div>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
             </div>
           </div>
         </div>
@@ -86,18 +81,21 @@ export default {
   components: {
     /* SocialSharing: () => import("vue-social-sharing"),
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
+    categoryMenuComponent: () =>
+      import("~/components/categoryMenuComponent.vue")
   },
   data: function() {
     return {
       currentPromo: null,
       tempSEO: null,
-      currentSEO: []
+      currentSEO: [],
+      storePromos: []
     };
   },
   async asyncData({ store, route }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getData", { resource: "promotions" }),
+        store.dispatch("getMMData", { resource: "promotions" }),
         store.dispatch("LOAD_SEO", {
           url: route.fullPath
         })
@@ -150,8 +148,21 @@ export default {
           if (this.tempSEO) {
             this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
           }
+          this.loadStorePromos();
         }
       });
+    },
+    loadStorePromos: function() {
+      this.storePromos = this.processedPromos.filter(promo => {
+        if(promo.store) {
+          return (promo.store.id == this.currentPromo.store.id) && (promo.id != this.currentPromo.id);
+        } else {
+          return false;
+        }
+        
+      });
+
+
     }
   }
 };

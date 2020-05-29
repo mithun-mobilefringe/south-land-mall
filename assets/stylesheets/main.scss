@@ -50,7 +50,6 @@ img[lazy="loading"] {
     -webkit-box-direction: normal;
     flex-direction: column;
     //padding-top: 8rem;
-    background: #EEEEF0 0% 0% no-repeat padding-box;
 }
 
 .home .main_content_container {
@@ -723,6 +722,79 @@ footer {
 }
 
 
+/*** Promotion End ***/
+
+
+/*** Promotion Details ***/
+
+.promo_dets_container {
+    .top-section {
+        display: flex;
+        margin-top: 30px;
+        .detail {
+            display: flex;
+            margin: 1.25rem 0rem;
+            background-color: white;
+            text-transform: uppercase;
+            .detail-internal {
+                border: 0.5px solid black;
+                margin: 1rem;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+                .detail-date {
+                    display: flex;
+                    font-size: 0.7rem;
+                }
+                .detail-name {
+                    display: flex;
+                    font-size: 2.25rem;
+                }
+                .detail-description {
+                    display: flex;
+                    font-size: 1rem;
+                }
+                .detail-buttons {
+                    display: flex;
+                    .visit-button {
+                        display: flex;
+                        flex: 50%;
+                        border: solid 0.5px #000000;
+                        font-size: 1rem;
+                    }
+                    .share-button {
+                        display: flex;
+                        flex: 50%;
+                        font-size: 0.85rem;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+                }
+            }
+        }
+        .img {
+            display: flex;
+            height: 100%;
+        }
+    }
+    .other-promotions-lbl {
+        text-transform: uppercase;
+        border-bottom: 0.5px solid #000000;
+        padding: 1.8rem 0px;
+    }
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: white;
+}
+
+
 /******* Events **********/
 
 .event-section {
@@ -1233,10 +1305,6 @@ li.list-group-item.row.place-group-item {
             }
         }
     }
-}
-
-.content-container {
-    padding: 0rem 7rem;
 }
 
 @media (max-width: 480px) {
