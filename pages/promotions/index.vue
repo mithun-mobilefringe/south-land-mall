@@ -1,10 +1,9 @@
 <template>
   <div>
-    <category-menu-component categoryType="stores"></category-menu-component>
-    <inside-page-header :pageBanner="pageBanner" :pageHeader="$t('promos_page.promotions')"></inside-page-header>
-    <div class="site_container page_content">
-      <div class="promotion-section col-12">
-        <div class="col-md-6 col-sm-12" style="padding: 15px" v-for="promotion in promotions" :key="promotion.id">
+    <category-menu-component categoryType="promotion"></category-menu-component>
+    <div>
+      <div class="row content-container">
+        <div class="col-md-6 col-sm-12 promotion-section" v-for="promotion in promotions" :key="promotion.id">
           <div class="promotion-container">
             <div class="container-details col-7">
               <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
-    <smart-app-banner ios="1206738635"></smart-app-banner>
-    <alert-banner></alert-banner>
-    <div class="page-content">
+    <div>
+      <div class="container">
       <header-component :is-transparent="true" :menu_items="menu_items" />
-      <div class="main_content_container">
+      </div>
+      <div class="main_content_container container">
         <nuxt class="router_content" />
       </div>
+      <div class="container">
       <!-- <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" /> -->
+      </div>
     </div>
-    <chat-window chatUrl="https://secure.kipsu.com/acct/widget/333/1c7d"></chat-window>
     <!-- <cookie-consent
       :cookieExpiryDays="7"
       message="We use cookies to ensure you get the best experience on our website. By using our website, you agree to our use of cookies for the purposes listed in our "

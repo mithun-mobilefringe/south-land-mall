@@ -2,7 +2,7 @@
   <!-- begin header nav -->
   <div class="nav-content sticky-aniamte nav-spacing">
     <div class="nav-container">
-      <div class="top-nav container-fluid d-none d-md-block col-12">
+      <div class="content-container d-none d-md-block row">
         <div class="top-header">
           <div class="header-lang">
             <div>EN</div>

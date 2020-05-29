@@ -1,7 +1,7 @@
 <template>
-<div>
-<div class="category-menu">
-    <div class="col-4">   
+<div class="">
+<div class="category-menu content-container row">
+    <div class="col-4 p-0">   
         <span @click="showList=!showList" class="category-lbl">
         <span style="margin-right: 5px">{{categoryLbl}}</span>
         <i class="fa fa-caret-right category-icon" style="font-size: small" :class="{'rotate': showList}"></i>
@@ -10,14 +10,14 @@
     <div class="col-4 map-category">
         Mall Map
     </div>
-    <div class="col-4 search-category">
+    <div class="col-4 search-category p-0">
         Search For Store
         <i class="fa fa-search search-icon"></i>
     </div>
     
 </div>
 <transition name="fade">
-<div class="category-list col-12" v-if="categories" v-show="showList">
+<div class="category-list content-container row" v-if="categories" v-show="showList">
     <div class="category-list-items">
     <div v-for="category in categories" class="category-item col-3" :key="category.id">
         {{category.name}}
@@ -40,7 +40,8 @@ export default {
       socialFeed: null,
       categoryLbl: '',
       categories: null,
-      showList: false
+      showList: false,
+      promotionCategories: []
     }
   },
   mounted() {
@@ -48,7 +49,8 @@ export default {
   },
   computed: {
       ...mapGetters([
-      "processedCategories"
+      "processedCategories",
+      "processedPromos"
     ]),
     filteredCategories() {
         return this.processedCategories.filter(category => {
@@ -61,12 +63,36 @@ export default {
     loadData: function() {
       if(this.categoryType == 'stores') {
           this.categoryLbl = 'Categories'
-          this.getStoreCategories();
+          this.loadStoreCategories();
       }
-      this.categories = this.filteredCategories;
+      if(this.categoryType == 'promotion') {
+          this.categoryLbl = 'Promotion Categories'
+          this.loadPromotionCategories();
+      } else {
+          this.categories = this.filteredCategories;
+      }
+      
 
     },
-    getStoreCategories: function() {
+    loadPromotionCategories: function() {
+        debugger;
+        for(let promo of this.processedPromos) {
+            if(promo.store.categories){
+                let length = promo.store.categories.length;
+            if(length == 1) {
+                if(!this.promotionCategories.indexOf(promo.store.categories[0]) > -1)
+                    this.promotionCategories.push(promo.store.categories[0])
+            } else {
+                for(let cat of promo.store.categories) {
+                    if(!this.promotionCategories.indexOf(cat.id) > -1)
+                        this.promotionCategories.push(cat)
+                }
+            }
+            }
+        }
+        this.categories = this.processedCategories.filter(category => {
+        return this.promotionCategories.indexOf(category.id) > -1
+     })
 
     }
   }
@@ -78,9 +104,8 @@ export default {
     background-color: #000000;
     display: flex;
     color: #FFFFFF;
-    padding: 0px 70px;
     align-items: center;
-    font-size: 16px;
+    font-size: 1rem;
 }
 .category-icon {
     transition: transform 0.3s ease-in-out;
@@ -103,24 +128,22 @@ export default {
     margin-left: 5px;
 }
 .category-list {
-    height: 235px;
     background: #EEEEF0 0% 0% no-repeat padding-box;
     display: flex;
     flex-wrap: wrap;
-    padding: 30px 85px 0px 85px;
-    margin-bottom: 30px;
     
 }
 .category-list-items {
+    width: 100%;
     border-bottom: solid 0.5px #000000;
     display: flex;
     flex-wrap: wrap;
+    font-size: 1.2rem;
+    padding: 1.5rem 0rem;
 }
 .category-item {
     display: flex;
-    height: 25px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding: 1rem 0rem;
 }
 
 .rotate {
