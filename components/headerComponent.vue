@@ -30,11 +30,12 @@
                 <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
               </transition>
             </div>
-            <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+            <!-- <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
                 <stay-drop-down v-if="displayStayDropDown"></stay-drop-down>
               </transition>
-            </div>
+            </div> -->
+            <div @click="displayDropDown(0)">Events</div>
             <div @click="displayDropDown(0)">News</div>
             <div @click="displayDropDown(0)">Services</div>
             <div @click="displayDropDown(0)">About</div>
