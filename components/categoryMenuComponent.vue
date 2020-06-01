@@ -54,7 +54,7 @@ export default {
     return {
       socialFeed: null,
       categoryLbl: "",
-      categories: null,
+      categories: [],
       showList: false,
       promotionCategories: [],
       showBackButton: false,
@@ -93,6 +93,7 @@ export default {
       }
     },
     loadPromotionCategories: function() {
+      this.$nextTick(function() {
       for (let promo of this.processedPromos) {
         if (promo.store.categories) {
           let length = promo.store.categories.length;
@@ -109,14 +110,12 @@ export default {
           }
         }
       }
-      this.categories = this.processedCategories.filter(category => {
-          let promotionCategories = [6436,6439,6396];
-          console.log("MM : " + this.promotionCategories)
-          console.log("MM : " + category.id)
-          let idd=this.promotionCategories.indexOf(category.id);
-          console.log("MM : " + idd)
-          console.log("MM : " + idd>-1)
-        return promotionCategories.indexOf(category.id) > -1;
+      this.categories = this.filterItemCategories(this.promotionCategories);
+      });
+    },
+    filterItemCategories: function(itemCategories) {
+      return this.processedCategories.filter(category => {
+        return itemCategories.includes(category.id);
       });
     }
   }

@@ -29,8 +29,9 @@
             </div>
           </div>
           <div class="col-6 p-0 img-box">
-            <div class="img">
-              <img :src="currentPromo.image_url"/>
+            <div class="img" v-lazy:background-image="currentPromo.image_url">
+
+              <!-- <img :src="currentPromo.image_url"/> -->
             </div>
           </div>
         </div>
@@ -147,6 +148,9 @@ export default {
         } else {
           if (this.tempSEO) {
             this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+          }
+          if(!this.currentPromo.image_url) {
+            this.currentPromo.image_url = this.currentPromo.store.store_front_url_abs;
           }
           this.loadStorePromos();
         }

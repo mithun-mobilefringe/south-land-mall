@@ -769,6 +769,8 @@ footer {
                         flex: 50%;
                         border: solid 0.5px #000000;
                         font-size: 1rem;
+                        justify-content: center;
+                        align-items: center;
                     }
                     .share-button {
                         display: flex;
@@ -776,6 +778,9 @@ footer {
                         font-size: 0.85rem;
                         align-items: center;
                         justify-content: flex-end;
+                        &>i {
+                            padding-left: 0.5rem;
+                        }
                     }
                 }
             }
@@ -796,6 +801,12 @@ footer {
             left: 0;
             bottom: 0;
             right: 0;
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: white;
         }
     }
     .other-promotions-lbl {
