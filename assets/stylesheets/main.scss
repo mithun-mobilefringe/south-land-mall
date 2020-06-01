@@ -466,6 +466,15 @@ footer {
     margin: 0px 85px;
 }
 
+.header-menu {
+    position: relative;
+    cursor: pointer;
+    color: black;
+    &>a {
+        color: black;
+    }
+}
+
 
 /*** Stores ***/
 
@@ -656,11 +665,13 @@ footer {
 
 /****Promotion****/
 
-.promotion-section {
+.promotion-section,
+.event-section {
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
-    .promotion-container {
+    .promotion-container,
+    .event-container {
         display: flex;
         border: solid 0.5px #000000;
         height: 255px;

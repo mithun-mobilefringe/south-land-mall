@@ -20,12 +20,12 @@
           </div>
         </div>
         <div class="nav-container nav-bar">
-            <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" style="position: relative;">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+            <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" class="header-menu">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
                 <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
               </transition>
             </div>
-            <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" style="position: relative;">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+            <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" class="header-menu">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
                 <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
               </transition>
@@ -35,7 +35,7 @@
                 <stay-drop-down v-if="displayStayDropDown"></stay-drop-down>
               </transition>
             </div> -->
-            <div @click="displayDropDown(0)">Events</div>
+            <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/events"> Events</nuxt-link></div>
             <div @click="displayDropDown(0)">News</div>
             <div @click="displayDropDown(0)">Services</div>
             <div @click="displayDropDown(0)">About</div>
