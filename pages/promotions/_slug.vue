@@ -4,7 +4,7 @@
     <div class="site_container container">
       <div class="row">
         <div class="col-12 top-section p-0">
-          <div class="col-6 p-0">
+          <div class="col-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
                 <div class="detail-date">
@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <div class="col-6 p-0">
+          <div class="col-6 p-0 img-box">
             <div class="img">
               <img :src="currentPromo.image_url"/>
             </div>
