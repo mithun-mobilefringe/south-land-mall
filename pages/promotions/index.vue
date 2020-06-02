@@ -1,6 +1,6 @@
 <template>
   <div>
-    <category-menu-component categoryType="promotion"></category-menu-component>
+    <category-menu-component categoryType="promotions"></category-menu-component>
     <div class="container">
       <div class="row">
         <div

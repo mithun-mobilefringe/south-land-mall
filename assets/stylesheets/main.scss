@@ -400,7 +400,8 @@ footer {
     display: flex;
     flex-direction: column;
     height: 215px;
-    &>div {
+    &>div,
+    &>a {
         padding-top: 20px;
     }
 }

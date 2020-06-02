@@ -57,6 +57,8 @@ export default {
       categories: [],
       showList: false,
       promotionCategories: [],
+      storeCategories:[],
+      eventCategories: [],
       showBackButton: false,
       backlinkURL: ""
     };
@@ -65,7 +67,7 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters(["processedCategories", "processedPromos"]),
+    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents"]),
     filteredCategories() {
       return this.processedCategories.filter(category => {
         return category.parent_category_id == null;
@@ -75,11 +77,11 @@ export default {
   methods: {
     loadData: function() {
       if (this.categoryType == "stores") {
-        this.categoryLbl = "Categories";
+        this.categoryLbl = "Store Categories";
         this.showBackButton = false;
         this.loadStoreCategories();
       }
-      if (this.categoryType == "promotion") {
+      if (this.categoryType == "promotions") {
         this.categoryLbl = "Promotion Categories";
         this.showBackButton = false;
         this.loadPromotionCategories();
@@ -88,9 +90,40 @@ export default {
         this.showBackButton = true;
         this.categoryLbl = "Back to Promotions";
         this.backlinkURL = "/promotions";
+      }
+      if (this.categoryType == "events") {
+        this.categoryLbl = "Event Categories";
+        this.showBackButton = false;
+        this.loadPromotionCategories();
+      }
+      if (this.categoryType == "eventDetails") {
+        this.showBackButton = true;
+        this.categoryLbl = "Back to Events";
+        this.backlinkURL = "/events";
       } else {
         this.categories = this.filteredCategories;
       }
+    },
+    loadStoreCategories:function() {
+      this.$nextTick(function() {
+      for (let store of this.processedStores) {
+        if (store.categories) {
+          let length = store.categories.length;
+          if (length == 1) {
+            if (
+              !this.storeCategories.indexOf(store.categories[0]) > -1
+            )
+              this.storeCategories.push(store.categories[0]);
+          } else {
+            for (let cat of store.categories) {
+              if (!this.storeCategories.indexOf(cat.id) > -1)
+                this.storeCategories.push(cat);
+            }
+          }
+        }
+      }
+      this.categories = this.filterItemCategories(this.storeCategories);
+      });
     },
     loadPromotionCategories: function() {
       this.$nextTick(function() {

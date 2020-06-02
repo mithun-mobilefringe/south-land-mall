@@ -3,9 +3,10 @@
     <div class="col-12 dropdown-box">
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header display-border">
-          <span>Stores Directory</span>
+          <span>Shop</span>
         </div>
         <div class="dropdown-options">
+          <nuxt-link to="/stores">Stores Directory</nuxt-link>
           <nuxt-link to="/promotions">Promotions</nuxt-link>
           <div>Mall Map</div>
           <div>New Stores</div>

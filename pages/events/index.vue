@@ -1,6 +1,6 @@
 <template>
   <div>
-    <category-menu-component categoryType="event"></category-menu-component>
+    <category-menu-component categoryType="events"></category-menu-component>
     <div class="container">
       <div class="row" v-if="events">
         <div class="col-md-6 col-sm-12 event-section" v-for="event in events" :key="event.id">

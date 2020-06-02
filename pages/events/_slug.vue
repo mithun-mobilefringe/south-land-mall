@@ -1,6 +1,6 @@
 <template>
   <div class="promo_dets_container" v-if="currentEvent">
-    <category-menu-component categoryType="promotionDetails"></category-menu-component>
+    <category-menu-component categoryType="eventDetails"></category-menu-component>
     <div class="site_container container">
       <div class="row">
         <div class="col-12 top-section p-0">
