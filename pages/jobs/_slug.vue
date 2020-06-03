@@ -19,7 +19,7 @@
                 
                 <div class="detail-buttons">
                   <div class="visit-button btn" v-if="currentJob.store">
-                    <nuxt-link to="">Visit {{currentJob.store.name}}</nuxt-link>
+                    <nuxt-link :to="'/stores' + currentJob.store.slug">Visit {{currentJob.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Jobs
@@ -155,7 +155,6 @@ export default {
       });
     },
     loadStoreJobs: function() {
-      debugger;
       this.storeJobs = this.processedJobs.filter(job => {
         if(job.store && this.currentJob.store) {
           return (job.store.id == this.currentJob.store.id) && (job.id != this.currentJob.id);

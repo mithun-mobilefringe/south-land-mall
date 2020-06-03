@@ -1,27 +1,28 @@
 <template>
-  <div class="promo_dets_container" v-if="currentPromo">
-    <category-menu-component categoryType="promotionDetails"></category-menu-component>
+  <div class="promo_dets_container" v-if="currentNews">
+    <category-menu-component categoryType="newsDetails"></category-menu-component>
     <div class="site_container container">
       <div class="row">
         <div class="col-12 top-section">
           <div class="col-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
-                <div class="detail-date">
-                  {{currentPromo.start_date | moment("MMM D", timezone)}} - {{currentPromo.end_date | moment("MMM D", timezone)}}
-                </div>
-                <div class="detail-name">
-                  {{currentPromo.name}}
-                </div>
+                <div
+                  class="detail-date"
+                >End Date: {{currentNews.end_date | moment("MMM D", timezone)}}</div>
+                <div class="detail-name">{{currentNews.name}}</div>
                 <div class="detail-description">
-                  <span v-html="currentPromo.description"></span>
+                  <span v-html="currentNews.description"></span>
                 </div>
+
                 <div class="detail-buttons">
-                  <div class="visit-button btn">
-                    <nuxt-link :to="'/stores' + currentPromo.store.slug">Visit {{currentPromo.store.name}}</nuxt-link>
+                  <div class="visit-button btn" v-if="currentNews.store">
+                    <nuxt-link
+                      :to="'/stores' + currentNews.store.slug"
+                    >Visit {{currentNews.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
-                    Share Promotion
+                    Share News
                     <i class="fa fa-share"></i>
                   </div>
                 </div>
@@ -29,22 +30,19 @@
             </div>
           </div>
           <div class="col-6 p-0 img-box">
-            <div class="img" v-lazy:background-image="currentPromo.image_url">
-
-              <!-- <img :src="currentPromo.image_url"/> -->
+            <div class="img" v-lazy:background-image="currentNews.image_url">
+              <!-- <img :src="currentNews.image_url"/> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
-        <div class="other-promotions-lbl col-12">
-          Other Promotions at {{currentPromo.store.name}}
-        </div>
+      <div class="row" v-if="storeNews.length > 0">
+        <div class="other-promotions-lbl col-12">Other News at {{currentNews.store.name}}</div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
+      <div class="row" v-if="storeNews.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
-          v-for="promotion in storePromos"
+          v-for="promotion in storeNews"
           :key="promotion.id"
         >
           <div class="promotion-container">
@@ -80,25 +78,25 @@ export default {
   },
   transition: "page",
   components: {
-    /* SocialSharing: () => import("vue-social-sharing"),
-    insidePageHeader: () => import("~/components/insidePageHeader.vue") */
+    // SocialSharing: () => import("vue-social-sharing"),
+    // insidePageHeader: () => import("~/components/insidePageHeader.vue")
     categoryMenuComponent: () =>
       import("~/components/categoryMenuComponent.vue")
   },
   data: function() {
     return {
-      currentPromo: null,
+      currentNews: null,
       tempSEO: null,
       currentSEO: [],
-      storePromos: []
+      storeNews: []
     };
   },
-  async asyncData({ store, route }) {
+  async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getMMData", { resource: "promotions" }),
+        store.dispatch("getMMData", { resource: "news" }),
         store.dispatch("LOAD_SEO", {
-          url: route.fullPath
+          name: "/news"
         })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -107,29 +105,29 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.updateCurrentPromo(this.$route.params.slug);
+    this.updateCurrentNews(this.$route.params.slug);
     next();
   },
   created() {
-    this.updateCurrentPromo(this.$route.params.slug);
-    this.promos = this.promotions;
+    this.updateCurrentNews(this.$route.params.slug);
   },
+
   computed: {
     ...mapGetters([
       "property",
-      "processedPromos",
-      "findPromoBySlug",
-      "findPromoById",
+      "processedNews",
+      "findNewsBySlug",
+      "findNewsById",
       "timezone",
       "findRepoByName",
       "locale"
     ]),
-    allPromos() {
-      return this.processedPromos;
+    allNews() {
+      return this.processedNews;
     },
     pageBanner() {
       var pageBanner = null;
-      var temp_repo = this.findRepoByName("Promotions Banner");
+      var temp_repo = this.findRepoByName("News Banner");
       if (temp_repo && temp_repo.images) {
         pageBanner = temp_repo.images[0];
       } else {
@@ -140,30 +138,29 @@ export default {
     }
   },
   methods: {
-    updateCurrentPromo(id) {
+    updateCurrentNews(id) {
       this.$nextTick(function() {
-        this.currentPromo = this.findPromoBySlug(id);
-        if (this.currentPromo === null || this.currentPromo === undefined) {
+        this.currentNews = this.findNewsBySlug(id);
+        if (this.currentNews === null || this.currentNews === undefined) {
           this.$router.replace("/");
         } else {
           if (this.tempSEO) {
             this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
           }
-          if(!this.currentPromo.image_url) {
-            this.currentPromo.image_url = this.currentPromo.store.store_front_url_abs;
-          }
-          this.loadStorePromos();
+          this.loadStoreNews();
         }
       });
     },
-    loadStorePromos: function() {
-      this.storePromos = this.processedPromos.filter(promo => {
-        if(promo.store) {
-          return (promo.store.id == this.currentPromo.store.id) && (promo.id != this.currentPromo.id);
+    loadStoreNews: function() {
+      this.storeNews = this.processedNews.filter(news => {
+        if (news.store && this.currentNews.store) {
+          return (
+            news.store.id == this.currentNews.store.id &&
+            news.id != this.currentNews.id
+          );
         } else {
           return false;
         }
-        
       });
     }
   }

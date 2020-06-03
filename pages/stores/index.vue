@@ -2,7 +2,7 @@
   <div>
     <category-menu-component categoryType="stores"></category-menu-component>
     <div class="container">
-      <div class="row">
+      <div class="row" v-if="promotions.length>0">
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 store-section" v-for="store in filteredStores" :key="store.id">
           <div class="store-item">
             <nuxt-link :to="'/stores/' +store.slug">
@@ -16,6 +16,9 @@
             </nuxt-link>
           </div>
         </div>
+      </div>
+      <div class="row" v-else style="margin-top: 30px">
+        <p>There are no Stores at this time. Please check back soon.</p>
       </div>
     </div>
   </div>

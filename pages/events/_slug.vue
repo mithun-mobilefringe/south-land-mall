@@ -18,7 +18,7 @@
                 </div>
                 <div class="detail-buttons">
                   <div class="visit-button btn">
-                    <nuxt-link to="">Visit {{currentEvent.name}}</nuxt-link>
+                    <nuxt-link :to="'/stores' + currentEvent.store.slug">Visit {{currentEvent.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Event
@@ -36,15 +36,15 @@
           </div>
         </div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
+      <div class="row" v-if="storeEvents.length > 0">
         <div class="other-promotions-lbl col-12">
           Other Events at {{currentEvent.store.name}}
         </div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
+      <div class="row" v-if="storeEvents.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
-          v-for="promotion in storePromos"
+          v-for="promotion in storeEvents"
           :key="promotion.id"
         >
           <div class="promotion-container">
@@ -84,7 +84,7 @@ export default {
       currentEvent: null,
       tempSEO: null,
       currentSEO: [],
-      storePromos: []
+      storeEvents: []
     };
   },
   async asyncData({ store, route }) {
@@ -166,8 +166,19 @@ export default {
             if (this.tempSEO) {
               this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
             }
+            this.loadStoreEvents();
           }
         }
+      });
+    },
+    loadStoreEvents: function() {
+      this.storeEvents = this.processedEvents.filter(event => {
+        if(event.store) {
+          return (event.store.id == this.currentEvent.store.id) && (event.id != this.currentEvent.id);
+        } else {
+          return false;
+        }
+        
       });
     }
   }

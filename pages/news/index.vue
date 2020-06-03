@@ -1,29 +1,28 @@
 <template>
   <div>
-    <category-menu-component categoryType="jobs"></category-menu-component>
+    <category-menu-component categoryType="news"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="jobs.length>0">
-        <div class="col-md-6 col-sm-12 job-section" v-for="job in jobs" :key="job.id">
-          <div class="job-container">
+      <div class="row" v-if="newss.length > 0">
+        <div class="col-md-6 col-sm-12 news-section" v-for="news in newss" :key="news.id">
+          <div class="news-container">
             <div class="container-details col-7">
-              <div v-if="job.store && job.store.name" class="promo-store-name">{{job.store.name}}</div>
+              <div v-if="news.store && news.store.name" class="promo-store-name">{{news.store.name}}</div>
               <div v-else class="promo-store-name">Southland Mall</div>
-              <div class="promo-name">{{job.name}}</div>
-              <p class="job_position">{{ job.job_type }}</p>
-              <div class="promo-date">End Date: {{job.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-name">{{news.name}}</div>
+              <div class="promo-date">End Date: {{news.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn p-0">
-                <nuxt-link :to="'/jobs/'+job.slug">Job Details</nuxt-link>
+                <nuxt-link :to="'/news/'+news.slug">News Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">
-              <div v-if="job.image_url" v-lazy:background-image="job.image_url"></div>
-              <div v-else v-lazy:background-image="job.store.store_front_url_abs"></div>
+              <div v-if="news.image_url" v-lazy:background-image="news.image_url"></div>
+              <div v-else v-lazy:background-image="news.store.store_front_url_abs"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row" v-else style="margin-top: 30px">
-        <p>There are no Promotions at this time. Please check back soon.</p>
+      <div class="row" style="margin-top: 30px" v-else>
+        <p>There are no News at this time. Please check back soon.</p>
       </div>
     </div>
   </div>
@@ -48,15 +47,15 @@ export default {
       showMore: 9,
       tempSEO: null,
       currentSEO: [],
-      filteredJobs: null
+      filteredNews: null
     };
   },
   async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getMMData", { resource: "jobs" }),
+        store.dispatch("getMMData", { resource: "news" }),
         store.dispatch("LOAD_SEO", {
-          url: "/jobs"
+          url: "/news"
         })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -78,10 +77,10 @@ export default {
     }
   },
   watch: {
-    filteredJobs() {
-      if (!this.filteredJobs) {
+    filteredNews() {
+      if (!this.filteredNews) {
         debugger;
-        this.filteredJobs = this.jobs;
+        this.filteredNews = this.news;
       }
     }
   },
@@ -89,15 +88,15 @@ export default {
     ...mapGetters([
       "property",
       "timezone",
-      "processedJobs",
+      "processedNews",
       "findRepoByName",
       "locale"
     ]),
-    jobs() {
+    newss() {
       var vm = this;
       var temp_promo = [];
       debugger;
-      _.forEach(this.processedJobs, function(value, key) {
+      _.forEach(this.processedNews, function(value, key) {
         var today = moment().tz(vm.timezone);
         var webDate = moment(value.show_on_web_date).tz(vm.timezone);
         if (today >= webDate) {
@@ -125,7 +124,7 @@ export default {
 
     pageBanner() {
       var pageBanner = null;
-      var temp_repo = this.findRepoByName("Jobs Banner");
+      var temp_repo = this.findRepoByName("News Banner");
       if (temp_repo && temp_repo.images) {
         pageBanner = temp_repo.images[0];
       } else {
@@ -136,27 +135,13 @@ export default {
     }
   },
   methods: {
-    loadMoreJobs() {
-      if (this.showMore <= this.jobs.length) {
+    loadMoreNews() {
+      if (this.showMore <= this.news.length) {
         var num = this.showMore + this.incrementBy;
         this.showMore = num;
       }
     },
-    checkJobType(job) {
-      if (this.locale != "en-ca") {
-        if (job.job_type == "Full Time") {
-          return "Plein Temps";
-        } else if (job.job_type == "Part Time") {
-          return "Mi Temps";
-        } else if (job.job_type == "Full Time/Part Time") {
-          return "Plein/Mi Temps";
-        } else if (job.job_type == "Seasonal") {
-          return "Travail Saisonnier";
-        }
-      } else {
-        return job.job_type;
-      }
-    }
+    
   }
 };
 </script>

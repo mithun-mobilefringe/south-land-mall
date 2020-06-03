@@ -860,13 +860,15 @@ img[lazy="loading"] {
 
 .promotion-section,
 .event-section,
-.job-section {
+.job-section,
+.news-section {
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
     .promotion-container,
     .event-container,
-    .job-container {
+    .job-container,
+    .news-container {
         display: flex;
         border: solid 0.5px #000000;
         height: 255px;

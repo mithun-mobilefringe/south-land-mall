@@ -2,7 +2,7 @@
   <div>
     <category-menu-component categoryType="promotions"></category-menu-component>
     <div class="container">
-      <div class="row">
+      <div class="row" v-if="promotions.length>0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
           v-for="promotion in promotions"
@@ -26,6 +26,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row" v-else style="margin-top: 30px">
+        <p>There are no Promotions at this time. Please check back soon.</p>
       </div>
     </div>
   </div>

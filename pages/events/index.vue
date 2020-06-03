@@ -2,7 +2,7 @@
   <div>
     <category-menu-component categoryType="events"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="events">
+      <div class="row" v-if="events.length>0">
         <div class="col-md-6 col-sm-12 event-section" v-for="event in events" :key="event.id">
           <div class="event-container">
             <div class="container-details col-7">
@@ -26,9 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="row" v-else>
-        There are no Events at this time. Please check back soon.
-      </div>
+      <div class="row" v-else style="margin-top: 30px">There are no Events at this time. Please check back soon.</div>
     </div>
   </div>
 </template>

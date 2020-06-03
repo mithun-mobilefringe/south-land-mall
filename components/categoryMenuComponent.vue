@@ -60,6 +60,7 @@ export default {
       storeCategories:[],
       eventCategories: [],
       jobCategories: [],
+      newsCategories: [],
       showBackButton: false,
       backlinkURL: ""
     };
@@ -68,7 +69,7 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents", "processedJobs"]),
+    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents", "processedJobs", "processedNews"]),
     filteredCategories() {
       return this.processedCategories.filter(category => {
         return category.parent_category_id == null;
@@ -105,7 +106,8 @@ export default {
         this.showBackButton = true;
         this.categoryLbl = "Back to Events";
         this.backlinkURL = "/events";
-      } else if (this.categoryType == "jobs") {
+      } 
+      else if (this.categoryType == "jobs") {
         this.categoryLbl = "Job Categories";
         this.showBackButton = false;
         this.loadJobCategories();
@@ -114,7 +116,18 @@ export default {
         this.showBackButton = true;
         this.categoryLbl = "Back to Jobs";
         this.backlinkURL = "/jobs";
-      } else {
+      } 
+      else if (this.categoryType == "news") {
+        this.categoryLbl = "News Categories";
+        this.showBackButton = false;
+        this.loadNewsCategories();
+      }
+      else if (this.categoryType == "newsDetails") {
+        this.showBackButton = true;
+        this.categoryLbl = "Back to News";
+        this.backlinkURL = "/news";
+      }
+      else {
         this.categories = this.filteredCategories;
       }
     },
@@ -179,6 +192,27 @@ export default {
         }
       }
       this.categories = this.filterItemCategories(this.jobCategories);
+      });
+    },
+    loadNewsCategories:function() {
+      this.$nextTick(function() {
+      for (let news of this.processedNews) {
+        if (news.store && news.store.categories) {
+          let length = news.store.categories.length;
+          if (length == 1) {
+            if (
+              !this.newsCategories.indexOf(news.store.categories[0]) > -1
+            )
+              this.newsCategories.push(news.store.categories[0]);
+          } else {
+            for (let cat of news.store.categories) {
+              if (!this.newsCategories.indexOf(cat.id) > -1)
+                this.newsCategories.push(cat);
+            }
+          }
+        }
+      }
+      this.categories = this.filterItemCategories(this.newsCategories);
       });
     },
     filterItemCategories: function(itemCategories) {
