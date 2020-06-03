@@ -30,6 +30,11 @@ module.exports = {
                 href: 'https://fonts.googleapis.com/css?family=Work+Sans&display=swap',
                 async: true
             },
+            {
+                rel: 'stylesheet',
+                href: 'https://db.onlinewebfonts.com/c/4205c9bb224d820c7ba373ac31387d2c?family=Pistilli',
+                async: true
+            },
         ]
     },
 

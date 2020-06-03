@@ -7,8 +7,8 @@
       <div class="main_content_container">
         <nuxt class="router_content" />
       </div>
-      <div class="container">
-      <!-- <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" /> -->
+      <div>
+      <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" />
       </div>
     </div>
     <!-- <cookie-consent

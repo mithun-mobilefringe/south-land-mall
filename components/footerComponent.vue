@@ -1,404 +1,214 @@
 <template>
-  <footer class="pt-5" id="footer" v-cloak>
-    <div class="container">
-      <nav aria-label="Copyright 2019 &copy; Taubman Centers. All Rights Reserved.">
-        <div class="row">
-          <div class="col-md-4 col-lg-3 col-xl-2">
-            <div
-              class="navbar navbar-expand-md p-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <h4>
-                <span class="h4 text-uppercase m-0 d-none d-md-block">Explore</span>
-              </h4>
-
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarExplore"
-                aria-controls="navbarExplore"
-                aria-expanded="false"
-                aria-label="Toggle Explore Mall navigation"
-              >
-                <h4>
-                  <span class="h4 text-uppercase m-0">
-                    Explore
-                    <span class="ion-chevron-down ml-2"></span>
-                  </span>
-                </h4>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarExplore">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li class="nav-item">
-                    <a class="nav-link px-md-0 py-md-1" href="/stores" target="_self">Explore Stores</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link px-md-0 py-md-1" href="/dining" target="_self">Explore Dining</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link px-md-0 py-md-1" href="/events" target="_self">Explore Events</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      href="/sales-offers"
-                      target="_self"
-                    >Explore Deals</a>
-                  </li>
-                </ul>
-              </div>
+  <div>
+    <div class="container footer">
+      <div class="row" v-if="scrollY">
+        <div class="back-to-top col-12">
+          <div class="btn">Back to Top</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="subscribe-section col-12">
+          <div class="subscribe-button">
+            <div class="btn">Subscribe</div>
+          </div>
+          <div class="subscribe-text">
+            <p>Promos & Offers, Events, News & Much More!</p>
+          </div>
+          <div class="shopping-hours-btn">
+            <div class="btn">Shopping Hours</div>
+          </div>
+          <div class="social-links">
+            <div class="icons">
+              <i class="fa fa-facebook-square"></i>
+              <i class="fa fa-instagram"></i>
+              <i class="fa fa-youtube"></i>
             </div>
           </div>
-
-          <div class="col-md-4 col-lg-3 col-xl-2">
-            <div
-              class="navbar navbar-expand-md p-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <h4>
-                <a class="h4 text-uppercase m-0 d-none d-md-block" href="/visit-hours">Hours & Map</a>
-              </h4>
-
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarVisit"
-                aria-controls="navbarVisit"
-                aria-expanded="false"
-                aria-label="Toggle Hours & Map navigation"
-              >
-                <h4>
-                  <span class="h4 text-uppercase m-0">
-                    Hours & Map
-                    <span class="ion-chevron-down ml-2"></span>
-                  </span>
-                </h4>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarVisit">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li class="nav-item">
-                    <nuxt-link
-                      class="nav-link px-md-0 py-md-1"
-                      :to="localePath({name: 'visit-hours-mall-hours'})"
-                      target="_self"
-                    >Hours</nuxt-link>
-                  </li>
-
-                  <li class="nav-item">
-                    <nuxt-link
-                      class="nav-link px-md-0 py-md-1"
-                      :to="localePath({name: 'visit-hours-mall-directions'})"
-                      target="_self"
-                    >Directions</nuxt-link>
-                  </li>
-
-                  <li class="nav-item">
-                    <nuxt-link
-                      class="nav-link px-md-0 py-md-1"
-                      :to="localePath({name: 'stores-mall-map'})"
-                      target="_self"
-                    >Map</nuxt-link>
-                  </li>
-
-                  <li class="nav-item">
-                    <nuxt-link
-                      class="nav-link px-md-0 py-md-1"
-                      :to="localePath({name: 'visit-hours-hotels'})"
-                      target="_self"
-                    >Hotels</nuxt-link>
-                  </li>
-
-                  <li class="nav-item">
-                    <nuxt-link
-                      class="nav-link px-md-0 py-md-1"
-                      :to="localePath({name: 'visit-hours-mall-parking'})"
-                      target="_self"
-                    >Parking</nuxt-link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-lg-3 col-xl-2">
-            <div
-              class="navbar navbar-expand-md p-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <h4>
-                <a class="h4 text-uppercase m-0 d-none d-md-block" href="/contact-us">Concierge</a>
-              </h4>
-
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarCustomerService"
-                aria-controls="navbarCustomerService"
-                aria-expanded="false"
-                aria-label="Toggle Concierge navigation"
-              >
-                <h4>
-                  <span class="h4 text-uppercase m-0">
-                    Concierge
-                    <span class="ion-chevron-down ml-2"></span>
-                  </span>
-                </h4>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarCustomerService">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      @click.prevent="$root.openChatWindow"
-                      @keydown.space.prevent="$root.openChatWindow"
-                    >Chat Live</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link px-md-0 py-md-1" href="/contact-us" target="_self">Contact Us</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link px-md-0 py-md-1" href="/contact-us" target="_self">FAQ</a>
-                  </li>
-                  <li class="nav-item">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      href="mailto:BeverlyCenter@Taubman.com"
-                      target="_self"
-                    >Feedback</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-lg-3 col-xl-2">
-            <div
-              class="navbar navbar-expand-md p-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <h4>
-                <a class="h4 text-uppercase m-0 d-none d-md-block" href="/our-partners">Our Partners</a>
-              </h4>
-
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarPartners"
-                aria-controls="navbarPartners"
-                aria-expanded="false"
-                aria-label="Toggle Our Partners navigation"
-              >
-                <h4>
-                  <span class="h4 text-uppercase m-0">
-                    Our Partners
-                    <span class="ion-chevron-down ml-2"></span>
-                  </span>
-                </h4>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarPartners">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li class="nav-item d-lg-none">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      href="/our-partners"
-                      target="_self"
-                    >All Partners</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      href="http://www.cedars-sinai.edu"
-                      target="_blank"
-                    >Cedars-Sinai</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a
-                      class="nav-link px-md-0 py-md-1"
-                      href="http://pepsi.com"
-                      target="_blank"
-                    >Pepsi</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-lg-3 col-xl-2">
-            <div
-              class="navbar navbar-expand-md p-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <h4>
-                <span class="h4 text-uppercase m-0 d-none d-md-block">Get The App</span>
-              </h4>
-              <button
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarGetTheApp"
-                aria-controls="navbarGetTheApp"
-                aria-expanded="false"
-                aria-label="Toggle Get The App navigation"
-                class="navbar-toggler"
-              >
-                <h4>
-                  <span class="h4 text-uppercase m-0">
-                    Get The App
-                    <span class="ion-chevron-down ml-2"></span>
-                  </span>
-                </h4>
-              </button>
-              <div id="navbarGetTheApp" class="collapse navbar-collapse">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li class="nav-item">
-                    <a
-                      href="https://apps.apple.com/us/app/beverly-center/id1206738635"
-                      target="_blank"
-                      class="nav-link px-md-0 py-md-1"
-                    >iOS</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-lg-3 col-xl-2 p-0">
-            <div
-              class="navbar navbar-expand-md p-md-0 mb-3 flex-column align-items-center align-items-md-start"
-            >
-              <span class="h4 text-uppercase m-0 d-none d-md-block">Newsletter Sign Up</span>
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNewsletter"
-                aria-controls="navbarNewsletter"
-                aria-expanded="false"
-                aria-label="Toggle Newsletter Sign Up"
-              >
-                <span class="h4 text-uppercase m-0">
-                  Newsletter Sign Up
-                  <span class="ion-chevron-down ml-2"></span>
-                </span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNewsletter">
-                <ul class="navbar-nav align-items-center flex-column align-items-md-start my-4">
-                  <li
-                    class="mb-3"
-                  >Be the first to hear about new discounts, events, products, and services.</li>
-                  <li>
-                    <nuxt-link
-                      class="btn btn-block btn-primary text-uppercase form-group"
-                      to="/subscribe"
-                    >Subscribe</nuxt-link>
-                  </li>
-                  <li>
-                    <p class="mb-2 small">
-                      See
-                      <nuxt-link class="link-u text-white" to="/pages/privacy-policy">Privacy Policy</nuxt-link>
-                      <span>for info use details.</span>
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="subscribe-text" style="margin-top: 1rem">
+            <p>Follow Us on Social Media</p>
           </div>
         </div>
-      </nav>
-      <hr />
-      <div class="footer_subtext">
-        <div class="text-center mb-2 footer_logo_container">
-          <img class="img-fluid logo-light" src="/images/logo.png" alt="Beverly Center" />
-          <img class="img-fluid logo-dark" src="/images/logo-black.png" alt="Beverly Center" />
-        </div>
-        <div class="order-1">
-          <social-links type="footer"></social-links>
-        </div>
-        <div class>
-          <hr class="d-lg-none" />
-          <ul
-            class="bottom-nav list-unstyled d-flex flex-row flex-wrap justify-content-around justify-content-lg-between mb-md-1"
-          >
-            <nuxt-link
-              v-for="(item, index) in  footer_sub_menu"
-              :key="index"
-              :to="item.href"
-              tag="li"
-            >
-              <a class="nav-link px-md-0 py-md-1">{{ item.name }}</a>
-            </nuxt-link>
-          </ul>
-          <div class="copyright text-center">
-            Copyright &copy; {{copyright_year}} Taubman Centers. All Rights Reserved | Powered by
-            <a
-              href="https://www.mallmaverick.com/"
-              target="_blank"
-            >Mall Maverick</a>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="footer-links">
+            <div class="footer_property_dets text-left col-3">
+              {{property.name}}
+              <p>
+                {{ property.address1 }},
+                <br />
+                {{ property.city }}, {{ property.province_state }} {{ property.postal_code }}
+              </p>
+              <p class="phone">{{ property.contact_phone }}</p>
+            </div>
+            <div class="col-2 menu-links">
+              <div class="menu-header">
+                <p>Shop</p>
+              </div>
+              <div class="menu-list">
+                <p>Stores Directory</p>
+              </div>
+              <div class="menu-list">
+                <p>New Stores</p>
+              </div>
+              <div class="menu-list">
+                <p>Promotion</p>
+              </div>
+            </div>
+            <div class="col-2 menu-links">
+              <div class="menu-header">
+                <p>Dine</p>
+              </div>
+              <div class="menu-list">
+                <p>Restaurants</p>
+              </div>
+              <div class="menu-list">
+                <p>Cafes</p>
+              </div>
+              <div class="menu-list">
+                <p>Fast Food</p>
+              </div>
+            </div>
+            <div class="col-1 menu-links">
+              <div class="menu-header">
+                <p>Events</p>
+              </div>
+            </div>
+            <div class="col-1 menu-links">
+              <div class="menu-header">
+                <p>News</p>
+              </div>
+            </div>
+            <div class="col-1 menu-links">
+              <div class="menu-header">
+                <p>Services</p>
+              </div>
+            </div>
+            <div class="col-2 menu-links">
+              <div class="menu-header">
+                <p>About</p>
+              </div>
+              <div class="menu-list">
+                <p>About Us</p>
+              </div>
+              <div class="menu-list">
+                <p>Careers</p>
+              </div>
+              <div class="menu-list">
+                <p>Contests</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="footer-links col-12">
+            <div class="col-3" style="text-align: left">Mall Maverick {{copyright_year}}</div>
+            <div class="col-6" style="text-align: center">
+              <p>
+                <a href target="_blank">{{$t("footer.privacy_policy")}}</a>
+                <span>|</span>
+                <a href target="_blank">{{$t("footer.terms_of_use")}}</a>
+                <span>|</span>
+                <a href target="_blank">{{$t("footer.disclaimer")}}</a>
+              </p>
+            </div>
+            <div class="col-3" style="text-align: right">
+              <p>
+                <span>
+                  {{$t("footer.powered_by")}}
+                  <a
+                    href="//www.mallmaverick.com"
+                    target="_blank"
+                  >Mall Maverick</a>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import moment from 'moment'
-import tz from 'moment-timezone'
+import { mapGetters } from "vuex";
+import moment from "moment";
+import tz from "moment-timezone";
 
 export default {
   data: function data() {
-    return {}
+    return {
+      scrollY: false
+    };
   },
-  props: ['menu_items', 'footer_sub_menu'],
+  props: ["menu_items", "footer_sub_menu"],
   components: {
     //SocialLinks: () => import('~/components/propertySocialLinks.vue')
   },
+  created() {
+    this.$nextTick(function() {
+      window.addEventListener("scroll", this.handleScroll);
+    });
+  },
   computed: {
-    ...mapGetters(['route', 'property', 'timezone', 'getPropertyHours']),
+    ...mapGetters(["route", "property", "timezone", "getPropertyHours"]),
     exploreMenu() {
-      var menu_items = this.menu_items
-      return _.slice(menu_items, 0, 4)
+      var menu_items = this.menu_items;
+      return _.slice(menu_items, 0, 4);
     },
     hoursMenu() {
-      var menu_items = this.menu_items
-      var sub_menu = []
+      var menu_items = this.menu_items;
+      var sub_menu = [];
       _.forEach(menu_items, function(value, key) {
-        if (_.includes(value.id, 'hours')) {
-          var sub_menu_items = value.sub_menu
+        if (_.includes(value.id, "hours")) {
+          var sub_menu_items = value.sub_menu;
           _.forEach(sub_menu_items, function(value, key) {
-            sub_menu.push(value)
-          })
+            sub_menu.push(value);
+          });
         }
-      })
+      });
       if (sub_menu) {
-        return sub_menu
+        return sub_menu;
       }
     },
     conciergeMenu() {
-      var menu_items = this.menu_items
-      var sub_menu = []
+      var menu_items = this.menu_items;
+      var sub_menu = [];
       _.forEach(menu_items, function(value, key) {
-        if (_.includes(value.id, 'concierge')) {
-          var sub_menu_items = value.sub_menu
+        if (_.includes(value.id, "concierge")) {
+          var sub_menu_items = value.sub_menu;
           _.forEach(sub_menu_items, function(value, key) {
-            sub_menu.push(value)
-          })
+            sub_menu.push(value);
+          });
         }
-      })
+      });
       if (sub_menu) {
-        return sub_menu
+        return sub_menu;
       }
     },
     getHours() {
       return _.filter(this.getPropertyHours, function(o) {
-        return o.day_of_week == 1
-      })
+        return o.day_of_week == 1;
+      });
     },
     copyright_year() {
-      return moment().year()
+      return moment().year();
+    },
+    handleScroll(event) {
+      var scrolled = window.pageYOffset;
+      if (scrolled >= 150) {
+        this.scrollY = true;
+      } else {
+        this.scrollY = false;
+      }
     }
+  },
+  beforeDestroy: function() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
-}
+};
 </script>
