@@ -3,23 +3,22 @@
   <div class="nav-content sticky-aniamte nav-spacing container">
     <div class="nav-container">
       <div class="d-none d-md-block row">
-        <div class="top-header">
+        <div class="top-header col-12">
+          <div class="top-header-mall">
           <div class="header-lang">
             <div>EN</div>
             <div>中文</div>
           </div>
           <div class="logo-header">
-            <img
-              href="/"
-              class="logo"
-              src="//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1539292470000/southland-mall-logo2-01-compressor.png"
-              alt="SouthLand Mall"
-            />
+            <nuxt-link to="/">
+            <div class="logo"></div>
+            </nuxt-link>
           </div>
           <div class="header-signin">
           </div>
+          </div>
         </div>
-        <div class="nav-container nav-bar">
+        <div class="nav-container nav-bar col-12">
             <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" class="header-menu">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
                 <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
@@ -38,7 +37,11 @@
             <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/events"> Events</nuxt-link></div>
             <div @click="displayDropDown(0)">News</div>
             <div @click="displayDropDown(0)">Services</div>
-            <div @click="displayDropDown(0)">About</div>
+            <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">About<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+              <transition name="fade">
+                <about-drop-down v-if="displayAboutDropDown"></about-drop-down>
+              </transition>
+            </div>
         </div>
         
       </div>
@@ -56,6 +59,7 @@ export default {
     shopDropDown: () => import('~/components/shopDropDown.vue'),
     dineDropDown: () => import('~/components/dineDropDown.vue'),
     stayDropDown: () => import('~/components/stayDropDown.vue'),
+    aboutDropDown: () => import('~/components/aboutDropDown.vue'),
   },
   data: function data() {
     return {
@@ -63,7 +67,8 @@ export default {
       is_home: false,
       displayShopDropDown: false,
       displayStayDropDown: false,
-      displayDineDropDown: false
+      displayDineDropDown: false,
+      displayAboutDropDown: false
     };
   },
   created() {
@@ -111,19 +116,19 @@ export default {
       if(menuItem == 1) {
         this.displayShopDropDown = !this.displayShopDropDown;
         this.displayDineDropDown = false;
-        this.displayStayDropDown = false;
+        this.displayAboutDropDown = false;
       } else if(menuItem == 2) {
         this.displayDineDropDown = !this.displayDineDropDown;
-        this.displayStayDropDown = false;
+        this.displayAboutDropDown = false;
         this.displayShopDropDown = false;
       } else if(menuItem == 3) {
-        this.displayStayDropDown = !this.displayStayDropDown;
+        this.displayAboutDropDown = !this.displayAboutDropDown;
         this.displayDineDropDown = false;
         this.displayShopDropDown = false;
       } else {
         this.displayDineDropDown = false;
         this.displayShopDropDown = false;
-        this.displayStayDropDown = false;
+        this.displayAboutDropDown = false;
       }
     }
   },

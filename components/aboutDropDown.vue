@@ -1,34 +1,32 @@
 <template>
-  <div class="menu-modal">
+<div class="menu-modal">
     <div class="col-12 dropdown-box">
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header display-border">
-          <!-- <span>Shop</span> -->
-          <nuxt-link to="/stores">Stores Directory</nuxt-link>
+          <span>About Us</span>
         </div>
         <div class="dropdown-options">
-          <nuxt-link to="/promotions">Promotions</nuxt-link>
-          <div>Mall Map</div>
-          <div>New Stores</div>
-          <div>Shopping Hours</div>
+          <div>Mall Hours</div>
+          <div>Contact Us</div>
+          <nuxt-link to="/jobs">Careers</nuxt-link>
         </div>
       </div>
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header">
-          <div>Featured Store</div>
+          <span></span>
         </div>
         <div class="dropdown-img">
           <img src="https://www.mallmaverick.com/system/stores/store_fronts/000/045/770/original/Bath___Body_Works.jpg?1548438769">
         </div>
         <div>
-          <span class="display-name">Store.name</span>
+          <span class="display-name">Info</span>
         </div>
         <div class="dropdown-visit">
-          Visit Store
+          Read Blog
         </div>
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>

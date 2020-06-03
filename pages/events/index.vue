@@ -53,13 +53,14 @@ export default {
       incrementBy: 9,
       showMore: 9,
       currentSEO: [],
-      tempSEO: null
+      tempSEO: null,
+      filteredPromotions: null
     };
   },
   async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getData", { resource: "events" }),
+        store.dispatch("getMMData", { resource: "events" }),
         store.dispatch("LOAD_SEO", { url: "/events" })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -76,6 +77,13 @@ export default {
   created() {
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+    }
+  },
+  watch: {
+    filteredEvents() {
+      if (!this.filteredEvents) {
+        this.filteredEvents = this.events;
+      }
     }
   },
   computed: {

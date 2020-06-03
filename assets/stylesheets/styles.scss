@@ -196,7 +196,7 @@ a {
             text-decoration: none;
         }
         &:focus {
-            outline: 0;
+            outline: none;
         }
     }
 }
@@ -611,7 +611,7 @@ pre {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 960px;
+        max-width: 1150px;
     }
 }
 
@@ -2384,7 +2384,7 @@ pre {
         color: #495057;
         background-color: #fff;
         border-color: #2b75d6;
-        outline: 0;
+        outline: none;
         -webkit-box-shadow: 0 0 0 0.2rem rgba(21, 59, 109, 0.25);
         box-shadow: 0 0 0 0.2rem rgba(21, 59, 109, 0.25);
     }
@@ -12388,7 +12388,8 @@ input {
 a:focus,
 button:focus,
 input:focus {
-    outline: 1px solid #676767 !important;
+    //outline: 1px solid #676767 !important;
+    outline: none !important;
 }
 
 .amenities-key ul a:focus {

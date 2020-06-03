@@ -168,10 +168,14 @@ img[lazy="loading"] {
 
 .nav-content {
     .logo {
-        margin: 12px 0px;
-        width: 160px;
-        height: 51px;
+        padding: 12px 0px;
+        width: 12rem;
+        height: 3rem;
         background-image: url("//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1539292470000/southland-mall-logo2-01-compressor.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: white;
     }
     .nav-list li {
         margin: 13px 20px;
@@ -476,8 +480,37 @@ footer {
     }
 }
 
+.top-header-mall {
+    display: flex;
+    border-bottom: 1px solid #efefef;
+    width: 100%;
+    padding: 15px 0px;
+}
+
 
 /*** Stores ***/
+
+.store-section {
+    display: flex;
+    flex-wrap: wrap;
+    height: 13.5rem;
+    padding-top: 30px;
+    .store-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        text-align: center;
+        width: 100%;
+        border-radius: 10px;
+        padding: 2rem;
+        .store-logo {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
 
 #cat-slide-nav {
     .slick-prev:before {
@@ -667,12 +700,14 @@ footer {
 /****Promotion****/
 
 .promotion-section,
-.event-section {
+.event-section,
+.job-section {
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
     .promotion-container,
-    .event-container {
+    .event-container,
+    .job-container {
         display: flex;
         border: solid 0.5px #000000;
         height: 255px;
@@ -1254,7 +1289,6 @@ li.list-group-item.row.place-group-item {
     }
     .top-header {
         display: flex;
-        border-bottom: 1px solid #efefef;
     }
     .header-lang {
         display: flex;

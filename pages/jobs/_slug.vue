@@ -1,6 +1,6 @@
 <template>
-  <div class="promo_dets_container" v-if="currentPromo">
-    <category-menu-component categoryType="promotionDetails"></category-menu-component>
+  <div class="promo_dets_container" v-if="currentJob">
+    <category-menu-component categoryType="jobDetails"></category-menu-component>
     <div class="site_container container">
       <div class="row">
         <div class="col-12 top-section">
@@ -8,20 +8,21 @@
             <div class="detail">
               <div class="detail-internal">
                 <div class="detail-date">
-                  {{currentPromo.start_date | moment("MMM D", timezone)}} - {{currentPromo.end_date | moment("MMM D", timezone)}}
+                  End Date: {{currentJob.end_date | moment("MMM D", timezone)}}
                 </div>
                 <div class="detail-name">
-                  {{currentPromo.name}}
+                  {{currentJob.name}} - {{ currentJob.job_type }}
                 </div>
                 <div class="detail-description">
-                  <span v-html="currentPromo.description"></span>
+                  <span v-html="currentJob.description"></span>
                 </div>
+                
                 <div class="detail-buttons">
-                  <div class="visit-button btn">
-                    <nuxt-link to="">Visit {{currentPromo.store.name}}</nuxt-link>
+                  <div class="visit-button btn" v-if="currentJob.store">
+                    <nuxt-link to="">Visit {{currentJob.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
-                    Share Promotion
+                    Share Jobs
                     <i class="fa fa-share"></i>
                   </div>
                 </div>
@@ -29,22 +30,22 @@
             </div>
           </div>
           <div class="col-6 p-0 img-box">
-            <div class="img" v-lazy:background-image="currentPromo.image_url">
+            <div class="img" v-lazy:background-image="currentJob.image_url">
 
-              <!-- <img :src="currentPromo.image_url"/> -->
+              <!-- <img :src="currentJob.image_url"/> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
+      <div class="row" v-if="storeJobs.length > 0">
         <div class="other-promotions-lbl col-12">
-          Other Promotions at {{currentPromo.store.name}}
+          Other Jobs at {{currentJob.store.name}}
         </div>
       </div>
-      <div class="row" v-if="storePromos.length > 0">
+      <div class="row" v-if="storeJobs.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
-          v-for="promotion in storePromos"
+          v-for="promotion in storeJobs"
           :key="promotion.id"
         >
           <div class="promotion-container">
@@ -80,25 +81,25 @@ export default {
   },
   transition: "page",
   components: {
-    /* SocialSharing: () => import("vue-social-sharing"),
-    insidePageHeader: () => import("~/components/insidePageHeader.vue") */
+    // SocialSharing: () => import("vue-social-sharing"),
+    // insidePageHeader: () => import("~/components/insidePageHeader.vue")
     categoryMenuComponent: () =>
       import("~/components/categoryMenuComponent.vue")
   },
   data: function() {
     return {
-      currentPromo: null,
+      currentJob: null,
       tempSEO: null,
       currentSEO: [],
-      storePromos: []
+      storeJobs: []
     };
   },
-  async asyncData({ store, route }) {
+  async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getMMData", { resource: "promotions" }),
+        store.dispatch("getMMData", { resource: "jobs" }),
         store.dispatch("LOAD_SEO", {
-          url: route.fullPath
+          name: "/jobs"
         })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -107,29 +108,29 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.updateCurrentPromo(this.$route.params.slug);
+    this.updateCurrentJob(this.$route.params.slug);
     next();
   },
   created() {
-    this.updateCurrentPromo(this.$route.params.slug);
-    this.promos = this.promotions;
+    this.updateCurrentJob(this.$route.params.slug);
   },
+
   computed: {
     ...mapGetters([
       "property",
-      "processedPromos",
-      "findPromoBySlug",
-      "findPromoById",
+      "processedJobs",
+      "findJobBySlug",
+      "findJobById",
       "timezone",
       "findRepoByName",
       "locale"
     ]),
-    allPromos() {
-      return this.processedPromos;
+    allJobs() {
+      return this.processedJobs;
     },
     pageBanner() {
       var pageBanner = null;
-      var temp_repo = this.findRepoByName("Promotions Banner");
+      var temp_repo = this.findRepoByName("Jobs Banner");
       if (temp_repo && temp_repo.images) {
         pageBanner = temp_repo.images[0];
       } else {
@@ -140,26 +141,24 @@ export default {
     }
   },
   methods: {
-    updateCurrentPromo(id) {
+    updateCurrentJob(id) {
       this.$nextTick(function() {
-        this.currentPromo = this.findPromoBySlug(id);
-        if (this.currentPromo === null || this.currentPromo === undefined) {
+        this.currentJob = this.findJobBySlug(id);
+        if (this.currentJob === null || this.currentJob === undefined) {
           this.$router.replace("/");
         } else {
           if (this.tempSEO) {
             this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
           }
-          if(!this.currentPromo.image_url) {
-            this.currentPromo.image_url = this.currentPromo.store.store_front_url_abs;
-          }
-          this.loadStorePromos();
+          this.loadStoreJobs();
         }
       });
     },
-    loadStorePromos: function() {
-      this.storePromos = this.processedPromos.filter(promo => {
-        if(promo.store) {
-          return (promo.store.id == this.currentPromo.store.id) && (promo.id != this.currentPromo.id);
+    loadStoreJobs: function() {
+      debugger;
+      this.storeJobs = this.processedJobs.filter(job => {
+        if(job.store && this.currentJob.store) {
+          return (job.store.id == this.currentJob.store.id) && (job.id != this.currentJob.id);
         } else {
           return false;
         }

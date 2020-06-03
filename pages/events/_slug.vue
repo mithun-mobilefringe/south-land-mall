@@ -3,7 +3,7 @@
     <category-menu-component categoryType="eventDetails"></category-menu-component>
     <div class="site_container container">
       <div class="row">
-        <div class="col-12 top-section p-0">
+        <div class="col-12 top-section">
           <div class="col-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
@@ -21,7 +21,7 @@
                     <nuxt-link to="">Visit {{currentEvent.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
-                    Share Promotion
+                    Share Event
                     <i class="fa fa-share"></i>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
       </div>
       <div class="row" v-if="storePromos.length > 0">
         <div class="other-promotions-lbl col-12">
-          Other Promotions at {{currentEvent.store.name}}
+          Other Events at {{currentEvent.store.name}}
         </div>
       </div>
       <div class="row" v-if="storePromos.length > 0">
@@ -90,7 +90,7 @@ export default {
   async asyncData({ store, route }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getData", { resource: "events" }),
+        store.dispatch("getMMData", { resource: "events" }),
         store.dispatch("LOAD_SEO", {
           url: route.fullPath
         })

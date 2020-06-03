@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div
-          class="col-md-6 col-sm-12 promotion-section"
+          class="col-2 store-section"
           v-for="store in allStores"
           :key="store.id"
         >
@@ -167,66 +167,6 @@ export default {
           } else {
             this.currentStore.no_store_logo = false;
           }
-
-          // loop through promotions
-          //   var temp_promo = [];
-          //   var featured_temp_promo = [];
-          //   var noend_temp_promo = [];
-          //   var store_promos = _.filter(this.processedPromos, function(o) {
-          //     return o.promotionable_id == vm.currentStore.id;
-          //   });
-          //   _.forEach(store_promos, function(value, key) {
-          //     var today = moment().tz(vm.timezone);
-          //     var webDate = moment(value.show_on_web_date).tz(vm.timezone);
-          //     if (today >= webDate) {
-          //       value.description_short = _.truncate(value.description, {
-          //         length: 70
-          //       });
-          //       value.description_short_2 = _.truncate(value.description_2, {
-          //         length: 70
-          //       });
-          //       if (_.isEmpty(value.store)) {
-          //         value.store = {};
-          //         value.store.store_front_url_abs =
-          //           "/images/coquitlam_default_logo.png";
-          //       }
-
-          //       if (value.is_featured) {
-          //         featured_temp_promo.push(value);
-          //       } else if (value.no_end_date) {
-          //         noend_temp_promo.push(value);
-          //       } else {
-          //         temp_promo.push(value);
-          //       }
-          //     }
-          //   });
-
-          //   featured_temp_promo = _.sortBy(featured_temp_promo, [
-          //     "end_date"
-          //   ]).reverse();
-          //   temp_promo = _.sortBy(temp_promo, ["end_date"]).reverse();
-          //   noend_temp_promo = _.sortBy(noend_temp_promo, [
-          //     "show_on_web_date"
-          //   ]).reverse();
-          //   var promos = _.concat(
-          //     featured_temp_promo,
-          //     temp_promo,
-          //     noend_temp_promo
-          //   );
-          //   this.promotions = promos;
-
-          //   var temp_job = [];
-          //   _.forEach(this.currentStore.jobs, function(value, key) {
-          //     var current_job = vm.findJobById(value);
-          //     current_job.description_short = _.truncate(
-          //       current_job.description,
-          //       {
-          //         length: 70
-          //       }
-          //     );
-          //     temp_job.push(current_job);
-          //   });
-          //   this.jobs = temp_job;
 
           // Get Promos, Events, Jobs and News by store ID
           this.all_store_items = this.findStoreItemsByStoreId(

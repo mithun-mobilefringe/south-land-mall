@@ -50,7 +50,8 @@ export default {
       incrementBy: 9,
       showMore: 9,
       tempSEO: null,
-      currentSEO: []
+      currentSEO: [],
+      filteredPromotions: null
     };
   },
   async asyncData({ store, params }) {
@@ -75,6 +76,13 @@ export default {
   created() {
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+    }
+  },
+  watch: {
+    filteredPromotions() {
+      if (!this.filteredPromotions) {
+        this.filteredPromotions = this.promotions;
+      }
     }
   },
   computed: {

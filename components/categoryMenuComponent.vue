@@ -3,7 +3,7 @@
     <div class="category-menu">
       <div class="container">
         <div class="row">
-          <div class="col-4 p-0">
+          <div class="col-4">
             <div v-if="!showBackButton">
               <span @click="showList=!showList" class="category-lbl">
                 <span style="margin-right: 5px">{{categoryLbl}}</span>
@@ -21,8 +21,8 @@
               </nuxt-link>
             </div>
           </div>
-          <div class="col-4 map-category p-0">Mall Map</div>
-          <div class="col-4 search-category p-0">
+          <div class="col-4 map-category">Mall Map</div>
+          <div class="col-4 search-category">
             Search For Store
             <i class="fa fa-search search-icon"></i>
           </div>
@@ -59,6 +59,7 @@ export default {
       promotionCategories: [],
       storeCategories:[],
       eventCategories: [],
+      jobCategories: [],
       showBackButton: false,
       backlinkURL: ""
     };
@@ -67,7 +68,7 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents"]),
+    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents", "processedJobs"]),
     filteredCategories() {
       return this.processedCategories.filter(category => {
         return category.parent_category_id == null;
@@ -81,25 +82,34 @@ export default {
         this.showBackButton = false;
         this.loadStoreCategories();
       }
-      if (this.categoryType == "promotions") {
+      else if (this.categoryType == "promotions") {
         this.categoryLbl = "Promotion Categories";
         this.showBackButton = false;
         this.loadPromotionCategories();
       }
-      if (this.categoryType == "promotionDetails") {
+      else if (this.categoryType == "promotionDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Promotions";
         this.backlinkURL = "/promotions";
       }
-      if (this.categoryType == "events") {
+      else if (this.categoryType == "events") {
         this.categoryLbl = "Event Categories";
         this.showBackButton = false;
         this.loadPromotionCategories();
       }
-      if (this.categoryType == "eventDetails") {
+      else if (this.categoryType == "eventDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Events";
         this.backlinkURL = "/events";
+      } else if (this.categoryType == "jobs") {
+        this.categoryLbl = "Job Categories";
+        this.showBackButton = false;
+        this.loadJobCategories();
+      }
+      else if (this.categoryType == "jobDetails") {
+        this.showBackButton = true;
+        this.categoryLbl = "Back to Jobs";
+        this.backlinkURL = "/jobs";
       } else {
         this.categories = this.filteredCategories;
       }
@@ -107,7 +117,7 @@ export default {
     loadStoreCategories:function() {
       this.$nextTick(function() {
       for (let store of this.processedStores) {
-        if (store.categories) {
+        if (store && store.categories) {
           let length = store.categories.length;
           if (length == 1) {
             if (
@@ -128,7 +138,7 @@ export default {
     loadPromotionCategories: function() {
       this.$nextTick(function() {
       for (let promo of this.processedPromos) {
-        if (promo.store.categories) {
+        if (promo.store && promo.store.categories) {
           let length = promo.store.categories.length;
           if (length == 1) {
             if (
@@ -144,6 +154,27 @@ export default {
         }
       }
       this.categories = this.filterItemCategories(this.promotionCategories);
+      });
+    },
+    loadJobCategories:function() {
+      this.$nextTick(function() {
+      for (let job of this.processedJobs) {
+        if (job.store && job.store.categories) {
+          let length = job.store.categories.length;
+          if (length == 1) {
+            if (
+              !this.jobCategories.indexOf(job.store.categories[0]) > -1
+            )
+              this.jobCategories.push(job.store.categories[0]);
+          } else {
+            for (let cat of job.store.categories) {
+              if (!this.jobCategories.indexOf(cat.id) > -1)
+                this.jobCategories.push(cat);
+            }
+          }
+        }
+      }
+      this.categories = this.filterItemCategories(this.jobCategories);
       });
     },
     filterItemCategories: function(itemCategories) {

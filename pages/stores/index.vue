@@ -1,155 +1,19 @@
 <template>
   <div>
     <category-menu-component categoryType="stores"></category-menu-component>
-    <div class="site_container page_content">
-      <div class="row bold store_btns">
-        <div class="col-sm-6 col-md-4">
-          <div class="store_search">
-            <!-- <search-component
-              :list="allStores"
-              :placeholder="$t('stores_page.find_your_store')"
-              suggestion-attribute="name"
-              :keys="['name']"
-              :tokenize="true"
-              v-model="search_result"
-              @select="onOptionSelect"
-              class="text-left"
-            > 
-              <template slot="item" scope="option" class="manual">
-                <article class="media">
-                  <p>
-                    <strong>{{ option.data.name }}</strong>
-                  </p>
-                </article>
-              </template>
-            </search-component>-->
-            <img src="/images/search_icon.png" class="pull-right" id="store_search_img" alt />
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="store_search">
-            <div class="category-select-container" v-if="windowWidth > 768">
-              <div
-                class="directory_btn caps"
-                @click="showCategories = !showCategories; showSubCategories = false"
-              >{{$t("stores_page.categories")}}</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-2 store-section" v-for="store in filteredStores" :key="store.id">
+          <div class="store-item">
+            <div v-if="!store.no_store_logo" class="store-logo">
+              <img class="store_img" :src="store.logo_image_url" alt />
             </div>
-            <div class="category-select-container" v-else>
-              <!-- <v-select
-                v-model="selectedParentCat"
-                :options="allCatergories"
-                label="name"
-                :searchable="false"
-                :on-change="filterByParentCategory"
-                class="category-select"
-                :placeholder="$t('stores_page.sort_by_cats')"
-                id="selectByCat"
-              ></v-select> -->
+
+            <div class="store_text" v-else>
+              <p>{{ store.name }}</p>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-          <div class="store_search">
-            <nuxt-link class="directory_link" :to="localePath({name: 'map'})">
-              <div class="directory_btn caps">{{$t("stores_page.view_map")}}</div>
-            </nuxt-link>
-          </div>
-        </div>
-      </div>
-      <div id="store_list_container">
-        <transition v-on:enter="enter" v-on:leave="leave">
-          <div class="categories_container" v-if="showCategories && windowWidth >= 768">
-            <span
-              v-for="category in allCatergories"
-              class="category hvr-underline-from-center"
-              :class="{'active': selectedParentCat.id == category.id}"
-              @click="selectedParentCat = category; getSubcategories()"
-              :key="category.id"
-            >{{category.name}}</span>
-          </div>
-        </transition>
-        <transition v-on:enter="enter" v-on:leave="leave">
-          <div class="categories_container" v-if="showSubCategories && windowWidth >= 768">
-            <span class="category caps" @click="backToParentCategories()">
-              <i class="fa fa-caret-left"></i>
-              Back
-            </span>
-            <span
-              v-for="category in subcategories"
-              class="category hvr-underline-from-center"
-              :class="{'active': selectedCat.id == category.id}"
-              @click="selectedCat = category; filterByCategory"
-              :key="category.id"
-            >{{category.name}}</span>
-          </div>
-        </transition>
-        <div
-          v-masonry
-          transition-duration="0.2s"
-          item-selector=".stores-grid-item"
-          horizontal-order="true"
-        >
-          <transition-group
-            name="custom-classes-transition"
-            enter-active-class="animated fade"
-            leave-active-class="animated fade"
-            tag="div"
-          >
-            <div
-              v-masonry-tile
-              v-for="(store, index) in filteredStores"
-              v-if="showMore > index"
-              :key="index"
-              class="stores-grid-item"
-            >
-              <div class="store_logo_container">
-                <nuxt-link :to="localePath({name: 'stores-slug', params:{slug:store.slug}})">
-                  <img
-                    v-if="!store.no_store_logo"
-                    class="store_img"
-                    :src="store.store_front_url_abs"
-                    alt
-                  />
-                  <div v-else class="no_logo_container">
-                    <img class="store_img" src="/images/transparent_logo.png" alt />
-                    <div class="no_logo_text">
-                      <div class="store_text">
-                        <h4 v-if="locale=='fr' && store.name_2">{{ store.name_2 }}</h4>
-                        <h4 v-else>{{ store.name }}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="store_tag" v-if="store.is_coming_soon_store">
-                    <div class="store_tag_text">Coming Soon</div>
-                  </div>
-                  <div class="store_tag" v-else-if="store.is_new_store">
-                    <div class="store_tag_text">New Store</div>
-                  </div>
-                  <div class="store_tag" v-else-if="store.total_published_promos">
-                    <div class="store_tag_text">Promotion</div>
-                  </div>
-                  <div class="store_tag" v-else-if="store.events">
-                    <div class="store_tag_text">Event</div>
-                  </div>
-                  <div class="store_tag" v-else-if="store.total_published_jobs">
-                    <div class="store_tag_text">Job</div>
-                  </div>
-                  <div class="store_details">
-                    <div class="store_text">
-                      <h4 v-if="locale=='fr' && store.name_2">{{ store.name_2 }}</h4>
-                      <h4 v-else>{{ store.name }}</h4>
-                    </div>
-                  </div>
-                </nuxt-link>
-              </div>
-            </div>
-          </transition-group>
-        </div>
-        <div
-          id="load_more"
-          v-if="filteredStores && showMore <= filteredStores.length"
-          @click="loadMore()"
-        ></div>
       </div>
     </div>
   </div>
@@ -193,7 +57,6 @@ export default {
         store.dispatch("LOAD_SEO", {
           url: "/stores"
         }),
-        store.dispatch("getMMData", { resource: "subcategories" })
       ]);
       return { tempSEO: results[2].data.meta_data[0] };
     } catch (e) {
@@ -214,8 +77,6 @@ export default {
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
     }
-    var newStores = this.findNewStores;
-    console.log("New Stores: " + newStores);
   },
   beforeMount() {
     window.addEventListener("scroll", this.isScrolled);
@@ -238,17 +99,16 @@ export default {
       "findCategoryById",
       "findCategoryByName",
       "findSubcategoriesByParentID",
-      "findRepoByName",
       "locale"
     ]),
     allStores() {
       var stores = this.processedStores;
       var vm = this;
       _.forEach(stores, function(store, key) {
-        if (_.includes(store.store_front_url_abs, "missing")) {
+        if (store.logo_image_url) {
           store.no_store_logo = true;
         } else {
-          store.no_store_logo = false;
+          store.no_store_logo = true;
         }
       });
       return stores;
