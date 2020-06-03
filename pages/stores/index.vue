@@ -3,7 +3,7 @@
     <category-menu-component categoryType="stores"></category-menu-component>
     <div class="container">
       <div class="row">
-        <div class="col-2 store-section" v-for="store in filteredStores" :key="store.id">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 store-section" v-for="store in filteredStores" :key="store.id">
           <div class="store-item">
             <div v-if="!store.no_store_logo" class="store-logo">
               <img class="store_img" :src="store.logo_image_url" alt />
