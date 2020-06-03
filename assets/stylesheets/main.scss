@@ -622,6 +622,55 @@ img[lazy="loading"] {
     }
 }
 
+.store_dets_container {
+    position: relative;
+    .top-section-detail {
+        display: flex;
+        justify-content: center;
+        .detail {
+            width: 100%;
+            .detail-internal {
+                z-index: 999;
+                min-width: 120%
+            }
+            .detail-name {
+                display: flex;
+                justify-content: center;
+                font-size: 0.75rem !important;
+                font-weight: bold !important;
+            }
+            .detail-logo {
+                display: flex;
+                justify-content: center;
+                flex: 25%;
+                &>img {
+                    height: 8rem;
+                    width: 8rem;
+                }
+            }
+            .store-category {
+                display: flex;
+                justify-content: center;
+                padding: 0rem 0.4rem;
+                margin-top: 1rem;
+            }
+            .store_phone {
+                display: flex;
+                justify-content: center;
+            }
+            .store_website {
+                display: flex;
+                justify-content: center;
+                font-size: 0.8rem;
+                & a {
+                    color: #000;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
 #cat-slide-nav {
     .slick-prev:before {
         margin-left: 4px;
@@ -884,7 +933,8 @@ img[lazy="loading"] {
 
 /*** Promotion Details ***/
 
-.promo_dets_container {
+.promo_dets_container,
+.store_dets_container {
     .top-section {
         display: flex;
         margin-top: 30px;

@@ -1,14 +1,152 @@
 <template>
-  <div>
-    <category-menu-component categoryType="stores"></category-menu-component>
+  <div class="store_dets_container" v-if="currentStore">
+    <category-menu-component categoryType="storeDetails"></category-menu-component>
     <div class="container">
       <div class="row">
+        <div class="col-12 top-section">
+          <div class="col-4 top-section-detail">
+            <div class="detail">
+              <div class="detail-internal">
+                <div class="detail-name">{{currentStore.name}}</div>
+                <div class="detail-logo">
+                  <img :src="currentStore.logo_url" />
+                </div>
+                <div class="store-category">
+                  <p v-if="currentStore.categories">{{storeCategory(currentStore.categories) }}</p>
+                </div>
+                <div v-if="currentStore.phone" class="store_phone">
+                  <p>
+                    <i class="fa fa-phone"></i>
+                    <span>{{ currentStore.phone }}</span>
+                  </p>
+                </div>
+                <div v-if="currentStore.website" class="store_website">
+                  <a :href="currentStore.website" target="_blank">{{currentStore.website}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-8 p-0 img-box">
+            <div class="img" v-lazy:background-image="currentStore.image_url">
+              <!-- <img :src="currentStore.image_url"/> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Promotions -->
+      <div class="row" v-if="storePromos.length > 0">
+        <div class="other-promotions-lbl col-12">Promotions at {{currentStore.name}}</div>
+      </div>
+      <div class="row" v-if="storePromos.length > 0">
         <div
-          class="col-2 store-section"
-          v-for="store in allStores"
-          :key="store.id"
+          class="col-md-6 col-sm-12 promotion-section"
+          v-for="promotion in storePromos"
+          :key="promotion.id"
         >
-          {{store.name}}
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div
+                class="promo-date"
+              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button btn">
+                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+              </div>
+            </div>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- events -->
+      <div class="row" v-if="store_events.length > 0">
+        <div class="other-promotions-lbl col-12">Events at {{currentStore.name}}</div>
+      </div>
+      <div class="row" v-if="store_events.length > 0">
+        <div
+          class="col-md-6 col-sm-12 promotion-section"
+          v-for="promotion in store_events"
+          :key="promotion.id"
+        >
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div
+                class="promo-date"
+              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button btn">
+                <nuxt-link :to="'/events/'+promotion.slug">Event Details</nuxt-link>
+              </div>
+            </div>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jobs -->
+      <div class="row" v-if="store_jobs.length > 0">
+        <div class="other-promotions-lbl col-12">Jobs at {{currentStore.name}}</div>
+      </div>
+      <div class="row" v-if="store_jobs.length > 0">
+        <div
+          class="col-md-6 col-sm-12 promotion-section"
+          v-for="promotion in store_jobs"
+          :key="promotion.id"
+        >
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div
+                class="promo-date"
+              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button btn">
+                <nuxt-link :to="'/jobs/'+promotion.slug">Job Details</nuxt-link>
+              </div>
+            </div>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- News -->
+      <div class="row" v-if="store_news.length > 0">
+        <div class="other-promotions-lbl col-12">News at {{currentStore.name}}</div>
+      </div>
+      <div class="row" v-if="store_news.length > 0">
+        <div
+          class="col-md-6 col-sm-12 promotion-section"
+          v-for="promotion in store_news"
+          :key="promotion.id"
+        >
+          <div class="promotion-container">
+            <div class="container-details col-7">
+              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-else class="promo-store-name">Southland Mall</div>
+              <div class="promo-name">{{promotion.name}}</div>
+              <div
+                class="promo-date"
+              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
+              <div class="promo-button btn">
+                <nuxt-link :to="'/promotions/'+promotion.slug">News Details</nuxt-link>
+              </div>
+            </div>
+            <div class="container-img col-5">
+              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
+              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -29,6 +167,8 @@ export default {
     /* SearchComponent: () => import("~/components/SearchComponent.vue"),
     MapplicMap: () => import("~/components/Mapplic.vue"),
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
+    categoryMenuComponent: () =>
+      import("~/components/categoryMenuComponent.vue")
   },
   async asyncData({ store, route }) {
     try {
@@ -36,7 +176,6 @@ export default {
         store.dispatch("getMMData", { resource: "stores" }),
         store.dispatch("getMMData", { resource: "jobs" }),
         store.dispatch("getMMData", { resource: "promotions" }),
-        store.dispatch("getMMData", { resource: "repos" }),
         store.dispatch("LOAD_SEO", {
           url: route.fullPath
         }),
@@ -57,7 +196,11 @@ export default {
       storeHours: [],
       currentSEO: {},
       tempSEO: null,
-      all_store_items: null
+      all_store_items: null,
+      storePromos: [],
+      store_events: [],
+      store_jobs: [],
+      store_news: []
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -74,7 +217,12 @@ export default {
       "processedStores",
       "findStoreBySlug",
       "findStoreItemsByStoreId",
-      "locale"
+      "locale",
+      "findCategoryById",
+      "findPromosByStoreId",
+      "findEventsByStoreId",
+      "findJobsByStoreId",
+      "findNewsByStoreId"
     ]),
     allStores() {
       var store_list = [];
@@ -158,6 +306,7 @@ export default {
     updateCurrentStore(id) {
       this.$nextTick(function() {
         this.currentStore = this.findStoreBySlug(id);
+        debugger;
         if (this.currentStore === null || this.currentStore === undefined) {
           this.$router.replace("/");
         } else {
@@ -172,6 +321,10 @@ export default {
           this.all_store_items = this.findStoreItemsByStoreId(
             this.currentStore.id
           );
+          this.storePromos = this.findPromosByStoreId(this.currentStore.id);
+          this.store_events = this.findEventsByStoreId(this.currentStore.id);
+            this.store_jobs = this.findJobsByStoreId(this.currentStore.id);
+            this.store_news = this.findNewsByStoreId(this.currentStore.id);
           var storeHours = [];
           var vm = this;
           _.forEach(this.currentStore.store_hours, function(value, key) {
@@ -193,6 +346,18 @@ export default {
           this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
         }
       });
+    },
+    storeCategory(categories) {
+      var categoryName = "";
+      var cat = this.findCategoryById(categories[0]);
+      categoryName = cat.name;
+      if (categories.length > 1) {
+        for (var i = 1; i < categories.length; i++) {
+          var category = this.findCategoryById(categories[i]);
+          categoryName = categoryName + " | " + category.name;
+        }
+      }
+      return categoryName;
     },
     dropPin(store) {
       this.$refs.svgmap_ref.showLocation(store.svgmap_region);

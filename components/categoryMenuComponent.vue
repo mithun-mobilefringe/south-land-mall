@@ -81,6 +81,10 @@ export default {
         this.categoryLbl = "Store Categories";
         this.showBackButton = false;
         this.loadStoreCategories();
+      } else if(this.categoryType == "storeDetails") {
+        this.showBackButton = true;
+        this.categoryLbl = "Back to Stores";
+        this.backlinkURL = "/stores";
       }
       else if (this.categoryType == "promotions") {
         this.categoryLbl = "Promotion Categories";
