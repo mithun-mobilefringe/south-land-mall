@@ -95,7 +95,6 @@ export default {
     newss() {
       var vm = this;
       var temp_promo = [];
-      debugger;
       _.forEach(this.processedNews, function(value, key) {
         var today = moment().tz(vm.timezone);
         var webDate = moment(value.show_on_web_date).tz(vm.timezone);
@@ -145,7 +144,6 @@ export default {
       if(selectedCat == "all") {
         this.filteredNews = this.newss;
       } else {
-        debugger;
         var category_id = selectedCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
         this.filteredNews = this.newss;

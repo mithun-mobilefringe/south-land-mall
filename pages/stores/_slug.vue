@@ -306,7 +306,6 @@ export default {
     updateCurrentStore(id) {
       this.$nextTick(function() {
         this.currentStore = this.findStoreBySlug(id);
-        debugger;
         if (this.currentStore === null || this.currentStore === undefined) {
           this.$router.replace("/");
         } else {

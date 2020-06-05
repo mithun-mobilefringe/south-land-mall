@@ -81,7 +81,6 @@ export default {
   watch: {
     filteredJobs() {
       if (!this.filteredJobs) {
-        debugger;
         this.filteredJobs = this.jobs;
       }
     }
@@ -97,7 +96,6 @@ export default {
     jobs() {
       var vm = this;
       var temp_promo = [];
-      debugger;
       _.forEach(this.processedJobs, function(value, key) {
         var today = moment().tz(vm.timezone);
         var webDate = moment(value.show_on_web_date).tz(vm.timezone);
@@ -147,7 +145,6 @@ export default {
       if(selectedCat == "all") {
         this.filteredJobs = this.jobs;
       } else {
-        debugger;
         var category_id = selectedCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
         this.filteredJobs = this.jobs;

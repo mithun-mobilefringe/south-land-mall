@@ -145,11 +145,10 @@ export default {
         this.showMore = num;
       }
     },
-    filterNewsByCategory: function(selectedCat) {
+    filterEventsByCategory: function(selectedCat) {
       if(selectedCat == "all") {
         this.filteredEvents = this.events;
       } else {
-        debugger;
         var category_id = selectedCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
         this.filteredEvents = this.events;

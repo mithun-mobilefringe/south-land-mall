@@ -157,7 +157,6 @@ export default {
       if(selectedCat == "all") {
         this.filteredPromotions = this.promotions;
       } else {
-        debugger;
         var category_id = selectedCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
         this.filteredPromotions = this.promotions;

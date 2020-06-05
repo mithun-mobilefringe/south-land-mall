@@ -33,17 +33,14 @@
       <div class="container">
         <div class="category-list row" v-if="categories" v-show="showList">
           <div class="col-12">
-          <div class="category-list-items">
-            <div
-              v-for="category in categories"
-              class="category-item col-3"
-              :key="category.id"
-            ><div class="items" @click="emitSelectedCategory(category)">{{category.name}}</div>
+            <div class="category-list-items">
+              <div v-for="category in categories" class="category-item col-3" :key="category.id">
+                <div class="items" @click="emitSelectedCategory(category)">{{category.name}}</div>
+              </div>
+              <div class="cross-item col-9" v-if="displayCross">
+                <i class="fa fa-times items" aria-hidden="true" @click="loadAllCategories()"></i>
+              </div>
             </div>
-            <div class="cross-item col-9" v-if="displayCross">
-              <i class="fa fa-times items" aria-hidden="true" @click="loadAllCategories()"></i>
-            </div>
-          </div>
           </div>
         </div>
       </div>
@@ -63,7 +60,7 @@ export default {
       categories: [],
       showList: false,
       promotionCategories: [],
-      storeCategories:[],
+      storeCategories: [],
       eventCategories: [],
       jobCategories: [],
       newsCategories: [],
@@ -73,15 +70,36 @@ export default {
     };
   },
   mounted() {
+     this.$nextTick(function () {
     this.loadData();
+     });
   },
   computed: {
-    ...mapGetters(["processedCategories", "processedPromos", "processedStores", "processedEvents", "processedJobs", "processedNews"]),
+    ...mapGetters([
+      "processedCategories",
+      "processedPromos",
+      "processedStores",
+      "processedEvents",
+      "processedJobs",
+      "processedNews",
+      "findNewStores"
+    ]),
     filteredCategories() {
       return this.processedCategories.filter(category => {
         return category.parent_category_id == null;
       });
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.$nextTick(function() {
+      this.loadData();
+    });
+    next();
+  },
+  watch: {
+    categoryType: function (val) {
+      this.loadData();
+    },
   },
   methods: {
     loadData: function() {
@@ -89,156 +107,169 @@ export default {
         this.categoryLbl = "Store Categories";
         this.showBackButton = false;
         this.loadStoreCategories();
-      } else if(this.categoryType == "storeDetails") {
+      } else if (this.categoryType == "newstores") {
+        this.categoryLbl = "New Store Categories";
+        this.showBackButton = false;
+        this.loadNewStoreCategories();
+      } else if (this.categoryType == "storeDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Stores";
         this.backlinkURL = "/stores";
-      }
-      else if (this.categoryType == "promotions") {
+      } else if (this.categoryType == "promotions") {
         this.categoryLbl = "Promotion Categories";
         this.showBackButton = false;
         this.loadPromotionCategories();
-      }
-      else if (this.categoryType == "promotionDetails") {
+      } else if (this.categoryType == "promotionDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Promotions";
         this.backlinkURL = "/promotions";
-      }
-      else if (this.categoryType == "events") {
+      } else if (this.categoryType == "events") {
         this.categoryLbl = "Event Categories";
         this.showBackButton = false;
         this.loadPromotionCategories();
-      }
-      else if (this.categoryType == "eventDetails") {
+      } else if (this.categoryType == "eventDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Events";
         this.backlinkURL = "/events";
-      } 
-      else if (this.categoryType == "jobs") {
+      } else if (this.categoryType == "jobs") {
         this.categoryLbl = "Job Categories";
         this.showBackButton = false;
         this.loadJobCategories();
-      }
-      else if (this.categoryType == "jobDetails") {
+      } else if (this.categoryType == "jobDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Jobs";
         this.backlinkURL = "/jobs";
-      } 
-      else if (this.categoryType == "news") {
+      } else if (this.categoryType == "news") {
         this.categoryLbl = "News Categories";
         this.showBackButton = false;
         this.loadNewsCategories();
-      }
-      else if (this.categoryType == "newsDetails") {
+      } else if (this.categoryType == "newsDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to News";
         this.backlinkURL = "/news";
-      }
-      else {
+      } else {
         this.categories = this.filteredCategories;
       }
     },
     loadAllCategories: function() {
-      this.loadData(); 
-      this.displayCross=false;
-      this.$emit('selectedCategory', "all");
+      this.loadData();
+      this.displayCross = false;
+      this.$emit("selectedCategory", "all");
     },
     emitSelectedCategory: function(event) {
-      this.$emit('selectedCategory', event);
+      this.$emit("selectedCategory", event);
       this.filterCategories(event);
     },
     filterCategories: function(cat) {
       this.displayCross = true;
       this.categories = _.filter(this.categories, function(o) {
-          return o.id==cat.id;
-        });
+        return o.id == cat.id;
+      });
     },
-    loadStoreCategories:function() {
-      this.storeCategories = [];
+    loadStoreCategories: function() {
       this.$nextTick(function() {
-      for (let store of this.processedStores) {
-        if (store && store.categories) {
-          let length = store.categories.length;
-          if (length == 1) {
-            if (
-              !this.storeCategories.indexOf(store.categories[0]) > -1
-            )
-              this.storeCategories.push(store.categories[0]);
-          } else {
-            for (let cat of store.categories) {
-              if (!this.storeCategories.indexOf(cat.id) > -1)
-                this.storeCategories.push(cat);
+        this.storeCategories = [];
+        for (let store of this.processedStores) {
+          if (store && store.categories) {
+            let length = store.categories.length;
+            if (length == 1) {
+              if (!this.storeCategories.indexOf(store.categories[0]) > -1)
+                this.storeCategories.push(store.categories[0]);
+            } else {
+              for (let cat of store.categories) {
+                if (!this.storeCategories.indexOf(cat.id) > -1)
+                  this.storeCategories.push(cat);
+              }
             }
           }
         }
-      }
-      this.categories = this.filterItemCategories(this.storeCategories);
+        this.categories = this.filterItemCategories(this.storeCategories);
+      });
+    },
+    loadNewStoreCategories: function() {
+      this.$nextTick(function() {
+        this.storeCategories = [];
+        for (let store of this.findNewStores) {
+          if (store && store.categories) {
+            let length = store.categories.length;
+            if (length == 1) {
+              if (!this.storeCategories.indexOf(store.categories[0]) > -1)
+                this.storeCategories.push(store.categories[0]);
+            } else {
+              for (let cat of store.categories) {
+                if (!this.storeCategories.indexOf(cat.id) > -1)
+                  this.storeCategories.push(cat);
+              }
+            }
+          }
+        }
+        this.categories = this.filterItemCategories(this.storeCategories);
       });
     },
     loadPromotionCategories: function() {
-      this.promotionCategories=[];
+      
       this.$nextTick(function() {
-      for (let promo of this.processedPromos) {
-        if (promo.store && promo.store.categories) {
-          let length = promo.store.categories.length;
-          if (length == 1) {
-            if (
-              !this.promotionCategories.indexOf(promo.store.categories[0]) > -1
-            )
-              this.promotionCategories.push(promo.store.categories[0]);
-          } else {
-            for (let cat of promo.store.categories) {
-              if (!this.promotionCategories.indexOf(cat.id) > -1)
-                this.promotionCategories.push(cat);
+        this.promotionCategories = [];
+        for (let promo of this.processedPromos) {
+          if (promo.store && promo.store.categories) {
+            let length = promo.store.categories.length;
+            if (length == 1) {
+              if (
+                !this.promotionCategories.indexOf(promo.store.categories[0]) >
+                -1
+              )
+                this.promotionCategories.push(promo.store.categories[0]);
+            } else {
+              for (let cat of promo.store.categories) {
+                if (!this.promotionCategories.indexOf(cat.id) > -1)
+                  this.promotionCategories.push(cat);
+              }
             }
           }
         }
-      }
-      this.categories = this.filterItemCategories(this.promotionCategories);
+        this.categories = this.filterItemCategories(this.promotionCategories);
       });
     },
-    loadJobCategories:function() {
-      this.jobCategories=[];
+    loadJobCategories: function() {
+      
       this.$nextTick(function() {
-      for (let job of this.processedJobs) {
-        if (job.store && job.store.categories) {
-          let length = job.store.categories.length;
-          if (length == 1) {
-            if (
-              !this.jobCategories.indexOf(job.store.categories[0]) > -1
-            )
-              this.jobCategories.push(job.store.categories[0]);
-          } else {
-            for (let cat of job.store.categories) {
-              if (!this.jobCategories.indexOf(cat.id) > -1)
-                this.jobCategories.push(cat);
+        this.jobCategories = [];
+        for (let job of this.processedJobs) {
+          if (job.store && job.store.categories) {
+            let length = job.store.categories.length;
+            if (length == 1) {
+              if (!this.jobCategories.indexOf(job.store.categories[0]) > -1)
+                this.jobCategories.push(job.store.categories[0]);
+            } else {
+              for (let cat of job.store.categories) {
+                if (!this.jobCategories.indexOf(cat.id) > -1)
+                  this.jobCategories.push(cat);
+              }
             }
           }
         }
-      }
-      this.categories = this.filterItemCategories(this.jobCategories);
+        this.categories = this.filterItemCategories(this.jobCategories);
       });
     },
-    loadNewsCategories:function() {
-      this.newsCategories=[];
+    loadNewsCategories: function() {
+      
       this.$nextTick(function() {
-      for (let news of this.processedNews) {
-        if (news.store && news.store.categories) {
-          let length = news.store.categories.length;
-          if (length == 1) {
-            if (
-              !this.newsCategories.indexOf(news.store.categories[0]) > -1
-            )
-              this.newsCategories.push(news.store.categories[0]);
-          } else {
-            for (let cat of news.store.categories) {
-              if (!this.newsCategories.indexOf(cat.id) > -1)
-                this.newsCategories.push(cat);
+        this.newsCategories = [];
+        for (let news of this.processedNews) {
+          if (news.store && news.store.categories) {
+            let length = news.store.categories.length;
+            if (length == 1) {
+              if (!this.newsCategories.indexOf(news.store.categories[0]) > -1)
+                this.newsCategories.push(news.store.categories[0]);
+            } else {
+              for (let cat of news.store.categories) {
+                if (!this.newsCategories.indexOf(cat.id) > -1)
+                  this.newsCategories.push(cat);
+              }
             }
           }
         }
-      }
-      this.categories = this.filterItemCategories(this.newsCategories);
+        this.categories = this.filterItemCategories(this.newsCategories);
       });
     },
     filterItemCategories: function(itemCategories) {

@@ -1,18 +1,22 @@
 <template>
   <div>
-    <category-menu-component categoryType="stores" @selectedCategory="filterStoresByCategory"></category-menu-component>
+    <category-menu-component :categoryType="categoryType" @selectedCategory="filterStoresByCategory"></category-menu-component>
     <div class="container">
       <div class="row" v-if="filteredStores.length>0">
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 store-section" v-for="store in filteredStores" :key="store.id">
+        <div
+          class="col-lg-2 col-md-3 col-sm-4 col-6 store-section"
+          v-for="store in filteredStores"
+          :key="store.id"
+        >
           <div class="store-item">
             <nuxt-link :to="'/stores/' +store.slug">
-            <div v-if="!store.no_store_logo" class="store-logo">
-              <img class="store_img" :src="store.logo_image_url" alt />
-            </div>
+              <div v-if="!store.no_store_logo" class="store-logo">
+                <img class="store_img" :src="store.logo_image_url" alt />
+              </div>
 
-            <div class="store_text" v-else>
-              <p>{{ store.name }}</p>
-            </div>
+              <div class="store_text" v-else>
+                <p>{{ store.name }}</p>
+              </div>
             </nuxt-link>
           </div>
         </div>
@@ -26,7 +30,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import backToTopVue from '../../components/backToTop.vue';
+import backToTopVue from "../../components/backToTop.vue";
 
 export default {
   head() {
@@ -40,7 +44,7 @@ export default {
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
     categoryMenuComponent: () =>
       import("~/components/categoryMenuComponent.vue"),
-      backToTop: () => import("~/components/backToTop.vue")
+    backToTop: () => import("~/components/backToTop.vue")
   },
   data() {
     return {
@@ -54,7 +58,9 @@ export default {
       showSubCategories: false,
       subcategories: null,
       showMore: 18,
-      incrementBy: 18
+      incrementBy: 18,
+      urlParams: null,
+      categoryType:"stores"
     };
   },
   async asyncData({ store, params }) {
@@ -64,7 +70,7 @@ export default {
         store.dispatch("getMMData", { resource: "stores" }),
         store.dispatch("LOAD_SEO", {
           url: "/stores"
-        }),
+        })
       ]);
       return { tempSEO: results[2].data.meta_data[0] };
     } catch (e) {
@@ -73,17 +79,33 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.$nextTick(function() {
+      this.urlParams = this.$route.query;
+    if (this.urlParams && this.urlParams.type == "newstores") {
+      this.categoryType="newstores";
+      this.loadNewStores();
+    } else {
       this.filteredStores = this.allStores;
+      this.urlParams = null;
+      this.categoryType = "stores";
       if (this.tempSEO) {
         this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
       }
+    }
     });
     next();
   },
   created() {
-    this.filteredStores = this.allStores;
-    if (this.tempSEO) {
-      this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+    this.urlParams = this.$route.query;
+    if (this.urlParams && this.urlParams.type == "newstores") {
+      this.categoryType="newstores";
+      this.loadNewStores();
+    } else {
+      this.filteredStores = this.allStores;
+      this.urlParams = null;
+      this.categoryType = "stores";
+      if (this.tempSEO) {
+        this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+      }
     }
   },
   beforeMount() {
@@ -107,7 +129,8 @@ export default {
       "findCategoryById",
       "findCategoryByName",
       "findSubcategoriesByParentID",
-      "locale"
+      "locale",
+      "findNewStores"
     ]),
     allStores() {
       var stores = this.processedStores;
@@ -206,22 +229,38 @@ export default {
         console.log("Error loading data: " + e.message);
       }
     },
+    loadNewStores: function() {
+      var filtered = _.filter(this.allStores, function(o) {
+        return o.is_new_store === true;
+      });
+      this.filteredStores = filtered;
+    },
     filterStoresByCategory: function(selectedCat) {
-      if(selectedCat == "all") {
+      if (selectedCat == "all") {
         this.filteredStores = this.allStores;
       } else {
         var category_id = selectedCat.id;
-      if (category_id == 0 || category_id == null || category_id == undefined) {
-        this.filteredStores = this.allStores;
-      } else {
-        var filtered = _.filter(this.allStores, function(o) {
-          return _.indexOf(o.categories, _.toNumber(category_id)) > -1;
-        });
+        if (
+          category_id == 0 ||
+          category_id == null ||
+          category_id == undefined
+        ) {
+          this.filteredStores = this.allStores;
+        } else {
+          var filtered = _.filter(this.allStores, function(o) {
+            return _.indexOf(o.categories, _.toNumber(category_id)) > -1;
+          });
 
+          this.filteredStores = filtered;
+        }
+      }
+
+      if (this.urlParams && this.urlParams.type == "newstores") {
+        var filtered = _.filter(this.filteredStores, function(o) {
+          return o.is_new_store === true;
+        });
         this.filteredStores = filtered;
       }
-      }
-      
     },
     onOptionSelect(option) {
       this.search_result = "";
