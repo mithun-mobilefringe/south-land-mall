@@ -32,12 +32,18 @@
     <transition name="fade">
       <div class="container">
         <div class="category-list row" v-if="categories" v-show="showList">
+          <div class="col-12">
           <div class="category-list-items">
             <div
               v-for="category in categories"
               class="category-item col-3"
               :key="category.id"
-            >{{category.name}}</div>
+            ><div class="items" @click="emitSelectedCategory(category)">{{category.name}}</div>
+            </div>
+            <div class="cross-item col-9" v-if="displayCross">
+              <i class="fa fa-times items" aria-hidden="true" @click="loadAllCategories()"></i>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -62,7 +68,8 @@ export default {
       jobCategories: [],
       newsCategories: [],
       showBackButton: false,
-      backlinkURL: ""
+      backlinkURL: "",
+      displayCross: false
     };
   },
   mounted() {
@@ -131,7 +138,23 @@ export default {
         this.categories = this.filteredCategories;
       }
     },
+    loadAllCategories: function() {
+      this.loadData(); 
+      this.displayCross=false;
+      this.$emit('selectedCategory', "all");
+    },
+    emitSelectedCategory: function(event) {
+      this.$emit('selectedCategory', event);
+      this.filterCategories(event);
+    },
+    filterCategories: function(cat) {
+      this.displayCross = true;
+      this.categories = _.filter(this.categories, function(o) {
+          return o.id==cat.id;
+        });
+    },
     loadStoreCategories:function() {
+      this.storeCategories = [];
       this.$nextTick(function() {
       for (let store of this.processedStores) {
         if (store && store.categories) {
@@ -153,6 +176,7 @@ export default {
       });
     },
     loadPromotionCategories: function() {
+      this.promotionCategories=[];
       this.$nextTick(function() {
       for (let promo of this.processedPromos) {
         if (promo.store && promo.store.categories) {
@@ -174,6 +198,7 @@ export default {
       });
     },
     loadJobCategories:function() {
+      this.jobCategories=[];
       this.$nextTick(function() {
       for (let job of this.processedJobs) {
         if (job.store && job.store.categories) {
@@ -195,6 +220,7 @@ export default {
       });
     },
     loadNewsCategories:function() {
+      this.newsCategories=[];
       this.$nextTick(function() {
       for (let news of this.processedNews) {
         if (news.store && news.store.categories) {
@@ -263,11 +289,24 @@ export default {
   display: flex;
   flex-wrap: wrap;
   font-size: 1.2rem;
-  padding: 1.5rem 0rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .category-item {
   display: flex;
   padding: 1rem 0rem;
+}
+
+.items {
+  cursor: pointer;
+}
+
+.cross-item {
+  display: flex;
+  font-size: 1rem;
+  padding: 1rem 1rem 0rem 1rem;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .rotate {

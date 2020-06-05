@@ -19,7 +19,7 @@
                 
                 <div class="detail-buttons">
                   <div class="visit-button btn" v-if="currentJob.store">
-                    <nuxt-link :to="'/stores' + currentJob.store.slug">Visit {{currentJob.store.name}}</nuxt-link>
+                    <nuxt-link :to="'/stores/' + currentJob.store.slug">Visit {{currentJob.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Jobs
@@ -57,7 +57,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+                <nuxt-link :to="'/jobs/'+promotion.slug">Job Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

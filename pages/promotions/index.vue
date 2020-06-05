@@ -1,11 +1,11 @@
 <template>
   <div>
-    <category-menu-component categoryType="promotions"></category-menu-component>
+    <category-menu-component categoryType="promotions" @selectedCategory="filterPromotionsByCategory"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="promotions.length>0">
+      <div class="row" v-if="filteredPromotions.length>0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
-          v-for="promotion in promotions"
+          v-for="promotion in filteredPromotions"
           :key="promotion.id"
         >
           <div class="promotion-container">
@@ -77,6 +77,7 @@ export default {
     next();
   },
   created() {
+    this.filteredPromotions = this.promotions;
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
     }
@@ -151,7 +152,25 @@ export default {
         var num = this.showMore + this.incrementBy;
         this.showMore = num;
       }
-    }
+    },
+    filterPromotionsByCategory: function(selectedCat) {
+      if(selectedCat == "all") {
+        this.filteredPromotions = this.promotions;
+      } else {
+        debugger;
+        var category_id = selectedCat.id;
+      if (category_id == 0 || category_id == null || category_id == undefined) {
+        this.filteredPromotions = this.promotions;
+      } else {
+        var filtered = _.filter(this.promotions, function(o) {
+          return _.indexOf(o.store.categories, _.toNumber(category_id)) > -1;
+        });
+
+        this.filteredPromotions = filtered;
+      }
+      }
+      
+    },
   }
 };
 </script>

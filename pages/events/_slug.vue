@@ -18,7 +18,7 @@
                 </div>
                 <div class="detail-buttons">
                   <div class="visit-button btn">
-                    <nuxt-link :to="'/stores' + currentEvent.store.slug">Visit {{currentEvent.name}}</nuxt-link>
+                    <nuxt-link :to="'/stores/' + currentEvent.store.slug">Visit {{currentEvent.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Event
@@ -56,7 +56,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+                <nuxt-link :to="'/events/'+promotion.slug">Event Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

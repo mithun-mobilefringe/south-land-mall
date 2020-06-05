@@ -92,7 +92,8 @@ module.exports = {
         '~/plugins/vue-cookieconsent-component.js',
         '~/plugins/vee-validate.js',
         '~/plugins/global.js',
-        '~/plugins/vue-masonry.js'
+        '~/plugins/vue-masonry.js',
+        '~/plugins/vue-elevator.js'
     ],
 
     /* Nuxt.js modules */

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <category-menu-component categoryType="events"></category-menu-component>
+    <category-menu-component categoryType="events" @selectedCategory="filterEventsByCategory"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="events.length>0">
-        <div class="col-md-6 col-sm-12 event-section" v-for="event in events" :key="event.id">
+      <div class="row" v-if="filteredEvents.length>0">
+        <div class="col-md-6 col-sm-12 event-section" v-for="event in filteredEvents" :key="event.id">
           <div class="event-container">
             <div class="container-details col-7">
               <div v-if="event.store" class="promo-store-name">{{event.store.name}}</div>
@@ -73,6 +73,7 @@ export default {
     next();
   },
   created() {
+    this.filteredEvents = this.events;
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
     }
@@ -142,6 +143,22 @@ export default {
       if (this.showMore <= this.events.length) {
         var num = this.showMore + this.incrementBy;
         this.showMore = num;
+      }
+    },
+    filterNewsByCategory: function(selectedCat) {
+      if(selectedCat == "all") {
+        this.filteredEvents = this.events;
+      } else {
+        debugger;
+        var category_id = selectedCat.id;
+      if (category_id == 0 || category_id == null || category_id == undefined) {
+        this.filteredEvents = this.events;
+      } else {
+        var filtered = _.filter(this.events, function(o) {
+          return _.indexOf(o.store.categories, _.toNumber(category_id)) > -1;
+        });
+        this.filteredEvents = filtered;
+      }
       }
     },
     isMultiDay(event) {

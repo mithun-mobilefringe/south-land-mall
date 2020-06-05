@@ -18,7 +18,7 @@
                 </div>
                 <div class="detail-buttons">
                   <div class="visit-button btn">
-                    <nuxt-link :to="'/stores' + currentPromo.store.slug">Visit {{currentPromo.store.name}}</nuxt-link>
+                    <nuxt-link :to="'/stores/' + currentPromo.store.slug">Visit {{currentPromo.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Promotion

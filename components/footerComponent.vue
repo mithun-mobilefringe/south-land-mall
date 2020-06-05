@@ -154,6 +154,9 @@ export default {
       window.addEventListener("scroll", this.handleScroll);
     });
   },
+  beforeMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
   computed: {
     ...mapGetters(["route", "property", "timezone", "getPropertyHours"]),
     exploreMenu() {

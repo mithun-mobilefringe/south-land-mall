@@ -18,7 +18,7 @@
                 <div class="detail-buttons">
                   <div class="visit-button btn" v-if="currentNews.store">
                     <nuxt-link
-                      :to="'/stores' + currentNews.store.slug"
+                      :to="'/stores/' + currentNews.store.slug"
                     >Visit {{currentNews.store.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
@@ -54,7 +54,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+                <nuxt-link :to="'/news/'+promotion.slug">News Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

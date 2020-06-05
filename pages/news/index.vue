@@ -1,9 +1,9 @@
 <template>
   <div>
-    <category-menu-component categoryType="news"></category-menu-component>
+    <category-menu-component categoryType="news" @selectedCategory="filterNewsByCategory"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="newss.length > 0">
-        <div class="col-md-6 col-sm-12 news-section" v-for="news in newss" :key="news.id">
+      <div class="row" v-if="filteredNews.length > 0">
+        <div class="col-md-6 col-sm-12 news-section" v-for="news in filteredNews" :key="news.id">
           <div class="news-container">
             <div class="container-details col-7">
               <div v-if="news.store && news.store.name" class="promo-store-name">{{news.store.name}}</div>
@@ -72,6 +72,7 @@ export default {
     next();
   },
   created() {
+    this.filteredNews = this.newss;
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
     }
@@ -79,8 +80,7 @@ export default {
   watch: {
     filteredNews() {
       if (!this.filteredNews) {
-        debugger;
-        this.filteredNews = this.news;
+        this.filteredNews = this.newss;
       }
     }
   },
@@ -141,7 +141,22 @@ export default {
         this.showMore = num;
       }
     },
-    
+    filterNewsByCategory: function(selectedCat) {
+      if(selectedCat == "all") {
+        this.filteredNews = this.newss;
+      } else {
+        debugger;
+        var category_id = selectedCat.id;
+      if (category_id == 0 || category_id == null || category_id == undefined) {
+        this.filteredNews = this.newss;
+      } else {
+        var filtered = _.filter(this.newss, function(o) {
+          return _.indexOf(o.store.categories, _.toNumber(category_id)) > -1;
+        });
+        this.filteredNews = filtered;
+      }
+      }
+    }
   }
 };
 </script>

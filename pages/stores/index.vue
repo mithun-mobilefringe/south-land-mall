@@ -1,8 +1,8 @@
 <template>
   <div>
-    <category-menu-component categoryType="stores"></category-menu-component>
+    <category-menu-component categoryType="stores" @selectedCategory="filterStoresByCategory"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="promotions.length>0">
+      <div class="row" v-if="filteredStores.length>0">
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 store-section" v-for="store in filteredStores" :key="store.id">
           <div class="store-item">
             <nuxt-link :to="'/stores/' +store.slug">
@@ -20,11 +20,13 @@
       <div class="row" v-else style="margin-top: 30px">
         <p>There are no Stores at this time. Please check back soon.</p>
       </div>
+      <back-to-top></back-to-top>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import backToTopVue from '../../components/backToTop.vue';
 
 export default {
   head() {
@@ -37,7 +39,8 @@ export default {
     VSelect: () => import("vue-select"),
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
     categoryMenuComponent: () =>
-      import("~/components/categoryMenuComponent.vue")
+      import("~/components/categoryMenuComponent.vue"),
+      backToTop: () => import("~/components/backToTop.vue")
   },
   data() {
     return {
@@ -84,7 +87,7 @@ export default {
     }
   },
   beforeMount() {
-    window.addEventListener("scroll", this.isScrolled);
+    // window.addEventListener("scroll", this.isScrolled);
   },
   watch: {
     filteredStores() {
@@ -116,6 +119,7 @@ export default {
           store.no_store_logo = true;
         }
       });
+      window.addEventListener("scroll", this.isScrolled);
       return stores;
     },
     allCatergories() {
@@ -133,8 +137,8 @@ export default {
       cats.unshift("ALL");
       return cats;
     },
-    filterByCategory() {
-      var category_id = this.selectedCat.id;
+    filterByCategory(selectedCat) {
+      var category_id = selectedCat.id;
 
       if (category_id == 0 || category_id == null || category_id == undefined) {
         this.filteredStores = this.allStores;
@@ -201,6 +205,23 @@ export default {
       } catch (e) {
         console.log("Error loading data: " + e.message);
       }
+    },
+    filterStoresByCategory: function(selectedCat) {
+      if(selectedCat == "all") {
+        this.filteredStores = this.allStores;
+      } else {
+        var category_id = selectedCat.id;
+      if (category_id == 0 || category_id == null || category_id == undefined) {
+        this.filteredStores = this.allStores;
+      } else {
+        var filtered = _.filter(this.allStores, function(o) {
+          return _.indexOf(o.categories, _.toNumber(category_id)) > -1;
+        });
+
+        this.filteredStores = filtered;
+      }
+      }
+      
     },
     onOptionSelect(option) {
       this.search_result = "";

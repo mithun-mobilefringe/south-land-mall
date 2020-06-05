@@ -1,9 +1,9 @@
 <template>
   <div>
-    <category-menu-component categoryType="jobs"></category-menu-component>
+    <category-menu-component categoryType="jobs" @selectedCategory="filterJobsByCategory"></category-menu-component>
     <div class="container">
-      <div class="row" v-if="jobs.length>0">
-        <div class="col-md-6 col-sm-12 job-section" v-for="job in jobs" :key="job.id">
+      <div class="row" v-if="filteredJobs.length>0">
+        <div class="col-md-6 col-sm-12 job-section" v-for="job in filteredJobs" :key="job.id">
           <div class="job-container">
             <div class="container-details col-7">
               <div v-if="job.store && job.store.name" class="promo-store-name">{{job.store.name}}</div>
@@ -73,6 +73,7 @@ export default {
     next();
   },
   created() {
+    this.filteredJobs = this.jobs;
     if (this.tempSEO) {
       this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
     }
@@ -140,6 +141,23 @@ export default {
       if (this.showMore <= this.jobs.length) {
         var num = this.showMore + this.incrementBy;
         this.showMore = num;
+      }
+    },
+    filterJobsByCategory: function(selectedCat) {
+      if(selectedCat == "all") {
+        this.filteredJobs = this.jobs;
+      } else {
+        debugger;
+        var category_id = selectedCat.id;
+      if (category_id == 0 || category_id == null || category_id == undefined) {
+        this.filteredJobs = this.jobs;
+      } else {
+        var filtered = _.filter(this.jobs, function(o) {
+          return _.indexOf(o.store.categories, _.toNumber(category_id)) > -1;
+        });
+
+        this.filteredJobs = filtered;
+      }
       }
     },
     checkJobType(job) {
