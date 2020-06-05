@@ -137,7 +137,7 @@ export default {
       var vm = this;
       _.forEach(stores, function(store, key) {
         if (store.logo_image_url) {
-          store.no_store_logo = true;
+          store.no_store_logo = false;
         } else {
           store.no_store_logo = true;
         }
