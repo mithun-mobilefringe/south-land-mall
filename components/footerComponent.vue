@@ -46,13 +46,13 @@
                 <p>Shop</p>
               </div>
               <div class="menu-list">
-                <p>Stores Directory</p>
+                <p><nuxt-link to="/stores">Stores Directory</nuxt-link></p>
               </div>
               <div class="menu-list">
-                <p>New Stores</p>
+                <p><nuxt-link to="/stores?type=newstores">New Stores</nuxt-link></p>
               </div>
               <div class="menu-list">
-                <p>Promotion</p>
+                <p><nuxt-link to="/promotions">Promotion</nuxt-link></p>
               </div>
             </div>
             <div class="col-2 menu-links">
@@ -71,12 +71,12 @@
             </div>
             <div class="col-1 menu-links">
               <div class="menu-header">
-                <p>Events</p>
+                <p><nuxt-link to="/events">Events</nuxt-link></p>
               </div>
             </div>
             <div class="col-1 menu-links">
               <div class="menu-header">
-                <p>News</p>
+                <p><nuxt-link to="/news">News</nuxt-link></p>
               </div>
             </div>
             <div class="col-1 menu-links">
@@ -92,7 +92,7 @@
                 <p>About Us</p>
               </div>
               <div class="menu-list">
-                <p>Careers</p>
+                <p><nuxt-link to="/jobs">Careers</nuxt-link></p>
               </div>
               <div class="menu-list">
                 <p>Contests</p>
