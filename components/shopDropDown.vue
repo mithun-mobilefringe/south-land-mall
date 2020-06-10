@@ -10,7 +10,6 @@
           <nuxt-link to="/promotions">Promotions</nuxt-link>
           <div>Mall Map</div>
            <nuxt-link to="/stores?type=newstores">New Stores</nuxt-link>
-          <div>New Stores</div>
           <div>Shopping Hours</div>
         </div>
       </div>
