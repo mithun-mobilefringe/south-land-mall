@@ -70,9 +70,9 @@ export default {
     };
   },
   mounted() {
-     this.$nextTick(function () {
-    this.loadData();
-     });
+    this.$nextTick(function() {
+      this.loadData();
+    });
   },
   computed: {
     ...mapGetters([
@@ -97,9 +97,9 @@ export default {
     next();
   },
   watch: {
-    categoryType: function (val) {
+    categoryType: function(val) {
       this.loadData();
-    },
+    }
   },
   methods: {
     loadData: function() {
@@ -126,7 +126,7 @@ export default {
       } else if (this.categoryType == "events") {
         this.categoryLbl = "Event Categories";
         this.showBackButton = false;
-        this.loadPromotionCategories();
+        this.loadEventCategories();
       } else if (this.categoryType == "eventDetails") {
         this.showBackButton = true;
         this.categoryLbl = "Back to Events";
@@ -207,7 +207,6 @@ export default {
       });
     },
     loadPromotionCategories: function() {
-      
       this.$nextTick(function() {
         this.promotionCategories = [];
         for (let promo of this.processedPromos) {
@@ -230,8 +229,42 @@ export default {
         this.categories = this.filterItemCategories(this.promotionCategories);
       });
     },
+    loadEventCategories: function() {
+      this.$nextTick(function() {
+        this.eventCategories = [];
+        for (let event of this.processedEvents) {
+          if (event.tags && event.tags.length > 0) {
+            for (let tag of event.tags) {
+              if (!this.isTagAlreadyAdded(tag)) {
+                var category = {
+                  name: tag,
+                  id: this.eventCategories.length
+                };
+                this.eventCategories.push(category);
+              }
+            }
+          }
+        }
+        this.categories = this.eventCategories;
+      });
+    },
+    isTagAlreadyAdded: function(tag) {
+      let isTagAdded= false;
+      if(this.eventCategories.length == 0) {
+        isTagAdded = false;
+      } else {
+      for (let eventCat of this.eventCategories) {
+        if (tag.indexOf(eventCat.name) > -1) {
+          isTagAdded = true;
+          break;
+        } else {
+          isTagAdded = false;
+        }
+      }
+      }
+      return isTagAdded;
+    },
     loadJobCategories: function() {
-      
       this.$nextTick(function() {
         this.jobCategories = [];
         for (let job of this.processedJobs) {
@@ -252,7 +285,6 @@ export default {
       });
     },
     loadNewsCategories: function() {
-      
       this.$nextTick(function() {
         this.newsCategories = [];
         for (let news of this.processedNews) {

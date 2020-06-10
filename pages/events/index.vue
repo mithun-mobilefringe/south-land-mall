@@ -3,10 +3,18 @@
     <category-menu-component categoryType="events" @selectedCategory="filterEventsByCategory"></category-menu-component>
     <div class="container">
       <div class="row" v-if="filteredEvents.length>0">
-        <div class="col-md-6 col-sm-12 event-section" v-for="event in filteredEvents" :key="event.id">
+        <div
+          class="col-md-6 col-sm-12 event-section"
+          v-for="event in filteredEvents"
+          :key="event.id"
+        >
           <div class="event-container">
             <div class="container-details col-7">
-              <div v-if="event.store" class="promo-store-name">{{event.store.name}}</div>
+              <div v-if="event.tags.length > 0" class="promo-store-name">
+                <div v-for="tag in event.tags" :key="tag.index">
+                  <div>{{tag}}</div>
+                </div>
+              </div>
               <div v-else class="promo-store-name">Southland Mall</div>
               <div class="promo-name">{{event.name}}</div>
               <div class="promo-date">
@@ -26,7 +34,11 @@
           </div>
         </div>
       </div>
-      <div class="row" v-else style="margin-top: 30px">There are no Events at this time. Please check back soon.</div>
+      <div
+        class="row"
+        v-else
+        style="margin-top: 30px"
+      >There are no Events at this time. Please check back soon.</div>
     </div>
   </div>
 </template>
@@ -52,7 +64,7 @@ export default {
       showMore: 9,
       currentSEO: [],
       tempSEO: null,
-      filteredPromotions: null
+      filteredEvents: null
     };
   },
   async asyncData({ store, params }) {
@@ -67,9 +79,11 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    if (this.tempSEO) {
-      this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
-    }
+    this.$nextTick(function() {
+      if (this.tempSEO) {
+        this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+      }
+    });
     next();
   },
   created() {
@@ -118,11 +132,11 @@ export default {
             separator: " "
           });
 
-          if (_.includes(value.image_url, "missing")) {
+          if (!value.image_url) {
             value.image_url =
               "//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
           }
-          if (_.includes(value.event_image2_url_abs, "missing")) {
+          if (!value.event_image2_url_abs) {
             value.event_image2_url_abs =
               "//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
           }
@@ -146,18 +160,14 @@ export default {
       }
     },
     filterEventsByCategory: function(selectedCat) {
-      if(selectedCat == "all") {
+      if (selectedCat == "all") {
         this.filteredEvents = this.events;
       } else {
-        var category_id = selectedCat.id;
-      if (category_id == 0 || category_id == null || category_id == undefined) {
-        this.filteredEvents = this.events;
-      } else {
+        var category_name = selectedCat.name;
         var filtered = _.filter(this.events, function(o) {
-          return _.indexOf(o.store.categories, _.toNumber(category_id)) > -1;
+          return _.indexOf(o.tags, category_name) > -1;
         });
         this.filteredEvents = filtered;
-      }
       }
     },
     isMultiDay(event) {

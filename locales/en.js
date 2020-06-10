@@ -9,7 +9,8 @@ module.exports = {
         "powered_by": "Powered By",
         "privacy_policy": "Privacy",
         "terms_of_use": "Terms & Conditions",
-        "send_feedback": "Send FeedBack"
+        "send_feedback": "Send FeedBack",
+        "disclaimer": "Disclaimer"
 
     }
 }

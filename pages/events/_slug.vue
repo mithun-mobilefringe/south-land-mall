@@ -7,18 +7,18 @@
           <div class="col-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
-                <div class="detail-date">
-                  {{currentEvent.start_date | moment("MMM D", timezone)}} - {{currentEvent.end_date | moment("MMM D", timezone)}}
-                </div>
-                <div class="detail-name">
-                  {{currentEvent.name}}
-                </div>
+                <div
+                  class="detail-date"
+                >{{currentEvent.start_date | moment("MMM D", timezone)}} - {{currentEvent.end_date | moment("MMM D", timezone)}}</div>
+                <div class="detail-name">{{currentEvent.name}}</div>
                 <div class="detail-description">
                   <span v-html="currentEvent.description"></span>
                 </div>
                 <div class="detail-buttons">
                   <div class="visit-button btn">
-                    <nuxt-link :to="'/stores/' + currentEvent.store.slug">Visit {{currentEvent.name}}</nuxt-link>
+                    <nuxt-link
+                      :to="'/stores/' + currentEvent.store.slug"
+                    >Visit {{currentEvent.name}}</nuxt-link>
                   </div>
                   <div class="share-button">
                     Share Event
@@ -30,38 +30,38 @@
           </div>
           <div class="col-6 p-0 img-box">
             <div class="img" v-lazy:background-image="currentEvent.image_url">
-
               <!-- <img :src="currentEvent.image_url"/> -->
             </div>
           </div>
         </div>
       </div>
       <div class="row" v-if="storeEvents.length > 0">
-        <div class="other-promotions-lbl col-12">
-          Other Events at {{currentEvent.store.name}}
-        </div>
+        <div class="other-promotions-lbl col-12">Other Events for {{currentEvent.tag}}</div>
       </div>
-      <div class="row" v-if="storeEvents.length > 0">
-        <div
-          class="col-md-6 col-sm-12 promotion-section"
-          v-for="promotion in storeEvents"
-          :key="promotion.id"
-        >
-          <div class="promotion-container">
+      <div class="row" v-if="storeEvents.length>0">
+        <div class="col-md-6 col-sm-12 event-section" v-for="event in storeEvents" :key="event.id">
+          <div class="event-container">
             <div class="container-details col-7">
-              <div v-if="promotion.store.name" class="promo-store-name">{{promotion.store.name}}</div>
+              <div v-if="event.tags.length > 0" class="promo-store-name">
+                <div v-for="tag in event.tags" :key="tag.index">
+                  <div>{{tag}}</div>
+                </div>
+              </div>
               <div v-else class="promo-store-name">Southland Mall</div>
-              <div class="promo-name">{{promotion.name}}</div>
-              <div
-                class="promo-date"
-              >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
-              <div class="promo-button btn">
-                <nuxt-link :to="'/events/'+promotion.slug">Event Details</nuxt-link>
+              <div class="promo-name">{{event.name}}</div>
+              <div class="promo-date">
+                <span
+                  v-if="isMultiDay(event)"
+                >{{ event.start_date | moment("MMM D", timezone)}} - {{ event.end_date | moment("MMM D", timezone)}}</span>
+                <span v-else>{{ event.start_date | moment("MMM D", timezone)}}</span>
+              </div>
+              <div class="promo-button btn p-0">
+                <nuxt-link :to="'/events/'+event.slug">Event Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">
-              <div v-if="promotion.image_url" v-lazy:background-image="promotion.image_url"></div>
-              <div v-else v-lazy:background-image="promotion.store.store_front_url_abs"></div>
+              <div v-if="event.image_url" v-lazy:background-image="event.image_url"></div>
+              <div v-else v-lazy:background-image="event.event_image2_url_abs"></div>
             </div>
           </div>
         </div>
@@ -148,6 +148,7 @@ export default {
         if (this.currentEvent === null || this.currentEvent === undefined) {
           this.$router.replace("/events");
         } else {
+          debugger;
           if (this.currentEvent != null) {
             if (
               this.currentEvent.store != null &&
@@ -161,6 +162,8 @@ export default {
             ) {
               this.currentEvent.store = {};
               this.currentEvent.store.store_front_url_abs = this.property.default_logo;
+              this.currentEvent.image_url =
+                "//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
             }
 
             if (this.tempSEO) {
@@ -173,12 +176,24 @@ export default {
     },
     loadStoreEvents: function() {
       this.storeEvents = this.processedEvents.filter(event => {
-        if(event.store) {
-          return (event.store.id == this.currentEvent.store.id) && (event.id != this.currentEvent.id);
+        let isTagPresent = false;
+        if (event.tags && this.currentEvent.tags) {
+          console.log("Cusrrent Event: " + this.currentEvent.tags);
+          console.log(
+            "index: " + _.indexOf(event.tags, this.currentEvent.tags[0])
+          );
+          for (let tag of this.currentEvent.tags) {
+            if (_.indexOf(event.tags, this.currentEvent.tags[0]) > -1 && event.id != this.currentEvent.id) {
+              isTagPresent = true;
+              break;
+            } else {
+              isTagPresent = false;
+            }
+          }
         } else {
-          return false;
+          isTagPresent = false;
         }
-        
+        return isTagPresent;
       });
     }
   }

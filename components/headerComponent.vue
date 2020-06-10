@@ -20,14 +20,14 @@
         </div>
         <div class="nav-container nav-bar col-12">
             <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" class="header-menu">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <transition name="fade">
+              <!-- <transition name="fade"> -->
                 <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
-              </transition>
+              <!-- </transition> -->
             </div>
             <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" class="header-menu">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <transition name="fade">
+              <!-- <transition name="fade"> -->
                 <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
-              </transition>
+              <!-- </transition> -->
             </div>
             <!-- <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
@@ -38,9 +38,9 @@
             <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/news">News</nuxt-link></div>
             <div @click="displayDropDown(0)">Services</div>
             <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">About<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
-              <transition name="fade">
+              <!-- <transition name="fade"> -->
                 <about-drop-down v-if="displayAboutDropDown"></about-drop-down>
-              </transition>
+              <!-- </transition> -->
             </div>
         </div>
         
