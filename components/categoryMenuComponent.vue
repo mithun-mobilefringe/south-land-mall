@@ -52,7 +52,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["categoryType", "showMap", "filteredStores"],
+  props: ["categoryType", "showMap", "filteredStores", "subCategoryType"],
   data() {
     return {
       socialFeed: null,
@@ -99,6 +99,9 @@ export default {
   },
   watch: {
     categoryType: function(val) {
+      this.loadData();
+    },
+    subCategoryType: function(val) {
       this.loadData();
     }
   },
@@ -174,7 +177,11 @@ export default {
         if(this.categoryType == "stores") {
           stores = this.processedStores;
         } else {
-          stores = this.processedDineStores;
+          if(this.subCategoryType) {
+            stores = this.filteredStores;
+          } else {
+            stores = this.processedDineStores;
+          }
         }
         for (let store of stores) {
           if (store && store.categories) {

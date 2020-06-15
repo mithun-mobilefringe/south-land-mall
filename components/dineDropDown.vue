@@ -6,12 +6,12 @@
           <span><nuxt-link to="/dine">Restaurants</nuxt-link></span>
         </div>
         <div class="dropdown-options">
-          <div><nuxt-link to="/stores?type=fine dining">Fine Dining</nuxt-link></div>
-          <div><nuxt-link to="/stores?type=fast food">Fast Food</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('fine dining')">Fine Dining</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('fast food')">Fast Food</nuxt-link></div>
           <div><nuxt-link :to="getEncodeURI('coffee & drinks')">Coffee & Drinks</nuxt-link></div>
-          <div><nuxt-link to="/stores?type=asian food">Asian Food</nuxt-link></div>
-          <div><nuxt-link to="/stores?type=italian food">Italian Food</nuxt-link></div>
-          <div><nuxt-link to="/stores?type=bubble tea">Bubble Tea</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('asian food')">Asian Food</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('italian food')">Italian Food</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('bubble tea')">Bubble Tea</nuxt-link></div>
         </div>
       </div>
       <div class="col-6 dropdown-col">
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getEncodeURI: function(string) {
-      return '/stores?type=' + encodeURIComponent(string);
+      return '/dine?type=' + encodeURIComponent(string);
     }
   }
 }

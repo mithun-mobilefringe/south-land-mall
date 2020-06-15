@@ -2,6 +2,8 @@
   <div>
     <category-menu-component
       :categoryType="categoryType"
+      :subCategoryType="subCategoryType"
+      :filteredStores="filteredStores"
       @selectedCategory="filterStoresByCategory"
     ></category-menu-component>
     <div class="container">
@@ -85,7 +87,8 @@ export default {
       this.urlParams = this.$route.query;
       debugger;
       if (this.urlParams && this.urlParams.type) {
-        this.categoryType = this.urlParams.type;
+        this.categoryType = "dine";
+        this.subCategoryType = this.urlParams.type;
         var cat = this.getCategory(this.urlParams.type);
         this.filterStoresByCategory(cat);
       } else {
@@ -102,8 +105,10 @@ export default {
   created() {
     this.urlParams = this.$route.query;
     if (this.urlParams && this.urlParams.type) {
-      this.categoryType = this.urlParams.type;
-      this.filteredStores = this.processedDineStores;
+      this.categoryType = "dine";
+      this.subCategoryType = this.urlParams.type;
+      var cat = this.getCategory(this.urlParams.type);
+        this.filterStoresByCategory(cat);
     } else {
       this.filteredStores = this.allStores;
       this.urlParams = null;
