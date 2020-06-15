@@ -120,7 +120,6 @@ export default {
       dataLoaded: false,
       show_popup: false,
       popup: null,
-      socialFeedData: null,
       tempSEO: null,
       currentSEO: {},
     };
@@ -136,15 +135,11 @@ export default {
         store.dispatch("getMMData", { resource: "banners" }),
         store.dispatch("getMMData", { resource: "feature_items" }),
         store.dispatch("getMMData", { resource: "popups" }),
-        store.dispatch("LOAD_PAGE_DATA", {
-          url: "https://mallmaverick.com/api/v4/coquitlam/social.json"
-        }),
         store.dispatch("LOAD_SEO", {
           url: "/"
         })
       ]);
       return {
-        socialFeedData: results[3].data,
         tempSEO: results[4].data.meta_data[0]
       };
     } catch (e) {
@@ -194,18 +189,6 @@ export default {
       "getTodayHours",
       "locale"
     ]),
-    instaFeed() {
-      var instaFeed = _.slice(this.socialFeedData.social.instagram, [0], [6]);
-      _.forEach(instaFeed, function(value, key) {
-        if (value.caption.text.length > 49) {
-          value.caption.text = _.truncate(value.caption.text, {
-            length: 49,
-            separator: "..."
-          });
-        }
-      });
-      return instaFeed;
-    },
     banners() {
       var all_banners = this.$store.state.banners;
       var banners = [];

@@ -75,7 +75,6 @@ export default {
       showBackButton: false,
       backlinkURL: "",
       displayCross: false,
-      showMap: true
     };
   },
   mounted() {
