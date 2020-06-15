@@ -400,7 +400,22 @@ const getters = {
         let new_stores = _.filter(stores, function(o) {
             return o.is_new_store === true;
         });
-        return new_stores
+        return new_stores;
+    },
+    processedDineStores: (state, getters) => {
+        let stores = getters.processedStores;
+        var categoryType = "dine";
+        var cat = null;
+        for (const category of getters.processedCategories) {
+            if (category.name.toLowerCase() == categoryType.toLowerCase()) {
+                cat = category;
+                break;
+            }
+        }
+        let dine_stores = _.filter(stores, function(o) {
+            return _.indexOf(o.categories, _.toNumber(cat.id)) > -1;
+        });
+        return dine_stores;
     },
     findComingSoonStores: (state, getters) => {
         let stores = getters.processedStores;

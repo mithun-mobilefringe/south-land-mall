@@ -37,7 +37,7 @@
               <div v-for="category in categories" class="category-item col-3" :key="category.id">
                 <div class="items" @click="emitSelectedCategory(category)">{{category.name}}</div>
               </div>
-              <div class="cross-item col-9" v-if="displayCross">
+              <div class="cross-item col-12" v-if="displayCross">
                 <i class="fa fa-times items" aria-hidden="true" @click="loadAllCategories()"></i>
               </div>
             </div>
@@ -52,7 +52,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["categoryType", "showMap"],
+  props: ["categoryType", "showMap", "filteredStores"],
   data() {
     return {
       socialFeed: null,
@@ -82,7 +82,8 @@ export default {
       "processedEvents",
       "processedJobs",
       "processedNews",
-      "findNewStores"
+      "findNewStores",
+      "processedDineStores"
     ]),
     filteredCategories() {
       return this.processedCategories.filter(category => {
@@ -103,7 +104,7 @@ export default {
   },
   methods: {
     loadData: function() {
-      if (this.categoryType == "stores") {
+      if (this.categoryType == "stores" || this.categoryType == "dine") {
         this.categoryLbl = "Store Categories";
         this.showBackButton = false;
         this.loadStoreCategories();
@@ -169,7 +170,13 @@ export default {
     loadStoreCategories: function() {
       this.$nextTick(function() {
         this.storeCategories = [];
-        for (let store of this.processedStores) {
+        var stores = [];
+        if(this.categoryType == "stores") {
+          stores = this.processedStores;
+        } else {
+          stores = this.processedDineStores;
+        }
+        for (let store of stores) {
           if (store && store.categories) {
             let length = store.categories.length;
             if (length == 1) {
@@ -367,9 +374,10 @@ export default {
 .cross-item {
   display: flex;
   font-size: 1rem;
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 1rem 2rem 0rem 1rem;
   justify-content: flex-end;
   align-items: center;
+  position: absolute;
 }
 
 .rotate {

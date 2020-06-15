@@ -2,7 +2,6 @@
   <div>
     <category-menu-component
       :categoryType="categoryType"
-      :filteredStores="filteredStores"
       @selectedCategory="filterStoresByCategory"
     ></category-menu-component>
     <div class="container">
@@ -34,7 +33,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import backToTopVue from "../../components/backToTop.vue";
 
 export default {
   head() {
@@ -64,7 +62,7 @@ export default {
       showMore: 18,
       incrementBy: 18,
       urlParams: null,
-      categoryType: "stores"
+      categoryType: "dine"
     };
   },
   async asyncData({ store, params }) {
@@ -73,7 +71,7 @@ export default {
         store.dispatch("getMMData", { resource: "categories" }),
         store.dispatch("getMMData", { resource: "stores" }),
         store.dispatch("LOAD_SEO", {
-          url: "/stores"
+          url: "/dine"
         })
       ]);
       return { tempSEO: results[2].data.meta_data[0] };
@@ -86,13 +84,14 @@ export default {
     this.$nextTick(function() {
       this.urlParams = this.$route.query;
       debugger;
-      if (this.urlParams && this.urlParams.type == "newstores") {
-        this.categoryType = "newstores";
-        this.loadNewStores();
+      if (this.urlParams && this.urlParams.type) {
+        this.categoryType = this.urlParams.type;
+        var cat = this.getCategory(this.urlParams.type);
+        this.filterStoresByCategory(cat);
       } else {
         this.filteredStores = this.allStores;
         this.urlParams = null;
-        this.categoryType = "stores";
+        this.categoryType = "dine";
         if (this.tempSEO) {
           this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
         }
@@ -102,17 +101,17 @@ export default {
   },
   created() {
     this.urlParams = this.$route.query;
-    if (this.urlParams && this.urlParams.type == "newstores") {
-      this.categoryType = "newstores";
-      this.loadNewStores();
+    if (this.urlParams && this.urlParams.type) {
+      this.categoryType = this.urlParams.type;
+      this.filteredStores = this.processedDineStores;
     } else {
       this.filteredStores = this.allStores;
       this.urlParams = null;
-      this.categoryType = "stores";
+      this.categoryType = "dine";
     }
     if (this.tempSEO) {
-        this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
-      }
+      this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
+    }
   },
   beforeMount() {
     // window.addEventListener("scroll", this.isScrolled);
@@ -136,10 +135,10 @@ export default {
       "findCategoryByName",
       "findSubcategoriesByParentID",
       "locale",
-      "findNewStores"
+      "processedDineStores"
     ]),
     allStores() {
-      var stores = this.processedStores;
+      var stores = this.processedDineStores;
       debugger;
       var vm = this;
       _.forEach(stores, function(store, key) {
@@ -151,21 +150,6 @@ export default {
       });
       window.addEventListener("scroll", this.isScrolled);
       return stores;
-    },
-    allCatergories() {
-      var cats = this.processedCategories; //_.map(this.processedCategories, 'name')
-      cats.unshift({ id: 0, name: "ALL" });
-      return cats;
-    },
-    dropDownCats() {
-      var cats = _.map(
-        _.filter(this.processedCategories, function(o) {
-          return o.store_ids;
-        }),
-        "name"
-      );
-      cats.unshift("ALL");
-      return cats;
     },
     filterByCategory(selectedCat) {
       var category_id = selectedCat.id;
@@ -184,25 +168,6 @@ export default {
         this.showCategories = false;
       }
     },
-    // filterByParentCategoryMobile() {
-    //   var category_id = this.selectedParentCat.name;
-
-    //   if (
-    //     category_id == "ALL" ||
-    //     category_id == null ||
-    //     category_id == undefined
-    //   ) {
-    //     this.filteredStores = this.allStores;
-    //   } else {
-    //     category_id = this.findCategoryByName(category_id).id;
-    //     var find = this.findCategoryById;
-    //     var filtered = _.filter(this.allStores, function(o) {
-    //       return _.indexOf(o.categories, _.toNumber(category_id)) > -1;
-    //     });
-
-    //     this.filteredStores = filtered;
-    //   }
-    // },
     pageBanner() {
       var pageBanner = null;
       var temp_repo = this.findRepoByName("Stores Banner");
@@ -236,12 +201,6 @@ export default {
         console.log("Error loading data: " + e.message);
       }
     },
-    loadNewStores: function() {
-      var filtered = _.filter(this.allStores, function(o) {
-        return o.is_new_store === true;
-      });
-      this.filteredStores = filtered;
-    },
     getCategory: function(categoryType) {
       var cat = null;
       for (const category of this.processedCategories) {
@@ -254,11 +213,12 @@ export default {
     },
     filterStoresByCategory: function(selectedCat) {
       debugger;
+      console.log(selectedCat);
       var filtered = [];
-      if (this.urlParams && this.urlParams.type == "newstores") {
-        filtered = _.filter(this.filteredStores, function(o) {
-          return o.is_new_store === true;
-          this.filteredStores = filtered;
+      if (this.urlParams && this.urlParams.type) {
+        var cat = this.getCategory(this.urlParams.type);
+        filtered = _.filter(this.allStores, function(o) {
+          return _.indexOf(o.categories, _.toNumber(cat.id)) > -1;
         });
       } else {
         filtered = this.allStores;

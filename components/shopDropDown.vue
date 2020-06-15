@@ -43,38 +43,10 @@ export default {
     }
   },
   mounted() {
-    this.loadData().then(response => {
-      if (response[0] && response[0].data && response[0].data.social) {
-        this.socialFeed = response[0].data.social
-      }
-    })
   },
   computed: {
-    instaFeed() {
-      var insta = null
-      if (
-        this.socialFeed &&
-        this.socialFeed.instagram &&
-        this.socialFeed.instagram.length > 0
-      ) {
-        insta = _.slice(this.socialFeed.instagram, 0, 6)
-      }
-      return insta
-    }
   },
   methods: {
-    loadData: async function(id) {
-      try {
-        let results = await Promise.all([
-          this.$store.dispatch('LOAD_PAGE_DATA', {
-            url: 'https://mallmaverick.com/api/v4/twinpines/social.json'
-          })
-        ])
-        return results
-      } catch (e) {
-        console.log('Error loading data: ' + e.message)
-      }
-    }
   }
 }
 </script>

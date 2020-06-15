@@ -3,15 +3,15 @@
     <div class="col-12 dropdown-box">
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header display-border">
-          <span>Restaurants</span>
+          <span><nuxt-link to="/dine">Restaurants</nuxt-link></span>
         </div>
         <div class="dropdown-options">
-          <div>Fine Dining</div>
-          <div>Fast Food</div>
-          <div>Coffee & Drinks</div>
-          <div>Asian Food</div>
-          <div>Italian Food</div>
-          <div>Bubble Tea</div>
+          <div><nuxt-link to="/stores?type=fine dining">Fine Dining</nuxt-link></div>
+          <div><nuxt-link to="/stores?type=fast food">Fast Food</nuxt-link></div>
+          <div><nuxt-link :to="getEncodeURI('coffee & drinks')">Coffee & Drinks</nuxt-link></div>
+          <div><nuxt-link to="/stores?type=asian food">Asian Food</nuxt-link></div>
+          <div><nuxt-link to="/stores?type=italian food">Italian Food</nuxt-link></div>
+          <div><nuxt-link to="/stores?type=bubble tea">Bubble Tea</nuxt-link></div>
         </div>
       </div>
       <div class="col-6 dropdown-col">
@@ -44,37 +44,12 @@ export default {
     }
   },
   mounted() {
-    this.loadData().then(response => {
-      if (response[0] && response[0].data && response[0].data.social) {
-        this.socialFeed = response[0].data.social
-      }
-    })
   },
   computed: {
-    instaFeed() {
-      var insta = null
-      if (
-        this.socialFeed &&
-        this.socialFeed.instagram &&
-        this.socialFeed.instagram.length > 0
-      ) {
-        insta = _.slice(this.socialFeed.instagram, 0, 6)
-      }
-      return insta
-    }
   },
   methods: {
-    loadData: async function(id) {
-      try {
-        let results = await Promise.all([
-          this.$store.dispatch('LOAD_PAGE_DATA', {
-            url: 'https://mallmaverick.com/api/v4/twinpines/social.json'
-          })
-        ])
-        return results
-      } catch (e) {
-        console.log('Error loading data: ' + e.message)
-      }
+    getEncodeURI: function(string) {
+      return '/stores?type=' + encodeURIComponent(string);
     }
   }
 }
