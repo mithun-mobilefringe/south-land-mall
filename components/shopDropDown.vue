@@ -8,7 +8,7 @@
         </div>
         <div class="dropdown-options">
           <nuxt-link to="/promotions">Promotions</nuxt-link>
-          <div>Mall Map</div>
+          <div><nuxt-link to="/map">Mall Map</nuxt-link></div>
            <nuxt-link to="/stores?type=newstores">New Stores</nuxt-link>
           <div>Shopping Hours</div>
         </div>

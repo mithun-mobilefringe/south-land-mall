@@ -93,7 +93,8 @@ module.exports = {
         '~/plugins/vee-validate.js',
         '~/plugins/global.js',
         '~/plugins/vue-masonry.js',
-        '~/plugins/vue-elevator.js'
+        '~/plugins/vue-elevator.js',
+        '~/plugins/vue-select.js'
     ],
 
     /* Nuxt.js modules */

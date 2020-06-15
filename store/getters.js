@@ -328,6 +328,17 @@ const getters = {
         else
             return {}
     },
+    findRepoById: (state, getters) => (id) => {
+        let repos = state.repos;
+        return repos.find(repo => repo.id === id)
+    },
+    findRepoPostByIdWithId: (state, getters) => (id, repo_id) => {
+        let repos = getters.findRepoById(id);
+        if (repos && repos.images) {
+            let repo_dets = repos.images
+            return repo_dets.find(repo => repo.id === repo_id)
+        }
+    },
     findBlogPostBySlug: (state, getters) => (name, slug) => {
         let blogs = getters.findBlogByName(name);
         let blog_posts = blogs.posts;

@@ -804,19 +804,22 @@ img[lazy="loading"] {
 }
 
 #mapplic {
-    border: 1px solid #FFF;
+    // border: 1px solid #FFF;
+    padding-top: 2rem;
     text-align: center;
     .mapplic-zoom-buttons {
         bottom: auto;
         top: -18px;
         right: 20px;
         transform: rotate(-90deg);
+        box-shadow: none;
+        margin: 0px;
     }
     .mapplic-tooltip-title {
         line-height: normal;
     }
     .mapplic-popup-link {
-        background-color: $primary;
+        // background-color: $primary;
     }
     .mapplic-levels {
         left: 0;
@@ -831,8 +834,9 @@ img[lazy="loading"] {
         font-size: 1.5rem;
     }
     .mapplic-button {
-        width: 38px;
-        height: 38px;
+        width: 3rem;
+        height: 3rem;
+        margin-top: 10px;
     }
     a.mapplic-zoomin-button,
     a.mapplic-zoomout-button {

@@ -12,5 +12,9 @@ module.exports = {
         "send_feedback": "Send FeedBack",
         "disclaimer": "Disclaimer"
 
+    },
+    "stores_page": {
+        "select_a_store": "SELECT A STORE"
+
     }
 }

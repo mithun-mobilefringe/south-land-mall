@@ -21,7 +21,7 @@
               </nuxt-link>
             </div>
           </div>
-          <div class="col-4 map-category">Mall Map</div>
+          <div class="col-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
           <div class="col-4 search-category">
             Search For Store
             <i class="fa fa-search search-icon"></i>
@@ -52,7 +52,15 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["categoryType", "showMap", "filteredStores", "subCategoryType"],
+  props: {
+    "categoryType": String,
+    "showMap": {
+      type: Boolean,
+      default:true
+    },
+    "filteredStores": {
+      type: Object
+    }, "subCategoryType": String},
   data() {
     return {
       socialFeed: null,
@@ -66,7 +74,8 @@ export default {
       newsCategories: [],
       showBackButton: false,
       backlinkURL: "",
-      displayCross: false
+      displayCross: false,
+      showMap: true
     };
   },
   mounted() {
@@ -334,6 +343,9 @@ export default {
   color: #ffffff;
   align-items: center;
   font-size: 1rem;
+}
+.category-menu a {
+  color: white;
 }
 .category-icon {
   transition: transform 0.3s ease-in-out;
