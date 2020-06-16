@@ -21,7 +21,6 @@
       <div id="directory" class="row">
 
         <div class="col-12 map-container">
-          <!-- Mall Map-->
             <div class="map-view d-flex" ref="mallMap">
               
                 <mapplic-map

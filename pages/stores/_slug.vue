@@ -7,9 +7,10 @@
           <div class="col-4 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
+                <div class="detail-top">
                 <div class="detail-name">{{currentStore.name}}</div>
                 <div class="detail-logo">
-                  <img :src="currentStore.logo_url" />
+                  <img :src="currentStore.logo_image_url" />
                 </div>
                 <div class="store-category">
                   <p v-if="currentStore.categories">{{storeCategory(currentStore.categories) }}</p>
@@ -24,19 +25,51 @@
                   <a :href="currentStore.website" target="_blank">{{currentStore.website}}</a>
                 </div>
               </div>
+              </div>
             </div>
           </div>
-          <div class="col-8 p-0 img-box">
-            <div class="img" v-lazy:background-image="currentStore.image_url">
+          <div class="col-8 p-0 img-box map-box">
+            <mapplic-map
+            class
+            ref="svgmap_ref"
+            :height="380"
+            :minimap="false"
+            :deeplinking="false"
+            :sidebar="false"
+            :hovertip="true"
+            :maxscale="5"
+            :storelist="allStores"
+            :mousewheel="false"
+            :mapData="mapData"
+            tooltiplabel="Store Info"
+            @updateMap="updateSVGMap"
+            v-if="windowWidth > 767"
+          ></mapplic-map>
+          <mapplic-map
+            class
+            ref="svgmap_ref"
+            :height="350"
+            :minimap="false"
+            :deeplinking="false"
+            :sidebar="false"
+            :hovertip="true"
+            :maxscale="5"
+            :storelist="allStores"
+            :mousewheel="false"
+            :mapData="mapData"
+            tooltiplabel="Store Info"
+            @updateMap="updateSVGMap"
+            v-else
+          ></mapplic-map>
               <!-- <img :src="currentStore.image_url"/> -->
             </div>
           </div>
         </div>
-      </div>
       <!-- Promotions -->
       <div class="row" v-if="storePromos.length > 0">
         <div class="other-promotions-lbl col-12">Promotions at {{currentStore.name}}</div>
       </div>
+      <hr v-if="storePromos.length > 0"/>
       <div class="row" v-if="storePromos.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
@@ -65,7 +98,9 @@
       <!-- events -->
       <div class="row" v-if="store_events.length > 0">
         <div class="other-promotions-lbl col-12">Events at {{currentStore.name}}</div>
+        <hr v-if="store_events.length > 0"/>
       </div>
+      
       <div class="row" v-if="store_events.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
@@ -95,6 +130,7 @@
       <div class="row" v-if="store_jobs.length > 0">
         <div class="other-promotions-lbl col-12">Jobs at {{currentStore.name}}</div>
       </div>
+      <hr v-if="store_jobs.length > 0"/>
       <div class="row" v-if="store_jobs.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
@@ -124,6 +160,7 @@
       <div class="row" v-if="store_news.length > 0">
         <div class="other-promotions-lbl col-12">News at {{currentStore.name}}</div>
       </div>
+      <hr v-if="store_news.length > 0"/>
       <div class="row" v-if="store_news.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
@@ -168,21 +205,37 @@ export default {
     MapplicMap: () => import("~/components/Mapplic.vue"),
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
     categoryMenuComponent: () =>
-      import("~/components/categoryMenuComponent.vue")
+      import("~/components/categoryMenuComponent.vue"),
+    MapplicMap: () => import('~/components/Mapplic.vue'),
   },
-  async asyncData({ store, route }) {
+  async asyncData({ store,params, route }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getMMData", { resource: "stores" }),
-        store.dispatch("getMMData", { resource: "jobs" }),
-        store.dispatch("getMMData", { resource: "promotions" }),
-        store.dispatch("LOAD_SEO", {
-          url: route.fullPath
+        store.dispatch('LOAD_PAGE_DATA', {
+          url:
+            process.env.MM_API_URL +
+            'store_by_slug/' +
+            route.params.slug +
+            '?api_key=' +
+            process.env.API_KEY
         }),
-        store.dispatch("getMMData", { resource: "events" }),
-        store.dispatch("getMMData", { resource: "news" })
-      ]);
-      return { tempSEO: results[4].data.meta_data[0] };
+
+        store.dispatch('LOAD_PAGE_DATA', {
+          url: process.env.MM_API_URL + 'mapplic?api_key=' + process.env.API_KEY
+        }),
+        store.dispatch('getMMData', { resource: 'stores' }),
+        store.dispatch('getMMData', { resource: 'promotions' }),
+        store.dispatch('getMMData', { resource: 'events' }),
+        store.dispatch('getMMData', { resource: 'jobs' }),
+        store.dispatch('LOAD_SEO', {
+          url: route.fullPath
+        })
+      ])
+      return {
+        currentStore: results[0].data,
+        mapData: results[1].data,
+        tempSEO: results[6].data
+      }
     } catch (e) {
       console.log(e.message);
     }
@@ -200,7 +253,8 @@ export default {
       storePromos: [],
       store_events: [],
       store_jobs: [],
-      store_news: []
+      store_news: [],
+      mapData: null
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -215,6 +269,10 @@ export default {
       "property",
       "timezone",
       "processedStores",
+      "processedPromos",
+      "processedEvents",
+      "processedJobs",
+      "processedNews",
       "findStoreBySlug",
       "findStoreItemsByStoreId",
       "locale",
@@ -236,10 +294,13 @@ export default {
         if (!value.svgmap_region) {
           value.svgmap_region = value.id;
         }
-        value.zoom = 0.4;
+        value.zoom = 1;
         store_list.push(value);
       });
       return store_list;
+    },
+    svgMapRef() {
+      return this.$refs.svgmap_ref
     },
     getSVGurl() {
       return "https://www.mallmaverick.com" + this.property.svgmap_url;
@@ -305,46 +366,162 @@ export default {
   methods: {
     updateCurrentStore(id) {
       this.$nextTick(function() {
-        this.currentStore = this.findStoreBySlug(id);
+        // this.currentStore = this.findStoreBySlug(id)
         if (this.currentStore === null || this.currentStore === undefined) {
-          this.$router.replace("/");
+           this.$router.replace("/");
         } else {
-          var vm = this;
+          debugger;
           if (_.includes(this.currentStore.store_front_url_abs, "missing")) {
             this.currentStore.no_store_logo = true;
           } else {
             this.currentStore.no_store_logo = false;
           }
-
-          // Get Promos, Events, Jobs and News by store ID
-          this.all_store_items = this.findStoreItemsByStoreId(
-            this.currentStore.id
-          );
-          this.storePromos = this.findPromosByStoreId(this.currentStore.id);
-          this.store_events = this.findEventsByStoreId(this.currentStore.id);
-            this.store_jobs = this.findJobsByStoreId(this.currentStore.id);
-            this.store_news = this.findNewsByStoreId(this.currentStore.id);
-          var storeHours = [];
-          var vm = this;
-          _.forEach(this.currentStore.store_hours, function(value, key) {
-            var hour = vm.findHourById(value);
-            // if (hour.day_of_week === 0) {
-            //   hour.order = 7;
-            // } else {
-            //   hour.order = hour.day_of_week;
-            // }
-            storeHours.push(hour);
-          });
-          this.storeHours = _.sortBy(storeHours, [
-            function(o) {
-              return o.order;
+          if (this.currentStore.website) {
+            if (_.includes(this.currentStore.website, 'https')) {
+              this.currentStore.website = _.replace(
+                this.currentStore.website,
+                'https://',
+                ''
+              )
+            } else if (_.includes(this.currentStore.website, 'http')) {
+              this.currentStore.website = _.replace(
+                this.currentStore.website,
+                'http://',
+                ''
+              )
             }
-          ]);
+          }
+
+          var vm = this
+          var temp_promo = []
+          var temp_event = []
+          var temp_job = []
+          var temp_news = []
+          temp_promo = _.filter(this.processedPromos, function(o) {
+            return o.promotionable_id == vm.currentStore.id
+          })
+          temp_event = _.filter(this.processedEvents, function(o) {
+            return o.eventable_id == vm.currentStore.id
+          })
+          temp_job = _.filter(this.processedJobs, function(o) {
+            return o.jobable_id == vm.currentStore.id
+          })
+          temp_news = _.filter(this.processedNews, function(o) {
+            return o.jobable_id == vm.currentStore.id
+          })
+
+          this.storePromos = temp_promo
+          this.store_events = temp_event
+          this.store_jobs = temp_job
+          if (this.currentStore.is_free_form_hours) {
+            this.freeFormHours = true
+          }
+          if (this.currentStore.hours) {
+            var storeHours = []
+            var _this = this
+            //find holiday in the current week
+            var next_holiday = []
+            var start_week = moment()
+              .tz(this.timezone)
+              .startOf('isoWeek')
+            start_week = moment(start_week).format('X')
+            var end_week = moment()
+              .tz(this.timezone)
+              .endOf('isoWeek')
+            end_week = moment(end_week).format('X')
+            _.forEach(this.currentStore.hours.holiday_hours, function(
+              value,
+              key
+            ) {
+              var this_holiday = value
+              var holiday_date = moment(this_holiday.holiday_date)
+                .hour(0)
+                .minute(0)
+                .tz(_this.timezone)
+                .format('X')
+              // If its a multiday holiday, check to see if any holidays are in that week
+              if (this_holiday.holiday_end_date) {
+                // Convert end date
+                var holiday_end_date = moment(this_holiday.holiday_end_date)
+                  .tz(_this.timezone)
+                  .format('X')
+                _.forEach(
+                  _.range(
+                    0,
+                    moment(this_holiday.holiday_end_date).diff(
+                      moment(this_holiday.holiday_date),
+                      'days'
+                    ) + 1
+                  ),
+
+                  function(i) {
+                    var current_holiday = {}
+                    var current_date = moment(this_holiday.holiday_date).add(
+                      i,
+                      'days'
+                    )
+
+                    // current_holiday.day_of_week = moment(current_holiday.date).day()
+                    current_holiday.date = current_date
+                      .hour(0)
+                      .minute(0)
+                      .format()
+                    current_holiday.close_time = this_holiday.close_time
+                    current_holiday.day_of_week = moment(
+                      current_holiday.date
+                    ).day()
+                    current_holiday.holiday_date = current_date
+                    current_holiday.holiday_name = this_holiday.holiday_name
+                    current_holiday.open_time = this_holiday.open_time
+                    current_holiday.is_closed = this_holiday.is_closed
+                    current_holiday.is_holiday = this_holiday.is_holiday
+                    current_holiday.open_full_day = this_holiday.open_full_day
+
+                    var temp_date = moment(current_holiday.date).format('X')
+
+                    if (temp_date >= start_week && temp_date <= end_week) {
+                      next_holiday.push(current_holiday)
+                    }
+                  }
+                )
+              } else if (
+                holiday_date >= start_week &&
+                holiday_date <= end_week
+              ) {
+                // Set the day_of_week for each Holiday Date
+                this_holiday.day_of_week = moment(
+                  this_holiday.holiday_date
+                ).day()
+                next_holiday.push(this_holiday)
+              }
+            })
+            //go through regular hours and replace it with holiday hours
+            _.forEach(this.currentStore.hours.regular_hours, function(
+              value,
+              key
+            ) {
+              var holiday = _.find(next_holiday, function(o) {
+                return o.day_of_week === value.day_of_week
+              })
+              if (holiday) {
+                value = holiday
+              }
+              if (value.day_of_week === 0) {
+                value.order = 7
+              } else {
+                value.order = value.day_of_week
+              }
+              storeHours.push(value)
+            })
+            this.storeHours = _.orderBy(storeHours, ['order'])
+            this.todaysHour = this.currentStore.hours.todays_hours
+          }
+          //update seo
+          if (!_.isEmpty(this.tempSEO)) {
+            this.currentSEO = this.localeSEO(this.tempSEO)
+          }
         }
-        if (this.tempSEO) {
-          this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
-        }
-      });
+      })
     },
     storeCategory(categories) {
       var categoryName = "";
@@ -359,11 +536,47 @@ export default {
       return categoryName;
     },
     dropPin(store) {
-      this.$refs.svgmap_ref.showLocation(store.svgmap_region);
+      if (this.svgMapRef) {
+        var map_id = null
+        // Find store data from mapplic
+        _.forEach(this.mapData.levels, function(o) {
+          map_id = _.find(o.locations, function(location) {
+            return location.store_id == store.id
+          })
+          if (map_id) return false
+        })
+        if (map_id) this.svgMapRef.showLocation(map_id.id)
+      }
     },
     updateSVGMap(map) {
-      this.map = map;
-      this.dropPin(this.currentStore);
+      debugger;
+      this.map = map
+      setTimeout(
+        () => {
+          this.dropPin(this.currentStore)
+        },
+        1000,
+        this
+      )
+    },
+    pastMallHours(hour) {
+      var time_now = moment().format('kkmm')
+      var property_hour = _.find(this.getPropertyHours, function(o) {
+        return o.day_of_week == hour.day_of_week
+      })
+      var mall_open_time = moment(property_hour.open_time).tz(this.timezone)
+      var mall_close_time = moment(property_hour.close_time).tz(this.timezone)
+
+      var open_time = moment(hour.open_time).tz(this.timezone)
+      var close_time = moment(hour.close_time).tz(this.timezone)
+
+      var is_pass_mall_hours = false
+      if (mall_open_time.format('kkmm') > open_time.format('kkmm')) {
+        is_pass_mall_hours = true
+      } else if (mall_close_time.format('kkmm') < close_time.format('kkmm')) {
+        is_pass_mall_hours = true
+      }
+      return is_pass_mall_hours
     }
   }
 };

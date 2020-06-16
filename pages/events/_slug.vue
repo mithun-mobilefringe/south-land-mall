@@ -38,6 +38,7 @@
       <div class="row" v-if="storeEvents.length > 0">
         <div class="other-promotions-lbl col-12">Other Events for {{currentEvent.tag}}</div>
       </div>
+      <hr v-if="storeEvents.length > 0"/>
       <div class="row" v-if="storeEvents.length>0">
         <div class="col-md-6 col-sm-12 event-section" v-for="event in storeEvents" :key="event.id">
           <div class="event-container">

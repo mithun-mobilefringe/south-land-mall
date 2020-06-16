@@ -1,6 +1,6 @@
 <template>
   <div style="position:relative; margin: auto;width: 100%;overflow: hidden;">
-    <div id="mapplic" class="mapplic" style="height:738px;"></div>
+    <div id="mapplic" class="mapplic"></div>
   </div>
 </template>
 
@@ -190,6 +190,9 @@ export default {
       return _.map(this.storelist, 'svgmap_region')
     }
   },
+  // created() {
+  //   this.loadStoreData()
+  // },
   mounted() {
     // Lets loops through mapData and hide pins
     this.locationJSON = this.mapData
@@ -234,24 +237,36 @@ export default {
       })
     })
 
-    if (this.locationJSON.levels && this.locationJSON.levels.length > 0) {
-      // Create Init Store
-      var initZoom = {}
-      initZoom.id = 'init'
-      initZoom.pin = 'hidden'
-      initZoom.z_coordinate = 1
-      initZoom.x = 0.5
-      initZoom.y = 0.5
-      if (this.isMobile) {
-        initZoom.zoom = 1
-      } else {
-        initZoom.zoom = 2
-      }
-      this.locationJSON.levels[0].locations.push(initZoom)
+    // Create Init Store
+    var initZoom = {}
+    initZoom.id = 'init'
+    initZoom.pin = 'hidden'
+    initZoom.z_coordinate = 1
+    initZoom.x = 0.5
+    initZoom.y = 0.5
+    if (this.isMobile) {
+      initZoom.zoom = 1
+    } else {
+      initZoom.zoom = 2
     }
+    this.locationJSON.levels[0].locations.push(initZoom)
+
     // this.store_source = this.loadStoreData();
     this.initMapplic()
   },
+  // watch: {
+  //     map: function() {
+  //         if(this.map != null) {
+  //             // this.$emit('updateMap', this.map);
+
+  //             //wait for map to load
+  //             setTimeout(() => {
+  //                 this.mapLoaded();
+  //             }, 1500);
+  //         }
+
+  //     }
+  // },
   methods: {
     getTooltip() {
       //   { thumb: true, desc: true, link: true }

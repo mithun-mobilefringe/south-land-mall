@@ -39,6 +39,7 @@
       <div class="row" v-if="storeNews.length > 0">
         <div class="other-promotions-lbl col-12">Other News at {{currentNews.store.name}}</div>
       </div>
+      <hr v-if="storeNews.length > 0"/>
       <div class="row" v-if="storeNews.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"

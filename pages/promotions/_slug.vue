@@ -41,6 +41,7 @@
           Other Promotions at {{currentPromo.store.name}}
         </div>
       </div>
+      <hr v-if="storePromos.length > 0"/>
       <div class="row" v-if="storePromos.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"

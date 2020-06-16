@@ -42,6 +42,7 @@
           Other Jobs at {{currentJob.store.name}}
         </div>
       </div>
+      <hr v-if="storeJobs.length > 0"/>
       <div class="row" v-if="storeJobs.length > 0">
         <div
           class="col-md-6 col-sm-12 promotion-section"
