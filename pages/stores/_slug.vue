@@ -202,7 +202,6 @@ export default {
   },
   components: {
     /* SearchComponent: () => import("~/components/SearchComponent.vue"),
-    MapplicMap: () => import("~/components/Mapplic.vue"),
     insidePageHeader: () => import("~/components/insidePageHeader.vue") */
     categoryMenuComponent: () =>
       import("~/components/categoryMenuComponent.vue"),
@@ -549,7 +548,6 @@ export default {
       }
     },
     updateSVGMap(map) {
-      debugger;
       this.map = map
       setTimeout(
         () => {
