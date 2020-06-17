@@ -2,16 +2,16 @@
   <div class="promo_dets_container">
     <div class="site_container container">
       <div class="row">
-        <div class="col-12 top-section">
+        <div class="col-12 top-section" v-if="pages">
           <div class="col-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
                 <div
                   class="detail-date"
                 ></div>
-                <div class="detail-name">Visit our Guest Info Desk for help</div>
+                <div class="detail-name">{{pages.title}}</div>
                 <div class="detail-description">
-                  <span>QUESTIONS, ASSISTANCE, GIFTCARDS, SECURITY, ACCESSIBILITY SERVICES AT GUEST INFO DESK</span>
+                  <span v-html="pages.body"></span>
                 </div>
 
                 <div class="detail-buttons">
@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="col-6 p-0 img-box">
-            <div class="img" v-lazy:background-image="property.image_url">
+            <div class="img" v-lazy:background-image="pages.image_url">
               <!-- <img :src="property.image_url"/> -->
             </div>
           </div>
@@ -35,32 +35,31 @@
         <div class="col-12 other-services">{{property.name}} SERVICES</div>
       </div>
       <hr>
-        <div class="row">
-            <div class="col-3">
-                <div class="service-item">
-                Accessible Restrooms  <i class="fa fa-accessible-icon"></i>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="service-item">
-                ELEVATORS <i class="fa fa-elevator"></i>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="service-item">
-                GUEST INFO DESK <i class="fa fa-info-square"></i>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="service-item">
-                PARKING <i class="fas fa-parking"></i>
-                </div>
-            </div>
+      <div v-if="showSubpageDetails">
+        <transition name="fade">
+      <div class="row">
+        <div class="col-4 selected-subpage">
+          <div class="selected-subpage-title">{{selectedSubpage.title}}</div>
+          <div class="selected-subpage-body" v-html="selectedSubpage.body"></div>
         </div>
-
-
-
-
+        <div class="col-8 selected-subpage-img">
+          <img :src="selectedSubpage.banner_url">
+        </div>
+        
+      </div>
+        </transition>
+      <hr/>
+      </div>
+      <div class="row">
+        <div class="col-3" style="padding:15px" v-for="subpage in subpages" :key="subpage.id">
+          <div class="btn subpage-btn" :class="{'selected-subpage-btn': selectedSubpageBtn(subpage)}" @click="subpageSelected(subpage)">
+            <div class="subpage-title">{{subpage.title}}</div>
+            <div>
+            <img class="subpage-image" :src="subpage.image_url"/>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,18 +81,21 @@ export default {
   },
   data: function() {
     return {
-      currentNews: null,
       tempSEO: null,
       currentSEO: [],
-      storeNews: []
+      storeNews: [],
+      pages: null,
+      subpages: null,
+      selectedSubpage: null,
+      showSubpageDetails: false
     };
   },
   async asyncData({ store, params }) {
     try {
       let results = await Promise.all([
-        store.dispatch("getMMData", { resource: "news" }),
+        store.dispatch("getMMData", { resource: "pages" }),
         store.dispatch("LOAD_SEO", {
-          name: "/news"
+          name: "/pages"
         })
       ]);
       return { tempSEO: results[1].data.meta_data[0] };
@@ -103,13 +105,37 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {},
   created() {
-      this.property.image_url="https://codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
   },
 
   computed: {
-    ...mapGetters(["property", "timezone", "findRepoByName", "locale"])
+    ...mapGetters(["property", "timezone", "findRepoByName", "locale", "processedPages"])
   },
-  methods: {}
+  methods: {
+    loadData: function() {
+        this.pages = this.processedPages[0];
+        this.subpages = this.pages.subpages;
+      
+    },
+    subpageSelected(subpage) {
+      if(this.selectedSubpage && this.selectedSubpage.id == subpage.id) {
+        this.showSubpageDetails = false;
+        this.selectedSubpage = null;
+      } else {
+        this.selectedSubpage = subpage;
+      this.showSubpageDetails = true;
+      }
+    },
+    selectedSubpageBtn: function(subpage) {
+      if(this.selectedSubpage && this.selectedSubpage.id == subpage.id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
+  mounted() {
+    this.loadData();
+  }
 };
 </script>
 <style scoped>
@@ -124,5 +150,64 @@ export default {
     line-height: 3.25rem;
     align-items: center;
     border: 0.5px solid #3C3C3C;
+}
+.subpage-image {
+  width: 2rem;
+  height: 2rem;
+}
+.subpage-btn {
+  display: flex;
+  border: solid 0.5px black;
+  border-radius: 0px;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.subpage-btn img {
+  display: flex;
+  background-color: #EEEEF0;
+  flex: 10%;
+}
+.subpage-title {
+  display: flex;
+  flex: 90%;
+}
+.selected-subpage-btn {
+  color: white;
+  background-color: #E5B03B;
+  
+}
+.selected-subpage-btn img {
+    background-color: #E5B03B;
+  }
+.selected-subpage {
+  display: flex;
+  flex-direction: column;
+  height: 20rem;
+}
+.selected-subpage-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+.selected-subpage-body {
+  margin-top: 2rem;
+  overflow-y: hidden;
+  flex: 80%;
+}
+.selected-subpage-img {
+  height: 20rem;
+  
+}
+.selected-subpage-img img {
+  border: solid 0.5px #707070;
+}
+.img-box .img {
+  background-color: white;
+  background-size: cover;
+
+
 }
 </style>

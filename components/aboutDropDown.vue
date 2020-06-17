@@ -8,7 +8,6 @@
         <div class="dropdown-options">
           <div>Mall Hours</div>
           <div>Contact Us</div>
-          <div>Blogs</div>
           <nuxt-link to="/jobs">Careers</nuxt-link>
         </div>
       </div>

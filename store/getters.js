@@ -228,6 +228,13 @@ const getters = {
             return [];
         }
     },
+    processedPages: state => {
+        try {
+            return state.pages;
+        } catch (err) {
+            return [];
+        }
+    },
     findBannerByName: (state, getters) => (name) => {
         let banners = getters.processedBanners;
         if (banners)
