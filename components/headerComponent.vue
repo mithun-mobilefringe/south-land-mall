@@ -2,7 +2,7 @@
   <!-- begin header nav -->
   <div class="nav-content sticky-aniamte nav-spacing container">
     <div class="nav-container">
-      <div class="d-none d-md-block row">
+      <div class="d-none d-block row">
         <div class="top-header col-12">
           <div class="top-header-mall">
           <div class="header-lang">
@@ -10,7 +10,7 @@
             <div>中文</div>
           </div>
           <div class="logo-header">
-            <nuxt-link to="/">
+            <nuxt-link to="/" aria-label="logo">
             <div class="logo"></div>
             </nuxt-link>
           </div>
@@ -37,7 +37,7 @@
             <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/events"> Events</nuxt-link></div>
             <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/news">News</nuxt-link></div>
             <div @click="displayDropDown(0)" class="header-menu"><nuxt-link to="/services">Services</nuxt-link></div>
-            <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">About<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
+            <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" class="header-menu">About<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <!-- <transition name="fade"> -->
                 <about-drop-down v-if="displayAboutDropDown"></about-drop-down>
               <!-- </transition> -->

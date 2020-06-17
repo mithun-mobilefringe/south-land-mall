@@ -1,11 +1,6 @@
 <template>
   <div>
     <div class="container footer">
-      <div class="row" v-if="scrollY">
-        <div class="back-to-top col-12">
-          <div class="btn">Back to Top</div>
-        </div>
-      </div>
       <div class="row">
         <div class="subscribe-section col-12">
           <div class="subscribe-button">
@@ -29,8 +24,8 @@
           </div>
         </div>
       </div>
+      <hr/>
       <div class="row">
-        <div class="col-12">
           <div class="footer-links">
             <div class="footer_property_dets text-left col-3">
               {{property.name}}
@@ -99,15 +94,14 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
           <div class="footer-links col-12">
-            <div class="col-3" style="text-align: left">Mall Maverick {{copyright_year}}</div>
-            <div class="col-6" style="text-align: center">
+            <div  style="text-align: left">Mall Maverick {{copyright_year}}</div>
+            <div style="text-align: center">
               <p>
                 <a href target="_blank">{{$t("footer.privacy_policy")}}</a>
                 <span>|</span>
@@ -116,7 +110,7 @@
                 <a href target="_blank">{{$t("footer.disclaimer")}}</a>
               </p>
             </div>
-            <div class="col-3" style="text-align: right">
+            <div style="text-align: right">
               <p>
                 <span>
                   {{$t("footer.powered_by")}}
@@ -142,7 +136,6 @@ import tz from "moment-timezone";
 export default {
   data: function data() {
     return {
-      scrollY: false
     };
   },
   props: ["menu_items", "footer_sub_menu"],
@@ -151,11 +144,7 @@ export default {
   },
   created() {
     this.$nextTick(function() {
-      window.addEventListener("scroll", this.handleScroll);
     });
-  },
-  beforeMount() {
-    window.addEventListener("scroll", this.handleScroll);
   },
   computed: {
     ...mapGetters(["route", "property", "timezone", "getPropertyHours"]),
@@ -201,17 +190,8 @@ export default {
     copyright_year() {
       return moment().year();
     },
-    handleScroll(event) {
-      var scrolled = window.pageYOffset;
-      if (scrolled >= 150) {
-        this.scrollY = true;
-      } else {
-        this.scrollY = false;
-      }
-    }
   },
   beforeDestroy: function() {
-    window.removeEventListener("scroll", this.handleScroll);
   }
 };
 </script>

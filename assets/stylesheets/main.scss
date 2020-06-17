@@ -232,7 +232,6 @@ img[lazy="loading"] {
         color: #000;
     }
     .subscribe-section {
-        margin-top: 4rem;
         display: flex;
         flex-direction: column;
         .subscribe-button {
@@ -276,9 +275,7 @@ img[lazy="loading"] {
     }
     .footer-links {
         display: flex;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 0.5px solid #000000;
+        margin-top: 1rem;
         .footer_property_dets {
             font-family: Pistilli;
             font-size: 1.25rem;
@@ -324,6 +321,7 @@ img[lazy="loading"] {
         height: 1.25rem;
         display: flex;
         font-size: 0.7rem;
+        justify-content: space-between;
         a {
             color: white;
             text-decoration: none;
@@ -1461,6 +1459,45 @@ li.list-group-item.row.place-group-item {
         padding: 0;
         background: transparent;
     }
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: center;
+}
+
+.top-header {
+    display: flex;
+}
+
+.header-lang {
+    display: flex;
+    flex: 0.2;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-header {
+    display: flex;
+    flex: 0.6;
+    justify-content: center;
+}
+
+.header-signin {
+    display: flex;
+    flex: 0.2;
+    flex-direction: column;
+}
+
+.nav-bar>div {
+    margin: 0px 30px;
+    padding: 0px 5px;
+}
+
+.nav-arrow {
+    display: flex;
+    justify-content: center;
+    font-size: small;
 }
 
 @media (min-width: 768px) {

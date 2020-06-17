@@ -17,7 +17,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn p-0">
-                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+                <nuxt-link :to="'/promotions/'+promotion.slug" :aria-label="promotion.slug">Promotion Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

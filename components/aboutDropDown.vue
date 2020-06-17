@@ -13,17 +13,17 @@
       </div>
       <div class="col-6 dropdown-col">
         <div class="menu-dropdown-header">
-          <span></span>
+          <div>&nbsp</div>
         </div>
         <div class="dropdown-img">
-          <img src="https://www.mallmaverick.com/system/stores/store_fronts/000/045/770/original/Bath___Body_Works.jpg?1548438769">
+          <img src="//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png">
         </div>
-        <div>
+        <!-- <div>
           <span class="display-name">Info</span>
         </div>
         <div class="dropdown-visit">
           Read Blog
-        </div>
+        </div> -->
       </div>
     </div>
 </div>

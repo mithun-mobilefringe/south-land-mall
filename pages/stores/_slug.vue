@@ -10,7 +10,7 @@
                 <div class="detail-top">
                 <div class="detail-name">{{currentStore.name}}</div>
                 <div class="detail-logo">
-                  <img :src="currentStore.logo_image_url" />
+                  <img :src="currentStore.logo_image_url" :aria-label="currentStore.id"/>
                 </div>
                 <div class="store-category">
                   <p v-if="currentStore.categories">{{storeCategory(currentStore.categories) }}</p>
@@ -85,7 +85,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/promotions/'+promotion.slug">Promotion Details</nuxt-link>
+                <nuxt-link :to="'/promotions/'+promotion.slug" :aria-label="promotion.slug">Promotion Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">
@@ -116,7 +116,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/events/'+promotion.slug">Event Details</nuxt-link>
+                <nuxt-link :to="'/events/'+promotion.slug" :aria-label="promotion.slug">Event Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">
@@ -146,7 +146,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/jobs/'+promotion.slug">Job Details</nuxt-link>
+                <nuxt-link :to="'/jobs/'+promotion.slug" :aria-label="promotion.slug">Job Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">
@@ -176,7 +176,7 @@
                 class="promo-date"
               >{{promotion.start_date | moment("MMM D", timezone)}} - {{promotion.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn">
-                <nuxt-link :to="'/promotions/'+promotion.slug">News Details</nuxt-link>
+                <nuxt-link :to="'/promotions/'+promotion.slug" :aria-label="promotion.slug">News Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

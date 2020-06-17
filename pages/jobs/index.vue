@@ -12,7 +12,7 @@
               <p class="job_position">{{ job.job_type }}</p>
               <div class="promo-date">End Date: {{job.end_date | moment("MMM D", timezone)}}</div>
               <div class="promo-button btn p-0">
-                <nuxt-link :to="'/jobs/'+job.slug">Job Details</nuxt-link>
+                <nuxt-link :to="'/jobs/'+job.slug" :aria-label="job.slug">Job Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

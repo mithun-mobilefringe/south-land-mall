@@ -24,7 +24,7 @@
                 <span v-else>{{ event.start_date | moment("MMM D", timezone)}}</span>
               </div>
               <div class="promo-button btn p-0">
-                <nuxt-link :to="'/events/'+event.slug">Event Details</nuxt-link>
+                <nuxt-link :to="'/events/'+event.slug" :aria-label="event.slug">Event Details</nuxt-link>
               </div>
             </div>
             <div class="container-img col-5">

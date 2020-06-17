@@ -1,13 +1,15 @@
 <template>
   <div id="head_section">
     <div style="background: #EEEEF0 0% 0% no-repeat padding-box;">
-      <div style="background: #FFFFFF 0% 0% no-repeat padding-box;">
+      <div style="background: #FFFFFF 0% 0% no-repeat padding-box;" role="complementary">
+        <h1 class="accessibility">{{ property.name }}</h1>
       <header-component :is-transparent="true" :menu_items="menu_items" />
       </div>
-      <div class="main_content_container">
+      <div class="main_content_container" role="main">
+        <h1 class="accessibility">{{ property.name }}</h1>
         <nuxt class="router_content" />
       </div>
-      <div>
+      <div role="contentinfo">
       <footer-component menu_items="menu_items" :footer_sub_menu="footer_sub_menu" />
       </div>
     </div>
