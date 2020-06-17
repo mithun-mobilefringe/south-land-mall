@@ -119,7 +119,6 @@ export default {
     }
   },
   beforeMount() {
-    // window.addEventListener("scroll", this.isScrolled);
   },
   watch: {
     filteredStores() {
@@ -153,7 +152,6 @@ export default {
           store.no_store_logo = true;
         }
       });
-      window.addEventListener("scroll", this.isScrolled);
       return stores;
     },
     filterByCategory(selectedCat) {
@@ -273,24 +271,6 @@ export default {
         this.showMore = num;
       }
     },
-    isScrolled() {
-      if (window.pageYOffset > 300) {
-        var button = document.getElementById("load_more");
-        if (button) {
-          this.isScrolledIntoView(button);
-        }
-      }
-    },
-    isScrolledIntoView(button) {
-      var docViewTop = $(window).scrollTop();
-      var docViewBottom = docViewTop + $(window).height();
-      var elemTop = $(button).offset().top;
-      var elemBottom = elemTop + $(button).height();
-
-      if (elemBottom <= docViewBottom && elemTop >= docViewTop) {
-        this.loadMore();
-      }
-    },
     filterByParentCategory() {
       var category_id = this.selectedParentCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
@@ -308,9 +288,6 @@ export default {
       this.showSubCategories = false;
       this.filterByParentCategory();
     }
-  },
-  beforeDestroy: function() {
-    window.removeEventListener("scroll", this.isScrolled);
   }
 };
 </script>

@@ -51,7 +51,7 @@
       <hr/>
       </div>
       <div class="row">
-        <div class="col-3" style="padding:15px" v-for="subpage in subpages" :key="subpage.id">
+        <div class="col-6 col-md-4 col-lg-3" style="padding:15px" v-for="subpage in subpages" :key="subpage.id">
           <div class="btn subpage-btn" :class="{'selected-subpage-btn': selectedSubpageBtn(subpage)}" @click="subpageSelected(subpage)">
             <div class="subpage-title">{{subpage.title}}</div>
             <div>

@@ -24,6 +24,7 @@
       <div class="row" style="margin-top: 30px" v-else>
         <p>There are no News at this time. Please check back soon.</p>
       </div>
+      <back-to-top></back-to-top>
     </div>
   </div>
 </template>
@@ -39,7 +40,8 @@ export default {
   transition: "page",
   components: {
     categoryMenuComponent: () =>
-      import("~/components/categoryMenuComponent.vue")
+      import("~/components/categoryMenuComponent.vue"),
+      backToTop: () => import("~/components/backToTop.vue")
   },
   data: function() {
     return {

@@ -64,7 +64,8 @@ export default {
       showMore: 18,
       incrementBy: 18,
       urlParams: null,
-      categoryType: "stores"
+      categoryType: "stores",
+      isBackToButtonVisible: false
     };
   },
   async asyncData({ store, params }) {
@@ -115,7 +116,6 @@ export default {
       }
   },
   beforeMount() {
-    // window.addEventListener("scroll", this.isScrolled);
   },
   watch: {
     filteredStores() {
@@ -149,7 +149,7 @@ export default {
           store.no_store_logo = true;
         }
       });
-      window.addEventListener("scroll", this.isScrolled);
+      // window.addEventListener("scroll", this.isScrolled);
       return stores;
     },
     allCatergories() {
@@ -308,24 +308,13 @@ export default {
         this.showMore = num;
       }
     },
-    isScrolled() {
+    /* isScrolled() {
       if (window.pageYOffset > 300) {
-        var button = document.getElementById("load_more");
-        if (button) {
-          this.isScrolledIntoView(button);
-        }
+        this.isBackToButtonVisible = true;
+      } else {
+        this.isBackToButtonVisible = false;
       }
-    },
-    isScrolledIntoView(button) {
-      var docViewTop = $(window).scrollTop();
-      var docViewBottom = docViewTop + $(window).height();
-      var elemTop = $(button).offset().top;
-      var elemBottom = elemTop + $(button).height();
-
-      if (elemBottom <= docViewBottom && elemTop >= docViewTop) {
-        this.loadMore();
-      }
-    },
+    }, */
     filterByParentCategory() {
       var category_id = this.selectedParentCat.id;
       if (category_id == 0 || category_id == null || category_id == undefined) {
@@ -345,7 +334,7 @@ export default {
     }
   },
   beforeDestroy: function() {
-    window.removeEventListener("scroll", this.isScrolled);
+    // window.removeEventListener("scroll", this.isScrolled);
   }
 };
 </script>

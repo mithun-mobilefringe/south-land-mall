@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="head_section">
     <div style="background: #EEEEF0 0% 0% no-repeat padding-box;">
       <div style="background: #FFFFFF 0% 0% no-repeat padding-box;">
       <header-component :is-transparent="true" :menu_items="menu_items" />

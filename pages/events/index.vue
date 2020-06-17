@@ -39,6 +39,7 @@
         v-else
         style="margin-top: 30px"
       >There are no Events at this time. Please check back soon.</div>
+      <back-to-top></back-to-top>
     </div>
   </div>
 </template>
@@ -56,7 +57,8 @@ export default {
   components: {
     // insidePageHeader: () => import("~/components/insidePageHeader.vue")
     categoryMenuComponent: () =>
-      import("~/components/categoryMenuComponent.vue")
+      import("~/components/categoryMenuComponent.vue"),
+      backToTop: () => import("~/components/backToTop.vue")
   },
   data: function() {
     return {

@@ -30,6 +30,7 @@
       <div class="row" v-else style="margin-top: 30px">
         <p>There are no Promotions at this time. Please check back soon.</p>
       </div>
+      <back-to-top></back-to-top>
     </div>
   </div>
 </template>
@@ -46,7 +47,8 @@ export default {
   components: {
     // insidePageHeader: () => import("~/components/insidePageHeader.vue")
     categoryMenuComponent: () =>
-      import("~/components/categoryMenuComponent.vue")
+      import("~/components/categoryMenuComponent.vue"),
+      backToTop: () => import("~/components/backToTop.vue")
   },
   data: function() {
     return {
