@@ -94,7 +94,8 @@ module.exports = {
         '~/plugins/global.js',
         '~/plugins/vue-masonry.js',
         '~/plugins/vue-elevator.js',
-        '~/plugins/vue-select.js'
+        '~/plugins/vue-select.js',
+        '~/plugins/vue-slick-carousel.js'
     ],
 
     /* Nuxt.js modules */

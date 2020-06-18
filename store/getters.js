@@ -235,6 +235,13 @@ const getters = {
             return [];
         }
     },
+    processedFeatures: state => {
+        try {
+            return state.features;
+        } catch (err) {
+            return [];
+        }
+    },
     findBannerByName: (state, getters) => (name) => {
         let banners = getters.processedBanners;
         if (banners)
