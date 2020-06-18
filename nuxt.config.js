@@ -35,6 +35,11 @@ module.exports = {
                 href: 'https://db.onlinewebfonts.com/c/4205c9bb224d820c7ba373ac31387d2c?family=Pistilli',
                 async: true
             },
+            {
+                href: "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css",
+                rel: "stylesheet",
+                async: true
+            }
         ]
     },
 

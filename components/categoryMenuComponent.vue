@@ -23,8 +23,10 @@
           </div>
           <div class="col-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
           <div class="col-4 search-category">
+            <div class="d-flex" @click="showSearchWindow=!showSearchWindow">
             Search For Store
             <i class="fa fa-search search-icon"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +36,7 @@
         <div class="category-list row" v-if="categories" v-show="showList">
           <div class="col-12">
             <div class="category-list-items">
-              <div v-for="category in categories" class="category-item col-3" :key="category.id">
+              <div v-for="category in categories" class="category-item col-6 col-sm-4 col-md-3" :key="category.id">
                 <div class="items" @click="emitSelectedCategory(category)">{{category.name}}</div>
               </div>
               <div class="cross-item col-12" v-if="displayCross">
@@ -43,6 +45,7 @@
             </div>
           </div>
         </div>
+        <right-search-component v-if="showSearchWindow" @selectedCategoryFromSearch="filterCategoriesFromSearch" @closeSearch="showSearchWindow=false"></right-search-component>
       </div>
     </transition>
   </div>
@@ -52,6 +55,9 @@
 import { mapGetters } from "vuex";
 
 export default {
+  components: {
+    RightSearchComponent: () => import('~/components/rightSearchComponent.vue')
+  },
   props: {
     "categoryType": String,
     "showMap": {
@@ -59,7 +65,7 @@ export default {
       default:true
     },
     "filteredStores": {
-      type: Object
+      type: Array
     }, "subCategoryType": String},
   data() {
     return {
@@ -75,6 +81,7 @@ export default {
       showBackButton: false,
       backlinkURL: "",
       displayCross: false,
+      showSearchWindow: false
     };
   },
   mounted() {
@@ -177,6 +184,12 @@ export default {
       this.categories = _.filter(this.categories, function(o) {
         return o.id == cat.id;
       });
+    },
+    filterCategoriesFromSearch: function(cat) {
+      this.displayCross = true;
+      this.showSearchWindow = false;
+      this.categories = this.filterItemCategories(this.storeCategories);
+      this.emitSelectedCategory(cat);
     },
     loadStoreCategories: function() {
       this.$nextTick(function() {
@@ -365,24 +378,6 @@ export default {
   display: flex;
   align-items: center;
   margin-left: 5px;
-}
-.category-list {
-  background: #eeeef0 0% 0% no-repeat padding-box;
-  display: flex;
-  flex-wrap: wrap;
-}
-.category-list-items {
-  width: 100%;
-  border-bottom: solid 0.5px #000000;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 1.2rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-.category-item {
-  display: flex;
-  padding: 1rem 0rem;
 }
 
 .items {

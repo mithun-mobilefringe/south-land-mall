@@ -7,28 +7,20 @@
       <div class="container">
         <div class="row featured-header">
           <div class="col">
-            <h1>
-              Follow our story.
-              <br />@beverlycenter
-            </h1>
-            <hr class="primary" />
-          </div>
-        </div>
-        <div class="row featured-subheader">
-          <div class="col">
-            <a
-              class="btn-link btn-right-arrow"
-              href="https://www.instagram.com/explore/tags/beverlycenter/"
-              target="_blank"
-              rel="noopener"
-              @keydown.tab="clear($event)"
-            >Follow #BeverlyCenter</a>
+              <span class="home-page-title">Follow Us</span>
+              <br /><span class="home-page-title-2">@{{property.name}}</span>
           </div>
         </div>
         <div class="row featured-body">
           <div class="col">
             <div class="row">
-              <div class="col-sm-6 col-md-4 p-4" v-for="item in instaFeed">
+              <div class="col-sm-6 col-md-3 p-4" v-for="item in instaFeed" :key="item.id">
+                <div style="text-align: end" v-if="item.type=='image'">
+                  <i class="fa fa-clone insta-type"></i>
+                </div>
+                <div style="text-align: end" v-if="item.type=='video'">
+                  <i class="fa fa-video-camera insta-type camera"></i>
+                </div>
                 <a
                   :href="item.link"
                   target="_blank"
@@ -69,6 +61,11 @@ export default {
     })
   },
   computed: {
+    ...mapGetters([
+      "property",
+      "timezone",
+      "locale",
+    ]),
     instaFeed() {
       var insta = null
       if (
@@ -76,7 +73,7 @@ export default {
         this.socialFeed.instagram &&
         this.socialFeed.instagram.length > 0
       ) {
-        insta = _.slice(this.socialFeed.instagram, 0, 6)
+        insta = _.slice(this.socialFeed.instagram, 0, 4)
       }
       return insta
     }
@@ -86,7 +83,7 @@ export default {
       try {
         let results = await Promise.all([
           this.$store.dispatch('LOAD_PAGE_DATA', {
-            url: 'https://mallmaverick.com/api/v4/twinpines/social.json'
+            url: 'http://twinpines.mallmaverick.com/api/v4/twinpines/social.json'
           })
         ])
         return results
@@ -97,3 +94,17 @@ export default {
   }
 }
 </script>
+<style scoped>
+.insta-type {
+  position: absolute;
+  transform: rotate(180deg);
+  font-size: 1.5rem;
+    margin: 0.5rem;
+    right: 5%;
+    color: black;
+    opacity: 7%;
+}
+ .camera {
+  transform: none;
+}
+</style>

@@ -7,7 +7,7 @@
             <div
               class="home-banner"
               :style="{ 'background-image': 'url(' + banner.image_url + ')' }"
-            >{{banner.id}}</div>
+            ></div>
           </div>
         </VueSlickCarousel>
       </div>
@@ -31,18 +31,24 @@
         </div>
         <div class="col-8 p-0 feature-img" v-lazy:background-image="homepage_features[0].image_url">
           <div class="label">{{homepage_features[0].name}}</div>
-          <div class="btn feature-btn"><nuxt-link :to="'/promotions/' + homepage_features[0].slug">Promotion Details</nuxt-link></div>
+          <div class="btn feature-btn">
+            <nuxt-link :to="'/promotions/' + homepage_features[0].slug">Promotion Details</nuxt-link>
+          </div>
         </div>
       </div>
       <div class="col-12 d-flex">
         <div class="col-8 feature-row-2 p-0">
           <div class="feature-img" v-lazy:background-image="homepage_features[1].image_url">
             <div class="label display-right">{{homepage_features[1].name}}</div>
-            <div class="btn feature-btn display-right"><nuxt-link :to="'/events/' + homepage_features[1].slug">Event Details</nuxt-link></div>
+            <div class="btn feature-btn display-right">
+              <nuxt-link :to="'/events/' + homepage_features[1].slug">Event Details</nuxt-link>
+            </div>
           </div>
           <div class="feature-img" v-lazy:background-image="homepage_features[2].image_url">
             <div class="label">{{homepage_features[2].name}}</div>
-            <div class="btn feature-btn"><nuxt-link :to="'/promotions/' + homepage_features[2].slug">Promotion Details</nuxt-link></div>
+            <div class="btn feature-btn">
+              <nuxt-link :to="'/promotions/' + homepage_features[2].slug">Promotion Details</nuxt-link>
+            </div>
           </div>
         </div>
         <div class="col-4 p-0">
@@ -65,31 +71,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="insta-feed-container clearfix">
-        <!-- <div class="insta-feed-image" v-for="(item, index) in instaFeed" :key="index">
-          <a :href="item.link" target="_blank">
-            <div
-              class="insta-feed-background"
-              v-bind:style="{ backgroundImage: 'url(' + item.images.standard_resolution.url + ')' }"
-            ></div>
-            <div class="insta_content">
-              <div class="insta_caption">
-                <p v-if="item.caption">{{ item.caption.text }}</p>
-                <div>
-                  <span>
-                    <i class="fa fa-heart"></i>
-                    {{ item.likes.count }}
-                  </span>
-                  <span>
-                    <i class="fa fa-comment"></i>
-                    {{ item.comments.count }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>-->
-      </div>
+      <instafeed></instafeed>
     </div>
     <!-- <div style="height: 300px;margin-bottom:-30px;width: 100%;">
       <iframe
@@ -137,13 +119,43 @@ export default {
       currentSEO: {},
       homepage_features: [],
       slickSettings: {
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 2000,
         pauseOnDotsHover: true,
         pauseOnFocus: true,
         pauseOnHover: true,
         arrows: true,
-        dots: true
+        dots: true,
+        rows: 2,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        centerPadding: "0px",
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 700,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
       }
     };
   },
@@ -151,7 +163,8 @@ export default {
   components: {
     Slick: () => import("vue-slick"),
     VueSlickCarousel: () => import("vue-slick-carousel"),
-    featureMasonry: () => import("~/components/featureMasonry.vue")
+    featureMasonry: () => import("~/components/featureMasonry.vue"),
+    instafeed: () => import("~/components/instafeed.vue")
   },
   async asyncData({ store, params }) {
     try {
@@ -380,17 +393,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.home-page-title {
-  font-family: Pistilli;
-  font-size: 2.5rem;
-  font-weight: 700;
-}
-.home-page-title-2 {
-  font-size: 1rem;
-}
-.home-page-title-3 {
-  font-size: 0.7rem;
-}
 .feature-row-2 {
   display: flex;
   flex-direction: column;
@@ -464,6 +466,9 @@ export default {
 }
 .display-right {
   justify-content: flex-end !important;
+}
+.slick-slide>div {
+  height: 340px;
 }
 </style>
 

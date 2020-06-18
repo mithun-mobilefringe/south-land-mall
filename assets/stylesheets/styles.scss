@@ -12827,7 +12827,10 @@ header {
 .nav-right {
     position: absolute;
     width: 100%;
-    background-color: #fff;
+    background: #000000D9 0% 0% no-repeat padding-box;
+    color: white;
+    font-weight: lighter;
+    // background-color: #fff;
     z-index: 1002;
     right: 0;
     border-left: 1px solid #b2b2b2;
@@ -12856,13 +12859,13 @@ header {
 @media (min-width: 768px) {
     .nav-left,
     .nav-right {
-        width: 25rem;
+        width: 100%;
     }
 }
 
 @media (min-width: 768px) {
     .nav-right {
-        width: 25rem;
+        width: 100%;
         .input-group a.btn {
             right: .2rem;
         }
@@ -14642,8 +14645,8 @@ header {
     .featured-feed-section .instafeed-image {
         width: 24vw;
         height: 24vw;
-        max-width: 425px;
-        max-height: 425px;
+        max-width: 255px;
+        max-height: 255px;
     }
 }
 

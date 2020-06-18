@@ -14,13 +14,13 @@
                 <div class="detail-description">
                   <span v-html="currentEvent.description"></span>
                 </div>
-                <div class="detail-buttons">
-                  <div class="visit-button btn">
+                <div class="detail-buttons col-12 p-0">
+                  <div class="visit-button btn col-12 col-sm-6">
                     <nuxt-link
                       :to="'/stores/' + currentEvent.store.slug"
                     >Visit {{currentEvent.name}}</nuxt-link>
                   </div>
-                  <div class="share-button">
+                  <div class="share-button col-12 col-sm-12">
                     Share Event
                     <i class="fa fa-share"></i>
                   </div>

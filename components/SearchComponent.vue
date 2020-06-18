@@ -1,8 +1,9 @@
 <template>
   <div class="search-component" v-if="autocomplete">
+    <i class="fa fa-search fa-2x" style="cursor: pointer" ></i>
     <p class="control has-icon has-icon-right">
       <input
-        type="search"
+        type="text"
         class="input is-large"
         :placeholder="placeholder"
         :suggestionAttribute="suggestionAttribute"
@@ -14,32 +15,11 @@
         v-on:keydown.enter="select"
         :value="value"
       />
-      <i class="fa fa-angle-down"></i>
+      <!-- <i class="fa fa-angle-down"></i> -->
     </p>
-    <ul v-show="isOpen" class="options-list">
-      <li
-        v-for="(option, index) in result"
-        :class="{'highlighted': index === highlightedPosition}"
-        v-on:mouseenter="highlightedPosition = index"
-        v-on:mousedown="select"
-      >
-        <slot name="item" :data="option"></slot>
-      </li>
-    </ul>
+    <i class="fa fa-times fa-2x" style="cursor: pointer" aria-hidden="true" @click="$parent.$emit('closeSearch')"></i>
   </div>
-  <div class="search-component" v-else>
-    <p class="control has-icon has-icon-right">
-      <input
-        type="search"
-        class="input is-large"
-        :placeholder="placeholder"
-        v-on:keydown.enter="select"
-        v-on:input="onInput($event.target.value)"
-        :value="value"
-      />
-      <i class="fa fa-angle-down"></i>
-    </p>
-  </div>
+  
 </template>
 
 <script>
@@ -186,6 +166,7 @@ export default {
     },
     result() {
       this.$parent.$emit(this.eventName, this.result)
+      this.$emit('updatedResults', this.result)
     }
   },
   methods: {

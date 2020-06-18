@@ -159,7 +159,8 @@ export default {
     },
     loadStorePromos: function() {
       this.storePromos = this.processedPromos.filter(promo => {
-        if(promo.store) {
+        debugger;
+        if(promo.store && this.currentPromo.store) {
           return (promo.store.id == this.currentPromo.store.id) && (promo.id != this.currentPromo.id);
         } else {
           return false;
