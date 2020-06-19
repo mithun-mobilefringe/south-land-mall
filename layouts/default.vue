@@ -6,7 +6,6 @@
       <header-component :is-transparent="true" :menu_items="menu_items" />
       </div>
       <div class="main_content_container" role="main">
-        <h1 class="accessibility">{{ property.name }}</h1>
         <nuxt class="router_content" />
       </div>
       <div role="contentinfo">

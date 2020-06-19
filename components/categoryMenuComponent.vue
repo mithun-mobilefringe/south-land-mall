@@ -23,7 +23,7 @@
           </div>
           <div class="col-12 col-sm-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
           <div class="col-12 col-sm-4 search-category">
-            <div class="d-flex" @click="showSearchWindow=!showSearchWindow">
+            <div class="d-flex" style="cursor: pointer;" @click="showSearchWindow=!showSearchWindow">
             Search For Store
             <i class="fa fa-search search-icon"></i>
             </div>

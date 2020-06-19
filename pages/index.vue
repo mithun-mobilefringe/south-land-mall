@@ -1,94 +1,93 @@
 <template>
-  <div class="container">
+  <div>
     <div class="row">
       <div class="col-12 slick-carousel">
-        <VueSlickCarousel v-bind="slickSettings">
+        <!-- <VueSlickCarousel v-bind="slickSettings">
           <div class v-for="banner in banners" :key="banner.id">
             <div
               class="home-banner"
               :style="{ 'background-image': 'url(' + banner.image_url + ')' }"
             ></div>
           </div>
-        </VueSlickCarousel>
+        </VueSlickCarousel>-->
+        <carousel-component :banners="banners"></carousel-component>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 homepage-label">
-        <div class="home-page-title">The Art of Shopping</div>
-        <div class="home-page-title-2">At {{property.name}}</div>
-        <div class="home-page-title-3">Hundreds of Brand Name Stores & Services under one roof.</div>
-      </div>
-    </div>
-    <div class="row mt-5" v-if="homepage_features.length >0">
-      <div class="col-12" style="display: flex;">
-        <div class="col-4 p-0">
-          <div class="featured-row-1">
-            <div class="feature-store">
-              <div style="font-family: Pistilli; font-size: 4rem;">50%</div>
-              <div style="font-size: 2rem;">WINTER SALE AT H&M</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-8 p-0 feature-img" v-lazy:background-image="homepage_features[0].image_url">
-          <div class="label">{{homepage_features[0].name}}</div>
-          <div class="btn feature-btn">
-            <nuxt-link :to="'/promotions/' + homepage_features[0].slug" :aria-label="homepage_features[0].slug">Promotion Details</nuxt-link>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 homepage-label">
+          <div class="home-page-title">The Art of Shopping</div>
+          <div class="home-page-title-2">At {{property.name}}</div>
+          <div class="home-page-title-3">Hundreds of Brand Name Stores & Services under one roof.</div>
         </div>
       </div>
-      <div class="col-12 d-flex">
-        <div class="col-8 feature-row-2 p-0">
-          <div class="feature-img" v-lazy:background-image="homepage_features[1].image_url">
-            <div class="label display-right">{{homepage_features[1].name}}</div>
-            <div class="btn feature-btn display-right">
-              <nuxt-link :to="'/events/' + homepage_features[1].slug">Event Details</nuxt-link>
+      <div class="row mt-5" v-if="homepage_features.length >0">
+        <div class="col-12" style="display: flex;">
+          <div class="col-4 p-0">
+            <div class="featured-row-1">
+              <div class="feature-store">
+                <div style="font-family: Pistilli; font-size: 4rem;">50%</div>
+                <div style="font-size: 2rem;">WINTER SALE AT H&M</div>
+              </div>
             </div>
           </div>
-          <div class="feature-img" v-lazy:background-image="homepage_features[2].image_url">
-            <div class="label">{{homepage_features[2].name}}</div>
+          <div
+            class="col-8 p-0 feature-img"
+            v-lazy:background-image="homepage_features[0].image_url"
+          >
+            <div class="label">{{homepage_features[0].name}}</div>
             <div class="btn feature-btn">
-              <nuxt-link :to="'/promotions/' + homepage_features[2].slug">Promotion Details</nuxt-link>
+              <nuxt-link
+                :to="'/promotions/' + homepage_features[0].slug"
+                :aria-label="homepage_features[0].slug"
+              >Promotion Details</nuxt-link>
             </div>
           </div>
         </div>
-        <div class="col-4 p-0">
-          <div class="feature-hours">
-            <div>
-              <div>
-                <i class="fa fa-clock-o clock"></i>
+        <div class="col-12 d-flex">
+          <div class="col-8 feature-row-2 p-0">
+            <div class="feature-img" v-lazy:background-image="homepage_features[1].image_url">
+              <div class="label display-right">{{homepage_features[1].name}}</div>
+              <div class="btn feature-btn display-right">
+                <nuxt-link :to="'/events/' + homepage_features[1].slug">Event Details</nuxt-link>
               </div>
-              <div style="text-align: center;">
-                <span style="font-size: 1.5rem">WE ARE OPEN ON FAMILY DAY</span>
-                <br />
-                <span>9am to 9pm</span>
+            </div>
+            <div class="feature-img" v-lazy:background-image="homepage_features[2].image_url">
+              <div class="label">{{homepage_features[2].name}}</div>
+              <div class="btn feature-btn">
+                <nuxt-link :to="'/promotions/' + homepage_features[2].slug">Promotion Details</nuxt-link>
               </div>
+            </div>
+          </div>
+          <div class="col-4 p-0">
+            <div class="feature-hours">
               <div>
-                <button class="btn" style="border: solid 0.5px white; color: white">SHOPPING HOURS</button>
+                <div>
+                  <i class="fa fa-clock-o clock"></i>
+                </div>
+                <div style="text-align: center;">
+                  <span style="font-size: 1.5rem">WE ARE OPEN ON FAMILY DAY</span>
+                  <br />
+                  <span>9am to 9pm</span>
+                </div>
+                <div>
+                  <button class="btn" style="border: solid 0.5px white; color: white">SHOPPING HOURS</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <instafeed></instafeed>
-    </div>
-    <!-- <div style="height: 300px;margin-bottom:-30px;width: 100%;">
-      <iframe
-        :src="propertyAddress()"
-        width="100%"
-        height="300"
-        frameborder="0"
-        style="border:0"
-        allowfullscreen
-      ></iframe>
-    </div>-->
-    <div class="popup_container" v-if="currentPopup && show_popup">
-      <i class="fa fa-times close_popup" @click="closePopup()"></i>
-      <a v-if="currentPopup.photo_link" :href="currentPopup.photo_link" target="_target">
-        <img :src="currentPopup.image_url" />
-      </a>
-      <img v-else :src="currentPopup.image_url" />
+      <div class="row">
+        <instafeed></instafeed>
+      </div>
+      <div class="popup_container" v-if="currentPopup && show_popup">
+        <i class="fa fa-times close_popup" @click="closePopup()"></i>
+        <a v-if="currentPopup.photo_link" :href="currentPopup.photo_link" target="_target">
+          <img :src="currentPopup.image_url" />
+        </a>
+        <img v-else :src="currentPopup.image_url" />
+      </div>
     </div>
   </div>
 </template>
@@ -96,6 +95,7 @@
 <script>
 import { mapGetters } from "vuex";
 import Cookies from "js-cookie";
+import carouselComponentVue from "../components/carouselComponent.vue";
 
 export default {
   data: function() {
@@ -119,7 +119,7 @@ export default {
       currentSEO: {},
       homepage_features: [],
       slickSettings: {
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 2000,
         pauseOnDotsHover: true,
         pauseOnFocus: true,
@@ -164,7 +164,8 @@ export default {
     Slick: () => import("vue-slick"),
     VueSlickCarousel: () => import("vue-slick-carousel"),
     featureMasonry: () => import("~/components/featureMasonry.vue"),
-    instafeed: () => import("~/components/instafeed.vue")
+    instafeed: () => import("~/components/instafeed.vue"),
+    carouselComponent: () => import("~/components/carouselComponent.vue")
   },
   async asyncData({ store, params }) {
     try {
@@ -467,7 +468,7 @@ export default {
 .display-right {
   justify-content: flex-end !important;
 }
-.slick-slide>div {
+.slick-slide > div {
   height: 340px;
 }
 </style>

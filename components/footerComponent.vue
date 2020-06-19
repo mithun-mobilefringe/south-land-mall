@@ -26,7 +26,7 @@
       </div>
       <hr/>
       <div class="row">
-          <div class="footer-links">
+          <div class="footer-links col-12">
             <div class="footer_property_dets text-left col-3">
               {{property.name}}
               <p>

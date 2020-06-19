@@ -15,11 +15,11 @@
           <div class="store-item">
             <nuxt-link :to="'/stores/' +store.slug">
               <div v-if="!store.no_store_logo" class="store-logo">
-                <img class="store_img" :src="store.logo_image_url" alt />
+                <img class="store_img" :aria-label="'Visit Details page for ' + store.name" :src="store.logo_image_url" alt />
               </div>
 
               <div class="store_text" v-else>
-                <p>{{ store.name }}</p>
+                <p :aria-label="'Visit Details page for ' + store.name">{{ store.name }}</p>
               </div>
             </nuxt-link>
           </div>

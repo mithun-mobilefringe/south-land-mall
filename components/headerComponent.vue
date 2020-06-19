@@ -11,7 +11,7 @@
           </div>
           <div class="logo-header">
             <nuxt-link to="/" aria-label="logo">
-            <div class="logo"></div>
+            <div class="logo"><h1 class="accessibility">{{ property.name }}</h1></div>
             </nuxt-link>
           </div>
           <div class="header-signin">
@@ -21,12 +21,12 @@
         <div class="nav-container nav-bar col-12">
             <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" class="header-menu">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <!-- <transition name="fade"> -->
-                <shop-drop-down v-if="displayShopDropDown" :featured_store="featuredStores[0]"></shop-drop-down>
+                <shop-drop-down v-if="displayShopDropDown" :featured_stores="featuredStores"></shop-drop-down>
               <!-- </transition> -->
             </div>
             <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" class="header-menu">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <!-- <transition name="fade"> -->
-                <dine-drop-down v-if="displayDineDropDown" :featured_store="featuredStores[1]"></dine-drop-down>
+                <dine-drop-down v-if="displayDineDropDown" :featured_stores="featuredStores"></dine-drop-down>
               <!-- </transition> -->
             </div>
             <!-- <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>

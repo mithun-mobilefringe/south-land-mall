@@ -13,7 +13,7 @@
           <div>Shopping Hours</div>
         </div>
       </div>
-      <div class="col-6 dropdown-col">
+      <div class="col-6 dropdown-col" v-if="featured_store">
         <div class="menu-dropdown-header">
           <div>Featured Store</div>
         </div>
@@ -27,6 +27,11 @@
           <nuxt-link :to="/stores/ + featured_store.slug">Visit {{featured_store.name}}</nuxt-link>
         </div>
       </div>
+      <div class="dropdown-empty" v-else>
+        <div class="dropdown-img">
+          <img src="//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png">
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -37,13 +42,16 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 
 export default {
-  props:['featured_store'],
+  props:['featured_stores'],
   data() {
     return {
       socialFeed: null,
+      featured_store: null
     }
   },
   mounted() {
+    if(this.featured_stores)
+    this.featured_store = this.featured_stores[0];
   },
   computed: {
   },
