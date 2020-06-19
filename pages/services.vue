@@ -201,7 +201,7 @@ export default {
 }
 .selected-subpage-body {
   margin-top: 2rem;
-  overflow-y: hidden;
+  overflow-y: scroll;
   flex: 80%;
 }
 .selected-subpage-img {

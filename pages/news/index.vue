@@ -95,6 +95,7 @@ export default {
       "locale"
     ]),
     newss() {
+      debugger;
       var vm = this;
       var temp_promo = [];
       _.forEach(this.processedNews, function(value, key) {
@@ -109,13 +110,12 @@ export default {
           });
           temp_promo.push(value);
         }
-        if (_.isEmpty(value.store)) {
-            value.store = {};
-            value.store.store_front_url_abs =
-              "https://www.mallmaverick.com/system/promotions/promo_images/000/135/896/original/SLM_-_Mall_Entrance.jpg?1542985738";
+        if (_.isEmpty(value.image_url)) {
+              value.image_url =
+                "//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
           }
       });
-
+        debugger;
       return _.sortBy(temp_promo, [
         function(o) {
           return o.start_date;

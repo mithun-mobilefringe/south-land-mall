@@ -32,7 +32,7 @@
         <div class="col-8 p-0 feature-img" v-lazy:background-image="homepage_features[0].image_url">
           <div class="label">{{homepage_features[0].name}}</div>
           <div class="btn feature-btn">
-            <nuxt-link :to="'/promotions/' + homepage_features[0].slug">Promotion Details</nuxt-link>
+            <nuxt-link :to="'/promotions/' + homepage_features[0].slug" :aria-label="homepage_features[0].slug">Promotion Details</nuxt-link>
           </div>
         </div>
       </div>

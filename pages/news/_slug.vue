@@ -140,6 +140,7 @@ export default {
   },
   methods: {
     updateCurrentNews(id) {
+      debugger;
       this.$nextTick(function() {
         this.currentNews = this.findNewsBySlug(id);
         if (this.currentNews === null || this.currentNews === undefined) {
@@ -153,6 +154,7 @@ export default {
       });
     },
     loadStoreNews: function() {
+      debugger;
       this.storeNews = this.processedNews.filter(news => {
         if (news.store && this.currentNews.store) {
           return (

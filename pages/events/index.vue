@@ -11,9 +11,7 @@
           <div class="event-container">
             <div class="container-details col-7">
               <div v-if="event.tags.length > 0" class="promo-store-name">
-                <div v-for="tag in event.tags" :key="tag.index">
-                  <div>{{tag}}</div>
-                </div>
+                  <div>{{event.tags.join(" | ")}} </div>
               </div>
               <div v-else class="promo-store-name">Southland Mall</div>
               <div class="promo-name">{{event.name}}</div>

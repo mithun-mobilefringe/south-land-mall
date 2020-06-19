@@ -370,7 +370,7 @@ img[lazy="loading"] {
 .nav-right .category-list {
     background-color: transparent;
     overflow-y: scroll;
-    height: 29vh;
+    height: 40vh;
 }
 
 .nav-right .category-list .items {
@@ -381,10 +381,12 @@ img[lazy="loading"] {
 /**** Site Search ******/
 
 #nav-right {
+    top: 0;
+    height: 100vh;
     .right-search-content {
         // height: calc(100vh - 165px);
         color: white;
-        height: 35vh;
+        height: 44vh;
         overflow-y: scroll;
         a {
             color: white;
@@ -594,6 +596,7 @@ img[lazy="loading"] {
     border: 0.5px solid #000000;
     justify-content: center;
     margin: 0px 20px;
+    text-align: center;
 }
 
 .display-name {
@@ -993,6 +996,8 @@ img[lazy="loading"] {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    width: 100%;
+                    height: 100%;
                 }
             }
         }

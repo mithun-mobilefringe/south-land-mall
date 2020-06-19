@@ -3,7 +3,7 @@
     <div class="category-menu">
       <div class="container">
         <div class="row">
-          <div class="col-4">
+          <div class="col-12 col-sm-4">
             <div v-if="!showBackButton">
               <span @click="showList=!showList" class="category-lbl">
                 <span style="margin-right: 5px">{{categoryLbl}}</span>
@@ -21,8 +21,8 @@
               </nuxt-link>
             </div>
           </div>
-          <div class="col-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
-          <div class="col-4 search-category">
+          <div class="col-12 col-sm-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
+          <div class="col-12 col-sm-4 search-category">
             <div class="d-flex" @click="showSearchWindow=!showSearchWindow">
             Search For Store
             <i class="fa fa-search search-icon"></i>

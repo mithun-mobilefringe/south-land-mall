@@ -18,13 +18,13 @@
           <div>Featured Store</div>
         </div>
         <div class="dropdown-img">
-          <img src="https://www.mallmaverick.com/system/stores/store_fronts/000/045/770/original/Bath___Body_Works.jpg?1548438769">
+          <img :src="featured_store.logo_image_url">
         </div>
         <div>
-          <span class="display-name">Store.name</span>
+          <span class="display-name">{{featured_store.name}}</span>
         </div>
         <div class="dropdown-visit">
-          Visit Store
+          <nuxt-link :to="/stores/ + featured_store.slug">Visit {{featured_store.name}}</nuxt-link>
         </div>
       </div>
     </div>
@@ -37,9 +37,10 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 
 export default {
+  props:['featured_store'],
   data() {
     return {
-      socialFeed: null
+      socialFeed: null,
     }
   },
   mounted() {

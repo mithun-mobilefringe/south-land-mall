@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row" v-if="storeEvents.length > 0">
-        <div class="other-promotions-lbl col-12">Other Events for {{currentEvent.tag}}</div>
+        <div class="other-promotions-lbl col-12">Other Events for {{currentEvent.tags.join(' | ')}}</div>
       </div>
       <hr v-if="storeEvents.length > 0"/>
       <div class="row" v-if="storeEvents.length>0">
@@ -144,6 +144,7 @@ export default {
   },
   methods: {
     updatecurrentEvent(id) {
+      debugger;
       this.$nextTick(function() {
         this.currentEvent = this.findEventBySlug(id);
         if (this.currentEvent === null || this.currentEvent === undefined) {
@@ -166,6 +167,7 @@ export default {
               this.currentEvent.image_url =
                 "//codecloud.cdn.speedyrails.net/sites/5daf7e206e6f643cde010000/image/png/1546551307522/eventplaceholder2@2x.png";
             }
+            debugger;
 
             if (this.tempSEO) {
               this.currentSEO = this.localeSEO(this.tempSEO, this.locale);
@@ -179,12 +181,8 @@ export default {
       this.storeEvents = this.processedEvents.filter(event => {
         let isTagPresent = false;
         if (event.tags && this.currentEvent.tags) {
-          console.log("Cusrrent Event: " + this.currentEvent.tags);
-          console.log(
-            "index: " + _.indexOf(event.tags, this.currentEvent.tags[0])
-          );
           for (let tag of this.currentEvent.tags) {
-            if (_.indexOf(event.tags, this.currentEvent.tags[0]) > -1 && event.id != this.currentEvent.id) {
+            if (_.indexOf(event.tags, tag) > -1 && event.id != this.currentEvent.id) {
               isTagPresent = true;
               break;
             } else {

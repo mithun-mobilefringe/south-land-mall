@@ -21,12 +21,12 @@
         <div class="nav-container nav-bar col-12">
             <div @click="displayDropDown(1)" v-click-outside="hideShopDropDown" class="header-menu">Shop<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <!-- <transition name="fade"> -->
-                <shop-drop-down v-if="displayShopDropDown"></shop-drop-down>
+                <shop-drop-down v-if="displayShopDropDown" :featured_store="featuredStores[0]"></shop-drop-down>
               <!-- </transition> -->
             </div>
             <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" class="header-menu">Dine<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <!-- <transition name="fade"> -->
-                <dine-drop-down v-if="displayDineDropDown"></dine-drop-down>
+                <dine-drop-down v-if="displayDineDropDown" :featured_store="featuredStores[1]"></dine-drop-down>
               <!-- </transition> -->
             </div>
             <!-- <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
@@ -68,12 +68,15 @@ export default {
       displayShopDropDown: false,
       displayStayDropDown: false,
       displayDineDropDown: false,
-      displayAboutDropDown: false
+      displayAboutDropDown: false,
+      featuredStores:[]
     };
   },
   created() {
     this.$nextTick(function() {
       //Init
+      debugger;
+      this.featuredStores = this.homepage.featured_stores;
       this.getWindowWidth();
       if (this.$route.path === "/") {
         this.is_home = true;
@@ -94,7 +97,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(["property"]),
+    ...mapGetters(["property", "homepage"]),
     menu1() {
       return _.slice(this.menu_items, 0, 4);
     },
