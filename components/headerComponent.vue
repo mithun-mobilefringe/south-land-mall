@@ -1,6 +1,6 @@
 <template>
   <!-- begin header nav -->
-  <div class="nav-content sticky-aniamte nav-spacing container">
+  <div class="nav-content sticky sticky-animate nav-spacing container">
     <div class="nav-container d-none d-sm-block">
       <div class="row">
         <div class="top-header col-12">
@@ -83,14 +83,26 @@
               </nuxt-link>
             </div>
             <div class="header-signin">
-              <div style="cursor: pointer;" @click="showMobileMenu=!showMobileMenu">
-                <i class="fa fa-bars" aria-hidden="true"></i>
+              <div class="hamburger" style="cursor: pointer;" @click="showMobileMenu=!showMobileMenu">
+                <div class="hamburger__line">
+                  <span class="hamburger__dots hamburger__dots--right"></span>
+                </div>
+                <div class="hamburger__line">
+                  <span class="hamburger__dots hamburger__dots--up"></span>
+                </div>
+                <div class="hamburger__line">
+                  <span class="hamburger__dots"></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <transition name="fade">
+      <transition
+          name="custom-classes-transition"
+          enter-active-class="animated slideInRight"
+          leave-active-class="animated slideOutRight"
+        >
         <mobile-menu-component v-if="showMobileMenu" @closeMenu="showMobileMenu=false"></mobile-menu-component>
       </transition>
     </div>

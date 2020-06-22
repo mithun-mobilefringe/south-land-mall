@@ -12,95 +12,64 @@
           <div class="shopping-hours-btn">
             <div class="btn">Shopping Hours</div>
           </div>
-          <div class="social-links">
+          <div class="social-links d-none d-sm-block">
             <div class="icons">
               <i class="fa fa-facebook-square"></i>
               <i class="fa fa-instagram"></i>
               <i class="fa fa-youtube"></i>
             </div>
           </div>
-          <div class="subscribe-text" style="margin-top: 1rem">
+          <div class="subscribe-text d-none d-sm-block" style="margin-top: 1rem">
             <p>Follow Us on Social Media</p>
           </div>
         </div>
       </div>
-      <hr/>
+      <hr />
       <div class="row">
-          <div class="footer-links col-12">
-            <div class="footer_property_dets text-left col-3">
-              {{property.name}}
-              <p>
-                {{ property.address1 }},
-                <br />
-                {{ property.city }}, {{ property.province_state }} {{ property.postal_code }}
+        <div class="footer-links col-12">
+          <div class="footer_property_dets text-left col-6 col-sm-3">
+            {{property.name}}
+            <p>
+              {{ property.address1 }},
+              <br />
+              {{ property.city }}, {{ property.province_state }} {{ property.postal_code }}
+            </p>
+            <p class="phone">{{ property.contact_phone }}</p>
+          </div>
+          <div class="col-9 menu-links d-none d-sm-block">
+            <div
+              class="col-2 menu-header"
+              v-for="menulist in footer_menu_list"
+              :key="menulist.index"
+            >
+              <p v-if="menulist.submenus">{{menulist.name}}</p>
+              <p v-else>
+                <nuxt-link :to="menulist.link">{{menulist.name}}</nuxt-link>
               </p>
-              <p class="phone">{{ property.contact_phone }}</p>
-            </div>
-            <div class="col-2 menu-links">
-              <div class="menu-header">
-                <p>Shop</p>
-              </div>
-              <div class="menu-list">
-                <p><nuxt-link to="/stores">Stores Directory</nuxt-link></p>
-              </div>
-              <div class="menu-list">
-                <p><nuxt-link to="/stores?type=newstores">New Stores</nuxt-link></p>
-              </div>
-              <div class="menu-list">
-                <p><nuxt-link to="/promotions">Promotion</nuxt-link></p>
-              </div>
-            </div>
-            <div class="col-2 menu-links">
-              <div class="menu-header">
-                <p>Dine</p>
-              </div>
-              <div class="menu-list">
-                <p>Restaurants</p>
-              </div>
-              <div class="menu-list">
-                <p>Cafes</p>
-              </div>
-              <div class="menu-list">
-                <p>Fast Food</p>
-              </div>
-            </div>
-            <div class="col-1 menu-links">
-              <div class="menu-header">
-                <p><nuxt-link to="/events">Events</nuxt-link></p>
-              </div>
-            </div>
-            <div class="col-1 menu-links">
-              <div class="menu-header">
-                <p><nuxt-link to="/news">News</nuxt-link></p>
-              </div>
-            </div>
-            <div class="col-1 menu-links">
-              <div class="menu-header">
-                <p>Services</p>
-              </div>
-            </div>
-            <div class="col-2 menu-links">
-              <div class="menu-header">
-                <p>About</p>
-              </div>
-              <div class="menu-list">
-                <p>About Us</p>
-              </div>
-              <div class="menu-list">
-                <p><nuxt-link to="/jobs">Careers</nuxt-link></p>
-              </div>
-              <div class="menu-list">
-                <p>Contests</p>
+              <div v-if="menulist.submenus" class="menu-list">
+                <div v-for="menu in menulist.submenus" :key="menu.index">
+                  <p>
+                    <nuxt-link :to="menu.link">{{menu.name}}</nuxt-link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+          <div class="social-links d-sm-none col-6">
+            <div class="icons">
+              <i class="fa fa-facebook-square"></i>
+              <i class="fa fa-instagram"></i>
+              <i class="fa fa-youtube"></i>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <div class="footer-links col-12">
-            <div  style="text-align: left">Mall Maverick {{copyright_year}}</div>
+          <div class="footer-links col-12 d-none d-sm-block">
+            <div style="text-align: left">Mall Maverick {{copyright_year}}</div>
             <div style="text-align: center">
               <p>
                 <a href target="_blank">{{$t("footer.privacy_policy")}}</a>
@@ -122,6 +91,20 @@
               </p>
             </div>
           </div>
+          <div class="footer-links col-12 d-sm-none">
+            <div style="text-align: left">
+              <p>
+                <span>
+                  {{$t("footer.powered_by")}}
+                  <a
+                    href="//www.mallmaverick.com"
+                    target="_blank"
+                  >Mall Maverick</a>
+                </span>
+              </p>
+            </div>
+            <div style="text-align-right">CopyRight {{copyright_year}}@</div>
+          </div>
         </div>
       </div>
     </div>
@@ -136,6 +119,65 @@ import tz from "moment-timezone";
 export default {
   data: function data() {
     return {
+      footer_menu_list: [
+        {
+          name: "Shop",
+          link: "",
+          submenus: [
+            {
+              name: "Stores Directory",
+              link: "/stores"
+            },
+            {
+              name: "New Stores",
+              link: "/stores"
+            },
+            {
+              name: "Promotions",
+              link: "/promotions"
+            }
+          ]
+        },
+        {
+          name: "Dine",
+          link: "",
+          submenus: [
+            {
+              name: "Restaurants",
+              link: "/dine"
+            },
+            {
+              name: "Cafes",
+              link: "/stores"
+            },
+            {
+              name: "Fast Food",
+              link: "/promotions"
+            }
+          ]
+        },
+        { name: "Events", link: "/events" },
+        { name: "News", link: "/news" },
+        { name: "Services", link: "/services" },
+        {
+          name: "About",
+          link: "",
+          submenus: [
+            {
+              name: "ABOUT US",
+              link: "/"
+            },
+            {
+              name: "CAREERS",
+              link: "/jobs"
+            },
+            {
+              name: "CONTESTS",
+              link: "/"
+            }
+          ]
+        }
+      ]
     };
   },
   props: ["menu_items", "footer_sub_menu"],
@@ -143,8 +185,7 @@ export default {
     //SocialLinks: () => import('~/components/propertySocialLinks.vue')
   },
   created() {
-    this.$nextTick(function() {
-    });
+    this.$nextTick(function() {});
   },
   computed: {
     ...mapGetters(["route", "property", "timezone", "getPropertyHours"]),
@@ -189,9 +230,8 @@ export default {
     },
     copyright_year() {
       return moment().year();
-    },
+    }
   },
-  beforeDestroy: function() {
-  }
+  beforeDestroy: function() {}
 };
 </script>

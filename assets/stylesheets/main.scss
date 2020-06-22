@@ -155,7 +155,7 @@ img[lazy="loading"] {
     .top-nav {
         height: 65px;
         background: white;
-        box-shadow: 3px 3px 7px rgba(158, 158, 158, 0.55);
+        // box-shadow: 3px 3px 7px rgba(158, 158, 158, 0.55);
         .nav-item .nav-link {
             color: #000;
         }
@@ -239,6 +239,55 @@ img[lazy="loading"] {
     font-size: 0.7rem;
 }
 
+.hamburger {
+    position: absolute;
+    top: 26px;
+    right: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 29px;
+    height: 29px;
+    z-index: 99;
+    cursor: pointer;
+    .hamburger__line {
+        display: flex;
+        justify-content: space-between;
+    }
+    .hamburger__dots {
+        width: 5px;
+        height: 5px;
+        background-color: $primary;
+        border-radius: 50%;
+        transition: all .5s ease;
+    }
+}
+
+.hamburger.open {
+    // .hamburger__dots {
+    //     background-color: $accent;
+    // }
+    .hamburger__dots--right {
+        transform: translateX(12px);
+    }
+    .hamburger__dots--up {
+        transform: translateY(-12px);
+    }
+    .hamburger__dots--down {
+        transform: translateY(12px);
+    }
+    .hamburger__dots--left {
+        transform: translateX(-12px);
+    }
+}
+
+.sticky-animate {
+    -o-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: all 0.3s ease;
+}
+
 .footer {
     margin-top: 30px;
     text-transform: uppercase;
@@ -314,12 +363,14 @@ img[lazy="loading"] {
         }
         .menu-links {
             display: flex;
-            flex-direction: column;
             .menu-header {
                 display: flex;
-                justify-content: center;
                 font-weight: bold;
                 font-size: 1rem;
+                flex-direction: column;
+                p {
+                    text-align: center;
+                }
             }
             .menu-list {
                 display: flex;
@@ -327,6 +378,8 @@ img[lazy="loading"] {
                 font-weight: lighter;
                 font-size: 0.75rem;
                 text-align: center;
+                flex-direction: column;
+                ;
             }
         }
     }
@@ -343,7 +396,7 @@ img[lazy="loading"] {
     .footer-links {
         height: 1.25rem;
         display: flex;
-        font-size: 0.7rem;
+        font-size: 0.625rem;
         justify-content: space-between;
         a {
             color: white;
@@ -1132,6 +1185,63 @@ img[lazy="loading"] {
         // border-bottom: 0.5px solid #000000;
         // padding: 1.8rem 0px;
         margin-top: 1.8rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .promo_dets_container {
+        .top-section {
+            flex-direction: column;
+        }
+        .detail-internal {
+            height: 400px;
+            .detail-buttons {
+                flex-direction: column;
+                max-height: none !important;
+                flex: 10%;
+                .visit-button {
+                    flex: 100% !important;
+                    border: none !important;
+                    overflow: unset !important;
+                    a {
+                        border: solid 0.5px #000000;
+                        padding: 1rem;
+                        border-radius: 4px;
+                    }
+                }
+                .share-button {
+                    justify-content: center !important;
+                }
+            }
+        }
+    }
+    .top-image {
+        height: 200px;
+        max-height: 200px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .store_dets_container {
+        .detail-internal {
+            min-width: 100% !important;
+        }
+        .mapplic {
+            border: solid 0.5px black;
+        }
+    }
+    .social-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+            padding: 0.75rem;
+            font-size: 1.25rem;
+        }
+    }
+    .sticky {
+        height: 82px;
+        position: fixed;
+        background: #fff;
     }
 }
 

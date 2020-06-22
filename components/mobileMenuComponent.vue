@@ -17,8 +17,22 @@
               </nuxt-link>
             </div>
             <div class="header-signin">
-              <div style="cursor: pointer;" @click="$emit('closeMenu')">
-                <i class="fa fa-close" aria-hidden="true"></i>
+              <div class="hamburger open" style="cursor: pointer;" @click="$emit('closeMenu')">
+                <div class="hamburger__line">
+                  <span class="hamburger__dots"></span>
+                  <span class="hamburger__dots hamburger__dots--right"></span>
+                  <span class="hamburger__dots"></span>
+                </div>
+                <div class="hamburger__line">
+                  <span class="hamburger__dots hamburger__dots--up"></span>
+                  <span class="hamburger__dots"></span>
+                  <span class="hamburger__dots hamburger__dots--down"></span>
+                </div>
+                <div class="hamburger__line">
+                  <span class="hamburger__dots"></span>
+                  <span class="hamburger__dots hamburger__dots--left"></span>
+                  <span class="hamburger__dots"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -91,7 +105,7 @@ export default {
         { name: "Services", link: "/services" },
         { name: "Dine", link: "/dine" },
         { name: "About", link: "/" },
-        { name: "Stay", link: "/" },
+        { name: "Careers", link: "/jobs" },
         { name: "Directions", link: "/" }
       ]
       // jobSearchResultList: []

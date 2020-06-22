@@ -3,8 +3,12 @@
     <category-menu-component categoryType="eventDetails"></category-menu-component>
     <div class="site_container container">
       <div class="row">
+        <div class="col-12 d-sm-none p-0">
+            <div class="top-image" v-lazy:background-image="currentEvent.image_url">
+            </div>
+          </div>
         <div class="col-12 top-section">
-          <div class="col-6 top-section-detail">
+          <div class="col-12 col-sm-6 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
                 <div
@@ -20,7 +24,7 @@
                       :to="'/stores/' + currentEvent.store.slug"
                     >Visit {{currentEvent.name}}</nuxt-link>
                   </div>
-                  <div class="share-button col-12 col-sm-12">
+                  <div class="share-button col-12 col-sm-6">
                     Share Event
                     <i class="fa fa-share"></i>
                   </div>
@@ -28,7 +32,7 @@
               </div>
             </div>
           </div>
-          <div class="col-6 p-0 img-box">
+          <div class="col-12 col-sm-6 p-0 img-box d-none d-sm-block">
             <div class="img" v-lazy:background-image="currentEvent.image_url">
               <!-- <img :src="currentEvent.image_url"/> -->
             </div>

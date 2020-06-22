@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 top-section">
-          <div class="col-4 top-section-detail">
+          <div class="col-12 col-sm-4 top-section-detail">
             <div class="detail">
               <div class="detail-internal">
                 <div class="detail-top">
@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <div class="col-8 p-0 img-box map-box">
+          <div class="col-8 p-0 img-box map-box d-none d-sm-block">
             <mapplic-map
             class
             ref="svgmap_ref"
@@ -43,12 +43,19 @@
             :mapData="mapData"
             tooltiplabel="Store Info"
             @updateMap="updateSVGMap"
-            v-if="windowWidth > 767"
+            v-if="windowWidth > 576"
           ></mapplic-map>
-          <mapplic-map
+          
+              <!-- <img :src="currentStore.image_url"/> -->
+            </div>
+          </div>
+        </div>
+        <div class="row d-sm-none">
+          <div class="col-12">
+            <mapplic-map
             class
             ref="svgmap_ref"
-            :height="350"
+            :height="170"
             :minimap="false"
             :deeplinking="false"
             :sidebar="false"
@@ -59,10 +66,7 @@
             :mapData="mapData"
             tooltiplabel="Store Info"
             @updateMap="updateSVGMap"
-            v-else
           ></mapplic-map>
-              <!-- <img :src="currentStore.image_url"/> -->
-            </div>
           </div>
         </div>
       <!-- Promotions -->
