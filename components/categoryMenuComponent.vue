@@ -3,7 +3,7 @@
     <div class="category-menu">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-sm-4">
+          <div class="col-12 col-sm-4 back-category">
             <div v-if="!showBackButton">
               <span @click="showList=!showList" class="category-lbl">
                 <span style="margin-right: 5px">{{categoryLbl}}</span>
@@ -395,5 +395,18 @@ export default {
 
 .rotate {
   transform: rotate(90deg);
+}
+
+@media (max-width: 575.98px) {
+  .category-menu{
+    height: 5rem;
+  }
+  .back-category > div, .map-category, .search-category {
+    justify-content: center;
+    display: flex;
+  }
+  .map-category {
+    border-bottom: solid 0.1px #eeeef0;
+  }
 }
 </style>

@@ -271,6 +271,7 @@ img[lazy="loading"] {
             font-size: 1.25rem;
             font-family: Work sans Light;
             color: #363636;
+            text-align: center;
         }
         .shopping-hours-btn {
             display: flex;
@@ -898,8 +899,8 @@ img[lazy="loading"] {
     text-align: center;
     .mapplic-zoom-buttons {
         bottom: auto;
-        top: -18px;
-        right: 20px;
+        top: 1rem;
+        right: 2rem;
         transform: rotate(-90deg);
         box-shadow: none;
         margin: 0px;
@@ -1259,6 +1260,12 @@ img {
 
 hr {
     width: 100%;
+}
+
+.btn {
+    a {
+        font-size: 0.9rem;
+    }
 }
 
 
@@ -1788,6 +1795,8 @@ li.list-group-item.row.place-group-item {
     display: flex;
     flex: 0.2;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-bar>div {

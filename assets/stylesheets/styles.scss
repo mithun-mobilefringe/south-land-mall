@@ -12154,7 +12154,7 @@ html {
 
 @media (min-width: 992px) and (max-width: 1599.98px) {
     html {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 
@@ -12822,6 +12822,55 @@ header {
     position: absolute;
     width: 100%;
     background-color: #fff;
+}
+
+.mobile-menu {
+    background: #B98E80 0% 0% no-repeat padding-box !important;
+    height: 100%;
+    color: white;
+    a {
+        text-decoration: underline;
+        color: white;
+    }
+    input {
+        width: 100%;
+    }
+    .mobile-opacity {
+        opacity: 80%;
+    }
+    .btn-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        a {
+            text-decoration: none;
+        }
+        .btn {
+            width: 10rem;
+            background-color: white;
+            a {
+                color: black;
+            }
+        }
+    }
+    .icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+            font-size: 1.25rem;
+            padding: 1.5rem;
+        }
+    }
+    opacity: 80%;
+    text-transform: uppercase;
+    .top-header {
+        margin-bottom: 30px;
+    }
+    .top-header-mall {
+        border: none;
+    }
 }
 
 .nav-right {

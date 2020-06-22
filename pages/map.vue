@@ -15,35 +15,28 @@
           ></v-select>
         </div>
       </div>
-      <div id="directory" class="row">
-        <div class="col-12 map-container">
-          <div class="map-view d-flex" ref="mallMap">
-            <mapplic-map
-              class
-              ref="svgmap_ref"
-              :height="720"
-              :minimap="false"
-              :deeplinking="false"
-              :sidebar="false"
-              :hovertip="true"
-              :maxscale="5"
-              :storelist="allStores"
-              :mapData="mapData"
-              :mousewheel="false"
-              tooltiplabel="Store Info"
-              @updateMap="updateSVGMap"
-            ></mapplic-map>
+      <div class="results-content results-with-map">
+          <!-- Mall Map-->
+          <div class="results-map">
+            <div class="map-view d-flex" ref="mallMap">
+                <mapplic-map
+                  class
+                  ref="svgmap_ref"
+                  :height="700"
+                  :minimap="false"
+                  :deeplinking="false"
+                  :sidebar="false"
+                  :hovertip="true"
+                  :maxscale="5"
+                  :storelist="allStores"
+                  :mapData="mapData"
+                  :mousewheel="false"
+                  tooltiplabel="Store Info"
+                  @updateMap="updateSVGMap"
+                ></mapplic-map>
+            </div>
           </div>
-          <transition name="mapToggle">
-            <button
-              class="btn bg-alt btn-mapview d-md-none animated btn-list"
-              type="button"
-              v-show="isMobile"
-              @click="goToStores()"
-            >List View</button>
-          </transition>
         </div>
-      </div>
     </div>
     <back-to-top></back-to-top>
   </div>
