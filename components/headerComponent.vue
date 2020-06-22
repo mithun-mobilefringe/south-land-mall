@@ -1,6 +1,6 @@
 <template>
   <!-- begin header nav -->
-  <div class="nav-content sticky sticky-animate nav-spacing container">
+  <div class="nav-content sticky-animate nav-spacing container">
     <div class="nav-container d-none d-sm-block">
       <div class="row">
         <div class="top-header col-12">
@@ -26,18 +26,18 @@
               <div class="nav-arrow">
                 <i class="fa fa-caret-down"></i>
               </div>
-              <!-- <transition name="fade"> -->
-              <shop-drop-down v-if="displayShopDropDown" :featured_stores="featuredStores"></shop-drop-down>
-              <!-- </transition> -->
+              <transition name="slide">
+                <shop-drop-down v-if="displayShopDropDown" :featured_stores="featuredStores"></shop-drop-down>
+              </transition>
             </div>
             <div @click="displayDropDown(2)" v-click-outside="hideDineDropDown" class="header-menu">
               Dine
               <div class="nav-arrow">
                 <i class="fa fa-caret-down"></i>
               </div>
-              <!-- <transition name="fade"> -->
-              <dine-drop-down v-if="displayDineDropDown" :featured_stores="featuredStores"></dine-drop-down>
-              <!-- </transition> -->
+              <transition name="slide">
+                <dine-drop-down v-if="displayDineDropDown" :featured_stores="featuredStores"></dine-drop-down>
+              </transition>
             </div>
             <!-- <div @click="displayDropDown(3)" v-click-outside="hideStayDropDown" style="position: relative;">Stay<div class="nav-arrow"><i class="fa fa-caret-down"></i></div>
               <transition name="fade">
@@ -58,9 +58,9 @@
               <div class="nav-arrow">
                 <i class="fa fa-caret-down"></i>
               </div>
-              <!-- <transition name="fade"> -->
-              <about-drop-down v-if="displayAboutDropDown"></about-drop-down>
-              <!-- </transition> -->
+              <transition name="slide">
+                <about-drop-down v-if="displayAboutDropDown"></about-drop-down>
+              </transition>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
     </div>
     <!-- begin mobile header nav -->
     <div class="top-nav container-fluid d-sm-none nav-collapse" id="mob-top-nav">
-      <div class="row">
+      <div class="row" >
         <div class="top-header col-12" v-if="!showMobileMenu">
           <div class="top-header-mall">
             <div class="header-lang">
@@ -83,7 +83,11 @@
               </nuxt-link>
             </div>
             <div class="header-signin">
-              <div class="hamburger" style="cursor: pointer;" @click="showMobileMenu=!showMobileMenu">
+              <div
+                class="hamburger"
+                style="cursor: pointer;"
+                @click="showMobileMenu=!showMobileMenu"
+              >
                 <div class="hamburger__line">
                   <span class="hamburger__dots hamburger__dots--right"></span>
                 </div>
@@ -99,10 +103,10 @@
         </div>
       </div>
       <transition
-          name="custom-classes-transition"
-          enter-active-class="animated slideInRight"
-          leave-active-class="animated slideOutRight"
-        >
+        name="custom-classes-transition"
+        enter-active-class="animated slideInRight"
+        leave-active-class="animated slideOutRight"
+      >
         <mobile-menu-component v-if="showMobileMenu" @closeMenu="showMobileMenu=false"></mobile-menu-component>
       </transition>
     </div>

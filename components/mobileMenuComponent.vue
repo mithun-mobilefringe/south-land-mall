@@ -52,7 +52,7 @@
         </div>
         <div class="row m-0">
           <div class="col-6 btn-menu" v-for="menu in menulist" :key="menu.index">
-            <div class="btn btn-outline-light">
+            <div class="btn btn-outline-light" @click="$emit('closeMenu')">
               <nuxt-link :to="menu.link">{{menu.name}}</nuxt-link>
             </div>
           </div>

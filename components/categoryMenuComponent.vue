@@ -31,9 +31,11 @@
         </div>
       </div>
     </div>
-    <transition name="fade">
+    
       <div class="container">
-        <div class="category-list row" v-if="categories" v-show="showList">
+        <transition name="slide">
+        <div class="category-list row" v-if="categories && showList">
+          
           <div class="col-12">
             <div class="category-list-items">
               <div v-for="category in categories" class="category-item col-6 col-sm-4 col-md-3" :key="category.id">
@@ -44,10 +46,11 @@
               </div>
             </div>
           </div>
+          
         </div>
+        </transition>
         <right-search-component v-if="showSearchWindow" @selectedCategoryFromSearch="filterCategoriesFromSearch" @closeSearch="showSearchWindow=false"></right-search-component>
       </div>
-    </transition>
   </div>
 </template>
 
