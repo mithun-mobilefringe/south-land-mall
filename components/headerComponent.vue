@@ -117,22 +117,22 @@
     <div class="d-sm-none row" v-if="!showMobileMenu">
       <div class="bottom-menu col-12">
         <div class="col-3">
-          <nuxt-link to="/stores">
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          <nuxt-link to="/stores" aria-label="shop">
+            <i class="fa fa-shopping-cart"  aria-hidden="true"></i>
           </nuxt-link>Shopping
         </div>
         <div class="col-3">
-          <nuxt-link to="/dine">
+          <nuxt-link to="/dine" aria-label="Dining">
             <i class="fa fa-cutlery" aria-hidden="true"></i>
           </nuxt-link>Dining
         </div>
         <div class="col-3">
-          <nuxt-link to="/services">
+          <nuxt-link to="/services" aria-label="Services">
             <i class="fa fa-users" aria-hidden="true"></i>
           </nuxt-link>Services
         </div>
         <div class="col-3">
-          <nuxt-link to="/map">
+          <nuxt-link to="/map" aria-label="shopping">
             <i class="fa fa-map" aria-hidden="true"></i>
           </nuxt-link>Map
         </div>

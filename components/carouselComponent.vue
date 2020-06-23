@@ -1,7 +1,7 @@
 <template>
   <div class="homepage_view_container">
     <!-- <div class="homepage_view_container" > -->
-    <slick ref="slick" :options="slickOptions" class="d-none d-sm-block slick-height">
+    <slick ref="slick" :options="slickOptions" class="d-none d-sm-block slick-height" aria-label="slick" tabindex=0>
       <div class="homepage-view-1" style="flex-direction: column;">
         <div class="banner-slider d-flex">
           <div v-if="banners[0].name && banners[0].image_url" class="banner_height">
@@ -10,7 +10,7 @@
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[0].image_url + ')' }"
               >
-                <div class="banner-label">{{banners[0].name}}</div>
+                <div class="banner-label" :aria-label="banners[0].name">{{banners[0].name}}</div>
               </div>
             </a>
           </div>
@@ -19,7 +19,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[1].image_url + ')' }"
-              ><div class="banner-label">{{banners[1].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[1].name">{{banners[1].name}}</div></div>
             </a>
           </div>
         </div>
@@ -45,7 +45,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[3].image_url + ')' }"
-              ><div class="banner-label">{{banners[3].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[3].name">{{banners[3].name}}</div></div>
             </a>
           </div>
           <div
@@ -57,7 +57,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[4].image_url + ')' }"
-              ><div class="banner-label">{{banners[4].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[4].name">{{banners[4].name}}</div></div>
             </a>
           </div>
         </div>
@@ -70,7 +70,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[5].image_url + ')' }"
-              ><div class="banner-label">{{banners[5].name}}</div>
+              ><div class="banner-label" :aria-label="banners[5].name">{{banners[5].name}}</div>
               </div>
             </a>
           </div>
@@ -79,7 +79,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[6].image_url + ')' }"
-              ><div class="banner-label">{{banners[6].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[6].name">{{banners[6].name}}</div></div>
             </a>
           </div>
         </div>
@@ -93,7 +93,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[4].image_url + ')' }"
-              ><div class="banner-label">{{banners[4].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[4].name">{{banners[4].name}}</div></div>
             </a>
           </div>
           <div
@@ -105,7 +105,7 @@
               <div
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[7].image_url + ')' }"
-              ><div class="banner-label">{{banners[7].name}}</div></div>
+              ><div class="banner-label" :aria-label="banners[7].name">{{banners[7].name}}</div></div>
             </a>
           </div>
           <div
@@ -129,7 +129,7 @@
     </slick> -->
 
 
-    <VueSlickCarousel :arrows="true" :dots="true" :autoplay="true" class="slick-height mobile-carousel d-sm-none">
+    <VueSlickCarousel :arrows="true" :dots="true" :autoplay="true" autoplaySpeed="8000" class="slick-height mobile-carousel d-sm-none">
       
           <div v-if="banners[1].name && banners[1].image_url" class="banner_height">
             <a :href="banners[1].url" :aria-label="banners[1].name" class="banner_content">
@@ -138,8 +138,8 @@
                 v-bind:style="{ backgroundImage: 'url(' + banners[1].image_url + ')' }"
               >
                 <div class="banner-label">
-                  <p>{{banners[1].name}}</p>
-                  <nuxt-link class="btn" to="/stores">Stores Directory</nuxt-link>
+                  <p :aria-label="banners[1].name">{{banners[1].name}}</p>
+                  <nuxt-link class="btn" to="/stores"><h2>Stores Directory</h2></nuxt-link>
                 </div>
               </div>
             </a>
@@ -150,8 +150,8 @@
                 class="banner_image"
                 v-bind:style="{ backgroundImage: 'url(' + banners[5].image_url + ')' }"
               ><div class="banner-label">
-                <p>{{banners[5].name}}</p>
-                  <nuxt-link class="btn" to="/dine">Dine</nuxt-link>
+                <p :aria-label="banners[5].name">{{banners[5].name}}</p>
+                  <nuxt-link class="btn" to="/dine"><h2>Dine</h2></nuxt-link>
               </div>
               </div>
             </a>
@@ -188,7 +188,7 @@ export default {
         cssEase: "linear",
         infinite: false,
         slidesToShow: 1,
-        speed: 2000,
+        speed: 8000,
         draggable: false,
 
         arrows: true,
