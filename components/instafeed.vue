@@ -14,8 +14,8 @@
         </div>
         <div class="row featured-body">
           <div class="col">
-            <div class="row">
-              <div class="col-sm-6 col-md-3 p-4" v-for="item in instaFeed" :key="item.id">
+            <div class="row justify-content-center align-middle" >
+              <div class="col-4 col-sm-6 col-md-3 p-4 insta-feed" v-for="item in instaFeed" :key="item.id">
                 <a
                   :href="item.link"
                   :aria-label="item.id"
@@ -104,5 +104,17 @@ export default {
 }
 .camera {
   transform: none;
+}
+
+.insta-feed {
+  height: 255px;
+  width: 255px;
+}
+
+@media (max-width: 567px){
+  .insta-feed {
+    height: 155px;
+    width: 255px;
+  }
 }
 </style>

@@ -214,4 +214,9 @@ export default {
   background-color: white;
   background-size: cover;
 }
+@media (max-width: 575.98px) {
+.other-services, .selected-subpage {
+  text-align: center;
+}
+}
 </style>

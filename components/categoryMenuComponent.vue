@@ -21,8 +21,8 @@
               </nuxt-link>
             </div>
           </div>
-          <div class="col-12 col-sm-4 map-category"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
-          <div class="col-12 col-sm-4 search-category">
+          <div class="col-12 col-sm-4 map-category d-none d-sm-block"><nuxt-link to="/map" v-if="showMap">Map</nuxt-link></div>
+          <div class="col-12 col-sm-4 search-category d-none d-sm-block">
             <div class="d-flex" style="cursor: pointer;" @click="showSearchWindow=!showSearchWindow">
             Search For Store
             <i class="fa fa-search search-icon"></i>
@@ -401,9 +401,6 @@ export default {
 }
 
 @media (max-width: 575.98px) {
-  .category-menu{
-    height: 5rem;
-  }
   .back-category > div, .map-category, .search-category {
     justify-content: center;
     display: flex;

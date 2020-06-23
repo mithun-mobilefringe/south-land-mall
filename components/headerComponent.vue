@@ -15,6 +15,8 @@
             <div class="logo-header">
               <nuxt-link to="/" aria-label="logo">
                 <div class="logo">
+                  <p>SouthLand</p>
+                  <p style="font-size: 1.25rem">Mall</p>
                   <h1 class="accessibility">{{ property.name }}</h1>
                 </div>
               </nuxt-link>
@@ -74,7 +76,10 @@
     <div id="mobile-menu" class="d-sm-none">
       <div class="mobile-logo-container">
         <nuxt-link to="/" :class="{ disabled: showMobileMenu }">
-          <div class="logo" :class="{ open: showMobileMenu }"></div>
+          <div class="logo" :class="{ open: showMobileMenu }">
+            <p>SouthLand</p>
+            <p style="font-size: 1.25rem">Mall</p>
+          </div>
         </nuxt-link>
       </div>
       <div
@@ -109,26 +114,30 @@
     </div>
 
     <!-- end mobile header nav -->
-    <div class="d-sm-none row">
+    <div class="d-sm-none row" v-if="!showMobileMenu">
       <div class="bottom-menu col-12">
         <div class="col-3">
-          <nuxt-link to="/stores"><i class="fa fa-shopping-cart" aria-hidden="true"></i></nuxt-link>
-          Shopping
+          <nuxt-link to="/stores">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </nuxt-link>Shopping
         </div>
         <div class="col-3">
-          <nuxt-link to="/dine"><i class="fa fa-cutlery" aria-hidden="true"></i></nuxt-link>
-          Dining
+          <nuxt-link to="/dine">
+            <i class="fa fa-cutlery" aria-hidden="true"></i>
+          </nuxt-link>Dining
         </div>
         <div class="col-3">
-          <nuxt-link to="/services"><i class="fa fa-users" aria-hidden="true"></i></nuxt-link>
-          Services
+          <nuxt-link to="/services">
+            <i class="fa fa-users" aria-hidden="true"></i>
+          </nuxt-link>Services
         </div>
         <div class="col-3">
-          <nuxt-link to="/map"><i class="fa fa-map" aria-hidden="true"></i></nuxt-link>
-          Map
+          <nuxt-link to="/map">
+            <i class="fa fa-map" aria-hidden="true"></i>
+          </nuxt-link>Map
         </div>
       </div>
-      </div>
+    </div>
   </div>
 </template>
 

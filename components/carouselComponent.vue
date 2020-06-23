@@ -1,7 +1,7 @@
 <template>
   <div class="homepage_view_container">
     <!-- <div class="homepage_view_container" > -->
-    <slick ref="slick" :options="slickOptions" style="height: 35rem">
+    <slick ref="slick" :options="slickOptions" class="d-none d-sm-block slick-height">
       <div class="homepage-view-1" style="flex-direction: column;">
         <div class="banner-slider d-flex">
           <div v-if="banners[0].name && banners[0].image_url" class="banner_height">
@@ -123,6 +123,50 @@
         </div>
       </div>
     </slick>
+
+    <!-- <slick ref="slick" :options="slickOptions" class="d-sm-none slick-height mobile-carousel">
+        
+    </slick> -->
+
+
+    <VueSlickCarousel :arrows="true" :dots="true" :autoplay="true" class="slick-height mobile-carousel d-sm-none">
+      
+          <div v-if="banners[1].name && banners[1].image_url" class="banner_height">
+            <a :href="banners[1].url" :aria-label="banners[1].name" class="banner_content">
+              <div
+                class="banner_image"
+                v-bind:style="{ backgroundImage: 'url(' + banners[1].image_url + ')' }"
+              >
+                <div class="banner-label">
+                  <p>{{banners[1].name}}</p>
+                  <nuxt-link class="btn" to="/stores">Stores Directory</nuxt-link>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div v-if="banners[5].name && banners[5].image_url" class="banner_height">
+            <a :href="banners[5].url" :aria-label="banners[5].name" class="banner_content">
+              <div
+                class="banner_image"
+                v-bind:style="{ backgroundImage: 'url(' + banners[5].image_url + ')' }"
+              ><div class="banner-label">
+                <p>{{banners[5].name}}</p>
+                  <nuxt-link class="btn" to="/dine">Dine</nuxt-link>
+              </div>
+              </div>
+            </a>
+          </div>
+          <div v-if="banners[2].name && banners[2].image_url" class="banner_height">
+            <a :href="banners[2].url" :aria-label="banners[2].name" class="banner_content">
+              <div
+                class="banner_image"
+                v-bind:style="{ backgroundImage: 'url(' + banners[2].image_url + ')' }"
+              >
+                <div class="banner-label">{{banners[2].name}}</div>
+              </div>
+            </a>
+          </div>
+    </VueSlickCarousel>
   </div>
 </template>
 
@@ -181,4 +225,13 @@ export default {
 };
 </script>
 <style scoped>
+.slick-height {
+  height: 35rem;
+}
+@media (max-width: 566.99px) {
+  .slick-height {
+  height: 22rem;
+}
+  
+}
 </style>

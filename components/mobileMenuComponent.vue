@@ -2,42 +2,6 @@
   <div>
     <div v-if="banners.length > 1">
       <div class="mobile-menu">
-      <!-- <div class="row">
-        <div class="top-header col-12">
-          <div class="top-header-mall">
-            <div class="header-lang justify-content-center align-middle">
-              <div class="text-center">EN</div>
-              <div class="text-center">中文</div>
-            </div>
-            <div class="logo-header">
-              <nuxt-link to="/" aria-label="logo">
-                <div class="logo">
-                  <h1 class="accessibility">{{ property.name }}</h1>
-                </div>
-              </nuxt-link>
-            </div>
-            <div class="header-signin">
-              <div class="hamburger open" style="cursor: pointer;" @click="$emit('closeMenu')">
-                <div class="hamburger__line">
-                  <span class="hamburger__dots"></span>
-                  <span class="hamburger__dots hamburger__dots--right"></span>
-                  <span class="hamburger__dots"></span>
-                </div>
-                <div class="hamburger__line">
-                  <span class="hamburger__dots hamburger__dots--up"></span>
-                  <span class="hamburger__dots"></span>
-                  <span class="hamburger__dots hamburger__dots--down"></span>
-                </div>
-                <div class="hamburger__line">
-                  <span class="hamburger__dots"></span>
-                  <span class="hamburger__dots hamburger__dots--left"></span>
-                  <span class="hamburger__dots"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div>
         <div class="row m-4">
           <div class="col-12 d-flex justify-content-center align-middle">Open Now until 9 pm</div>
@@ -52,8 +16,8 @@
         </div>
         <div class="row m-0">
           <div class="col-6 btn-menu" v-for="menu in menulist" :key="menu.index">
-            <div class="btn btn-outline-light" @click="$emit('closeMenu')">
-              <nuxt-link :to="menu.link">{{menu.name}}</nuxt-link>
+            <div  @click="$emit('closeMenu')">
+              <nuxt-link class="btn btn-outline-light" :to="menu.link">{{menu.name}}</nuxt-link>
             </div>
           </div>
         </div>
