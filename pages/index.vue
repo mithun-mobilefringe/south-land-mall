@@ -23,7 +23,7 @@
       </div>
       <div class="row mt-5" v-if="homepage_features.length >0">
         <div class="col-12" style="display: flex;">
-          <div class="col-4 p-0">
+          <div class="col-sm-4 p-0 d-none d-sm-block">
             <div class="featured-row-1">
               <div class="feature-store">
                 <div style="font-family: Pistilli; font-size: 4rem;">50%</div>
@@ -32,7 +32,7 @@
             </div>
           </div>
           <div
-            class="col-8 p-0 feature-img"
+            class="col-12 col-sm-8 p-0 feature-img"
             v-lazy:background-image="homepage_features[0].image_url"
           >
             <div class="label">{{homepage_features[0].name}}</div>
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="col-12 d-flex">
-          <div class="col-8 feature-row-2 p-0">
+          <div class="col-12 col-sm-8 feature-row-2 p-0">
             <div class="feature-img" v-lazy:background-image="homepage_features[1].image_url">
               <div class="label display-right">{{homepage_features[1].name}}</div>
               <div class="btn feature-btn display-right">
@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4 p-0">
+          <div class="col-4 p-0 d-none d-sm-block">
             <div class="feature-hours">
               <div>
                 <div>

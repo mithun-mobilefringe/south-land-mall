@@ -1,7 +1,7 @@
 <template>
   <div class="promo_dets_container">
     <div class="site_container container">
-      <div class="row">
+      <div class="row d-none d-sm-block">
         <div class="col-12 top-section" v-if="pages">
           <div class="col-6 top-section-detail">
             <div class="detail">
@@ -32,13 +32,13 @@
       </div>
       <hr />
       <div v-if="showSubpageDetails">
-        <transition name="fade">
+        <transition name="slide">
           <div class="row">
-            <div class="col-4 selected-subpage">
+            <div class="col-12 col-sm-4 selected-subpage">
               <div class="selected-subpage-title">{{selectedSubpage.title}}</div>
               <div class="selected-subpage-body" v-html="selectedSubpage.body"></div>
             </div>
-            <div class="col-8 selected-subpage-img">
+            <div class="col-12 col-sm-8 selected-subpage-img">
               <img :src="selectedSubpage.banner_url" />
             </div>
           </div>

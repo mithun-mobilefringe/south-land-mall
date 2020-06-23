@@ -1,6 +1,9 @@
 <template>
   <!-- begin header nav -->
-  <div class="nav-content sticky-animate nav-spacing container" :class="{mobileSelectedMenu: showMobileMenu}">
+  <div
+    class="nav-content sticky-animate nav-spacing container"
+    :class="{mobileSelectedMenu: showMobileMenu}"
+  >
     <div class="row d-none d-sm-block">
       <div class="row">
         <div class="top-header col-12">
@@ -67,51 +70,8 @@
       </div>
     </div>
     <!-- begin mobile header nav -->
-    <!-- <div class="top-nav container-fluid d-sm-none nav-collapse" id="mob-top-nav">
-      <div class="row">
-        <div class="top-header col-12" v-if="!showMobileMenu">
-          <div class="top-header-mall">
-            <div class="header-lang">
-              <div>EN</div>
-              <div>中文</div>
-            </div>
-            <div class="logo-header">
-              <nuxt-link to="/" aria-label="logo">
-                <div class="logo">
-                  <h1 class="accessibility">{{ property.name }}</h1>
-                </div>
-              </nuxt-link>
-            </div>
-            <div class="header-signin">
-              <div
-                class="hamburger"
-                style="cursor: pointer;"
-                @click="showMobileMenu=!showMobileMenu"
-              >
-                <div class="hamburger__line">
-                  <span class="hamburger__dots hamburger__dots--right"></span>
-                </div>
-                <div class="hamburger__line">
-                  <span class="hamburger__dots hamburger__dots--up"></span>
-                </div>
-                <div class="hamburger__line">
-                  <span class="hamburger__dots"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animated slideInRight"
-        leave-active-class="animated slideOutRight"
-      >
-        <mobile-menu-component v-if="showMobileMenu" @closeMenu="showMobileMenu=false"></mobile-menu-component>
-      </transition>
-    </div>-->
 
-    <div id="mobile-menu">
+    <div id="mobile-menu" class="d-sm-none">
       <div class="mobile-logo-container">
         <nuxt-link to="/" :class="{ disabled: showMobileMenu }">
           <div class="logo" :class="{ open: showMobileMenu }"></div>
@@ -141,45 +101,34 @@
       </div>
     </div>
     <div class="nav-container visible_phone">
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="animated slideInRight"
-        leave-active-class="animated slideOutRight"
-      >
+      <transition name="slide">
         <nav id="mobile-nav" v-if="showMobileMenu" class>
           <mobile-menu-component v-if="showMobileMenu" @closeMenu="showMobileMenu=false"></mobile-menu-component>
-          <!-- <ul class="nav-list">
-            <nuxt-link tag="li" to="/">
-              <p class="menu-item" @click="showMobileMenu = !showMobileMenu">Home</p>
-            </nuxt-link>
-            <nuxt-link tag="li" to="/location">
-              <p class="menu-item" @click="showMobileMenu = !showMobileMenu">Location</p>
-            </nuxt-link>
-            <nuxt-link tag="li" to="/highlights">
-              <p class="menu-item" @click="showMobileMenu = !showMobileMenu">Highlights</p>
-            </nuxt-link>
-            <nuxt-link tag="li" to="/retailers">
-              <p class="menu-item" @click="showMobileMenu = !showMobileMenu">Retailers</p>
-            </nuxt-link>
-            <nuxt-link tag="li" to="/floor-plans-and-contact">
-              <p class="menu-item" @click="showMobileMenu = !showMobileMenu">Floor Plans & Contact</p>
-            </nuxt-link>
-            <div class="address">
-              <p>
-                2 Bloor Street West
-                <br />Toronto, Ontario
-              </p>
-            </div>
-            <div class="management-logo">
-              <img src="/images/jll_white.png" alt="JLL Brokerage Logo" />
-              <p>&#169; {{copyright_year}} JLL Brokerage</p>
-            </div>
-          </ul> -->
         </nav>
       </transition>
     </div>
 
     <!-- end mobile header nav -->
+    <div class="d-sm-none row">
+      <div class="bottom-menu col-12">
+        <div class="col-3">
+          <nuxt-link to="/stores"><i class="fa fa-shopping-cart" aria-hidden="true"></i></nuxt-link>
+          Shopping
+        </div>
+        <div class="col-3">
+          <nuxt-link to="/dine"><i class="fa fa-cutlery" aria-hidden="true"></i></nuxt-link>
+          Dining
+        </div>
+        <div class="col-3">
+          <nuxt-link to="/services"><i class="fa fa-users" aria-hidden="true"></i></nuxt-link>
+          Services
+        </div>
+        <div class="col-3">
+          <nuxt-link to="/map"><i class="fa fa-map" aria-hidden="true"></i></nuxt-link>
+          Map
+        </div>
+      </div>
+      </div>
   </div>
 </template>
 
@@ -212,7 +161,7 @@ export default {
   },
   created() {
     this.$nextTick(function() {
-      this.banners =  this.$store.state.banners;
+      this.banners = this.$store.state.banners;
       //Init
       debugger;
       this.featuredStores = this.homepage.featured_stores;

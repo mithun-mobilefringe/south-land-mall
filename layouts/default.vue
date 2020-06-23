@@ -19,6 +19,7 @@
       href="/pages/privacy-policy"
       cookieDomain="beverlycenter.com"
     /> -->
+    
   </div>
 </template>
 <style>
