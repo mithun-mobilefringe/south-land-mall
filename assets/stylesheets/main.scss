@@ -1299,6 +1299,19 @@ img {
     background-color: white;
 }
 
+#mobile-menu {
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobileSelectedMenu {
+    background-color: #B98E80;
+    height: 100vh;
+    background: linear-gradient(0deg, #B98E80, rgba(0, 0, 0, .5)), url("https://assets.mallmaverick.com/system/site_images/photos/000/041/509/original/menu-banner-2-compressor.jpg?1533151015") 50%;
+}
+
 
 /******* Events **********/
 
@@ -2016,7 +2029,7 @@ li.list-group-item.row.place-group-item {
     .nav-content,
     nav.navbar {
         transition: all ease 0.3s;
-        height: 65px;
+        // height: 65px;
     }
     //   .sticky,
     //   .sticky nav {

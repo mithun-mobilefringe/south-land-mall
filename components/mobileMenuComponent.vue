@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div id="nav-right" class="nav-right" v-if="banners.length > 1" v-lazy:background-image="banners[1].cover_image_url">
+    <div v-if="banners.length > 1">
       <div class="mobile-menu">
-      <div class="row">
+      <!-- <div class="row">
         <div class="top-header col-12">
           <div class="top-header-mall">
             <div class="header-lang justify-content-center align-middle">
@@ -37,8 +37,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="mobile-opacity">
+      </div> -->
+      <div>
         <div class="row m-4">
           <div class="col-12 d-flex justify-content-center align-middle">Open Now until 9 pm</div>
           <div class="col-12 d-flex justify-content-center align-middle">

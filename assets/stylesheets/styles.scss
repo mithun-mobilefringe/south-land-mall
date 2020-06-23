@@ -12825,7 +12825,7 @@ header {
 }
 
 .mobile-menu {
-    background: #B98E80 0% 0% no-repeat padding-box !important;
+    // background: #B98E80 0% 0% no-repeat padding-box !important;
     height: 100%;
     color: white;
     a {
@@ -13060,9 +13060,10 @@ header {
     }
 }
 
-.nav-content {
+
+/* .nav-content {
     padding-bottom: 5rem;
-}
+} */
 
 @media (min-width: 768px) {
     .nav-content {

@@ -50,7 +50,7 @@ export default {
   transition: 'page',
   data() {
     return {
-      menu_items: [
+      /* menu_items: [
         {
           name: 'Stores',
           id: 'stores',
@@ -172,7 +172,7 @@ export default {
             }
           ]
         }
-      ],
+      ], */
       footer_sub_menu: [
         {
           name: 'Jobs',
